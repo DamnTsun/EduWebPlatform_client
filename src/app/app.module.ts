@@ -7,7 +7,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { PHeaderComponent } from './components/_shared/p-header/p-header.component';                          // Page header
 import { SubjectListComponent } from './components/subjects/subject-list/subject-list.component';             // Subject list/selector
-import { SubjectHomeComponent } from './components/subjects/subject-home/subject-home.component';             // Subject home page
+import { SubjectHomeComponent } from './components/subjects/subject-home/subject-home.component';
+import { TopicListComponent } from './components/topics/topic-list/topic-list.component';             // Subject home page
+import { environment } from '../environments/environment.prod';
 
 
 const appRoutes = [
@@ -25,6 +27,11 @@ const appRoutes = [
   {
     path: 'subjects/:subjectid',
     component: SubjectHomeComponent
+  },
+  // Topic listing and topic
+  {
+    path: environment.routes.topicSelect,
+    component: TopicListComponent
   }
 ]
 
@@ -34,7 +41,8 @@ const appRoutes = [
     AppComponent,
     PHeaderComponent,
     SubjectListComponent,
-    SubjectHomeComponent
+    SubjectHomeComponent,
+    TopicListComponent
   ],
   imports: [
     BrowserModule,

@@ -5,7 +5,16 @@
 export const environment = {
   production: false,
   
-  apiUrl: 'http://localhost/matheduapp-prototype_api/'
+  apiUrl: 'http://localhost/matheduapp-prototype_api/',
+  routeParams: {
+    subjectid: ':subjectid'
+  },
+  routes: {
+    subjectSelect: 'subjects/',
+    subjectHome: 'subjects/:subjectid',
+
+    topicSelect: 'subjects/:subjectid/topics'
+  }
 };
 
 /*

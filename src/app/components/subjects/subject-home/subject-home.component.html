@@ -1,3 +1,28 @@
-<p>
-  subject-home works!
-</p>
+<section class="container page-content">
+
+  <ng-container *ngIf="(this.subject$ !== null); else loadingTemplate">
+    <h2>
+      {{ this.subject$.name }}
+    </h2>
+    <section class="page-sub-content">
+      <h5>Subject Description:</h5>
+      <p>subject.descriptionLong will go here once implemented.</p>
+      <p>
+        When your test data is so bad you print the id to the screen.<br>
+        Id of this subject record is: {{ this.subject$.id }}
+      </p>
+    </section>
+  </ng-container>
+
+
+  <ng-template #loadingTemplate>
+    <ng-container *ngIf="!loadingError; else loadingErrorTemplate">
+      Loading.....
+    </ng-container>
+    <ng-template #loadingErrorTemplate>
+      Loading failed
+    </ng-template>
+    
+  </ng-template>
+
+</section>
