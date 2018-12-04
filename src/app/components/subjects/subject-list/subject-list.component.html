@@ -1,0 +1,13 @@
+<section class="container page-content">
+  <h2>Select a Subject:</h2>
+  <ul class="subject-list">
+    <li *ngFor="let subject of subjects$">
+      <button class="card" (click)="this.site.setSubjectId(subject.id)">
+        <section class="card-body">
+          <h5 class="card-title">{{ subject.name }}</h5>
+          <p class="card-text">subject.descriptionShort will go here once implemented.</p>
+        </section>
+      </button>
+    </li>
+  </ul>
+</section>
