@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   
-  apiUrl: 'http://localhost/matheduapp-prototype_api/',
+  apiUrl: 'http://localhost/EduWebPlatform_api/',
   routeParams: {
     subjectid: ':subjectid'
   },
