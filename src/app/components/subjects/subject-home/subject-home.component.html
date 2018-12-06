@@ -6,18 +6,16 @@
     </h2>
     <section class="page-sub-content">
       <h5>Subject Description:</h5>
-      <p>subject.descriptionLong will go here once implemented.</p>
-      <p>
-        When your test data is so bad you print the id to the screen.<br>
-        Id of this subject record is: {{ this.subject$.id }}
-      </p>
+      <p>{{ subject$.description }}</p>
+      {{ subject$.homepageContent }}
     </section>
+    <app-loader></app-loader>
   </ng-container>
 
 
   <ng-template #loadingTemplate>
     <ng-container *ngIf="!loadingError; else loadingErrorTemplate">
-      Loading.....
+      <app-loader></app-loader>
     </ng-container>
     <ng-template #loadingErrorTemplate>
       Loading failed

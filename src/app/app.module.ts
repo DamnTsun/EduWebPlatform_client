@@ -10,6 +10,7 @@ import { SubjectListComponent } from './components/subjects/subject-list/subject
 import { SubjectHomeComponent } from './components/subjects/subject-home/subject-home.component';
 import { TopicListComponent } from './components/topics/topic-list/topic-list.component';             // Subject home page
 import { environment } from '../environments/environment.prod';
+import { LoaderComponent } from './components/_shared/loader/loader.component';
 
 
 const appRoutes = [
@@ -42,7 +43,8 @@ const appRoutes = [
     PHeaderComponent,
     SubjectListComponent,
     SubjectHomeComponent,
-    TopicListComponent
+    TopicListComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
