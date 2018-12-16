@@ -31,13 +31,7 @@
           </div>
 
           <!-- Account / Admin navigation (right-align) -->
-          <div class="flex-grow-1">
-            <ul class="navbar-nav justify-content-end" onclick="$('#navbarCollapse').collapse('hide');">
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/">Sign In</a>
-              </li>
-            </ul>
-          </div>
+          <ng-container *ngTemplateOutlet="headerAccountSection"></ng-container>
         </section>
       </ng-container>
 
@@ -61,16 +55,34 @@
           </div>
 
           <!-- Account / Admin navigation (right-align) -->
-          <div class="flex-grow-1">
-            <ul class="navbar-nav justify-content-end" onclick="$('#navbarCollapse').collapse('hide');">
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/">Sign In</a>
-              </li>
-            </ul>
-          </div>
+          <ng-container *ngTemplateOutlet="headerAccountSection"></ng-container>
         </section>
       </ng-template>
 
+
+
+      <!-- Template for account section of header. (So it can be shared) -->
+      <ng-template #headerAccountSection>
+        <div class="flex-grow-1">
+          <ul class="navbar-nav justify-content-end" onclick="$('#navbarCollapse').collapse('hide');">
+
+            <!-- User signed in -->
+            <ng-container *ngIf="this.isUserSignedIn(); else accountHeaderNotSignedIn">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="{{ this.getRoute(this.routes.account) }}">Account</a>
+              </li>
+            </ng-container>
+
+            <!-- User not signed in -->
+            <ng-template #accountHeaderNotSignedIn>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="{{ this.getRoute(this.routes.account_signIn) }}">Sign In</a>
+              </li>
+            </ng-template>
+
+          </ul>
+        </div>
+      </ng-template>
     </section>
   </nav>
 </header>

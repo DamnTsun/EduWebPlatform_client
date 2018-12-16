@@ -3,9 +3,12 @@ export const environment = {
 
   apiUrl: 'http://localhost/EduWebPlatform_api/',
   routes: {
-    subjectSelect: 'subjects/',
+    subjectSelect: 'subjects',
     subjectHome: 'subjects/:subjectid',
 
-    topicSelect: 'subjects/:subjectid/topics'
+    topicSelect: 'subjects/:subjectid/topics',
+    
+    account_signIn: 'users/signin',
+    account: 'users/account'
   }
 };
