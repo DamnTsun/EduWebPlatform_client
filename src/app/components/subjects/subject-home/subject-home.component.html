@@ -1,0 +1,26 @@
+<section class="container page-content">
+
+  <ng-container *ngIf="(this.subject$ !== null); else loadingTemplate">
+    <h2>
+      {{ this.subject$.name }}
+    </h2>
+    <section class="page-sub-content">
+      <h5>Subject Description:</h5>
+      <p>{{ subject$.description }}</p>
+      {{ subject$.homepageContent }}
+    </section>
+    <app-loader></app-loader>
+  </ng-container>
+
+
+  <ng-template #loadingTemplate>
+    <ng-container *ngIf="!loadingError; else loadingErrorTemplate">
+      <app-loader></app-loader>
+    </ng-container>
+    <ng-template #loadingErrorTemplate>
+      Loading failed
+    </ng-template>
+    
+  </ng-template>
+
+</section>

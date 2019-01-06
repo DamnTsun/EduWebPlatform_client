@@ -1,1 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
+section.page-content {
+    margin-top: 1em;
+}
+
+
+/* Loading icon for before ajax requests complete */
+.loadingIconContainer {
+    color: #606060;
+    text-align: center;
+}
+.loadingIcon {
+    display: inline-block;
+    position: relative;
+    width: 128px;
+    height: 128px;
+}
+.loadingIcon div {
+    position: absolute;
+    top: 27px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #000;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.loadingIcon div:nth-child(1) {
+    left: 12px;
+    animation: loadingIcon1 0.6s infinite;
+}
+.loadingIcon div:nth-child(2) {
+    left: 12px;
+    animation: loadingIcon2 0.6s infinite;
+}
+.loadingIcon div:nth-child(3) {
+    left: 52px;
+    animation: loadingIcon2 0.6s infinite;
+}
+.loadingIcon div:nth-child(4) {
+    left: 90px;
+    animation: loadingIcon3 0.6s infinite;
+}
+
+@keyframes loadingIcon1 {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+@keyframes loadingIcon2 {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(38px, 0);
+    }
+}
+@keyframes loadingIcon3 {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}

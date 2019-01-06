@@ -1,0 +1,14 @@
+<section class="container page-content">
+
+  <ng-container *ngIf="(this.topics$ !== null); else loadingTemplate">
+    <p *ngFor="let topic of topics$">
+      {{ topic.name }}
+    </p>
+  </ng-container>
+
+
+  <ng-template #loadingTemplate>
+
+  </ng-template>
+
+</section>

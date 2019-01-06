@@ -1,0 +1,14 @@
+ul.subject-list {
+    list-style: none;
+    padding: 0.5em;
+}
+
+ul.subject-list li {
+    width: 100%;
+    padding: 0.25em 0;
+}
+
+ul.subject-list li button {
+    width: inherit;
+    text-align: center;
+}

@@ -1,0 +1,88 @@
+<header>
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <section class="container">
+      <!-- Navbar if in a subject -->
+      <ng-container *ngIf="(this.subject$ != null); else elseTemplate">
+        <a class="navbar-brand" routerLink="{{ this.getRoute(this.routes.subjectHome) }}">
+          {{ this.subject$.name }}
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+          area-expanded="false" aria-label="Toggle Navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <section id="navbarCollapse" class="collapse navbar-collapse">
+          <!-- Main navigation -->
+          <div>
+            <ul class="navbar-nav" onclick="$('#navbarCollapse').collapse('hide');">
+              <li class="nav-item" (click)="this.clearSubject();">
+                <a class="nav-link" routerLink="">Subjects</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="{{ this.getRoute(this.routes.subjectHome) }}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/">News</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="{{ this.getRoute(this.routes.topicSelect) }}">Topics</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Account / Admin navigation (right-align) -->
+          <ng-container *ngTemplateOutlet="headerAccountSection"></ng-container>
+        </section>
+      </ng-container>
+
+      <!-- Navbar if on subject select / account area, etc -->
+      <ng-template #elseTemplate>
+        <a class="navbar-brand" routerLink="/" onclick="$('#navbarCollapse').collapse('hide');">
+          Edu Web Platform
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+          area-expanded="false" aria-label="Toggle Navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <section id="navbarCollapse" class="collapse navbar-collapse">
+          <!-- Main navigation -->
+          <div>
+            <ul class="navbar-nav" onclick="$('#navbarCollapse').collapse('hide');">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/">Subjects</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Account / Admin navigation (right-align) -->
+          <ng-container *ngTemplateOutlet="headerAccountSection"></ng-container>
+        </section>
+      </ng-template>
+
+
+
+      <!-- Template for account section of header. (So it can be shared) -->
+      <ng-template #headerAccountSection>
+        <div class="flex-grow-1">
+          <ul class="navbar-nav justify-content-end" onclick="$('#navbarCollapse').collapse('hide');">
+
+            <!-- User signed in -->
+            <ng-container *ngIf="this.isUserSignedIn(); else accountHeaderNotSignedIn">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="{{ this.getRoute(this.routes.account) }}">Account</a>
+              </li>
+            </ng-container>
+
+            <!-- User not signed in -->
+            <ng-template #accountHeaderNotSignedIn>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="{{ this.getRoute(this.routes.account_signIn) }}">Sign In</a>
+              </li>
+            </ng-template>
+
+          </ul>
+        </div>
+      </ng-template>
+    </section>
+  </nav>
+</header>

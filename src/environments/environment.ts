@@ -3,7 +3,21 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  
+  apiUrl: 'http://localhost/EduWebPlatform_api/',
+  routeParams: {
+    subjectid: ':subjectid'
+  },
+  routes: {
+    subjectSelect: 'subjects',
+    subjectHome: 'subjects/:subjectid',
+
+    topicSelect: 'subjects/:subjectid/topics',
+
+    account_signIn: 'users/signin',
+    account: 'users/account'
+  }
 };
 
 /*
