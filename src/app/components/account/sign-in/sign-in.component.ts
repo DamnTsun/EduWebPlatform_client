@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
+import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { environment } from '../../../../environments/environment.prod';
 
 @Component({
@@ -31,7 +31,11 @@ export class SignInComponent implements OnInit {
   /**
    * Signs user in with Google account. Sends to them to Google's OAuth stuff if necessary.
    */
-  private signInWithGoogle() {
+  private signInWithGoogle(): void {
     this.auth.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  private signInWithFacebook(): void {
+    this.auth.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 }

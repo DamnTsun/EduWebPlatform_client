@@ -62,10 +62,14 @@ const appRoutes = [
 const googleLoginOptions: LoginOpt = {
   scope: 'profile email'
 };
-let config = new AuthServiceConfig ([
+let config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
     provider: new GoogleLoginProvider('140771721886-3ht78s72map4d75dd0iletdh6b5lkmsr.apps.googleusercontent.com', googleLoginOptions)
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('288853295310755')
   }
 ]);
 export function provideConfig() {
