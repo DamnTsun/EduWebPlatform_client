@@ -1,15 +1,14 @@
 <section class="container page-content">
 
-  <ng-container *ngIf="(this.subject$ !== null); else loadingTemplate">
+  <ng-container *ngIf="(this.topic$ !== null); else loadingTemplate">
     <h2>
-      {{ this.subject$.name }}
+      {{ topic$.name }}
     </h2>
     <section class="page-sub-content">
-      <p>{{ subject$.description }}</p>
+      <p>{{ topic$.description }}</p>
     </section>
-    
-    <app-subject-post-list title="Latest News" showControls="false" count="3"></app-subject-post-list>
   </ng-container>
+
 
 
   <ng-template #loadingTemplate>

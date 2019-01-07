@@ -17,14 +17,13 @@ export class SubjectHomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private site: SiteService,
-    private util: UtilService) { }
+    private site: SiteService
+  ) { }
 
 
   ngOnInit() {
     // Set subject id in site service based on url parameter.
-    let subjectParam = this.util.getRouteParamName(environment.routeParams.subjectid);
-    this.site.setSubject(this.route.snapshot.paramMap.get(subjectParam));
+    this.site.setSubject(this.route.snapshot.paramMap.get(environment.routeParams.subjectid));
     
     // Subscribe to subject record to get its data.
     this.site.subject().subscribe((subject) => {

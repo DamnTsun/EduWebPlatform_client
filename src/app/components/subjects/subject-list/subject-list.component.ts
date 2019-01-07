@@ -23,14 +23,4 @@ export class SubjectListComponent implements OnInit {
         this.subjects$ = subjects
     });
   }
-
-  /**
-   * Redirect to the subject home page for a subject.
-   * @param subjectId 
-   */
-  private enterSubject(subjectId: number) {
-    let route = environment.routes.subjectHome;
-    route = route.replace(environment.routeParams.subjectid, subjectId.toString());
-    this.site.redirect(route);
-  }
 }

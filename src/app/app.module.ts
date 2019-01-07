@@ -21,16 +21,22 @@ import { environment } from '../environments/environment.prod';
 import { LoaderComponent } from './components/_shared/loader/loader.component';
 import { SignInComponent } from './components/account/sign-in/sign-in.component';
 import { AccountComponent } from './components/account/account/account.component';
+import { SubjectNewsComponent } from './components/subjects/subject-news/subject-news.component';
+import { SubjectPostListComponent } from './components/subjects/subject-post-list/subject-post-list.component';
+import { TopicHomeComponent } from './components/topics/topic-home/topic-home.component';
 
 
 
 const appRoutes = [
-  // Base url and Subject Select.
+  // *** CONTENT RELATED ***
+  // SUBJECTS
+  // Redirect from '' to subject list.
   {
     path: '',
     redirectTo: environment.routes.subjectSelect,
     pathMatch: 'full'
   },
+  // Subject list.
   {
     path: environment.routes.subjectSelect,
     component: SubjectListComponent
@@ -40,11 +46,23 @@ const appRoutes = [
     path: environment.routes.subjectHome,
     component: SubjectHomeComponent
   },
-  // Topic listing and topic
+  // Subject news page.
+  {
+    path: environment.routes.subjectNews,
+    component: SubjectNewsComponent
+  },
+  // Subject topic list.
   {
     path: environment.routes.topicSelect,
     component: TopicListComponent
   },
+
+  // TOPICS
+  {
+    path: environment.routes.topicHome,
+    component: TopicHomeComponent
+  },
+
 
   // Sign in and account related.
   {
@@ -87,7 +105,10 @@ export function provideConfig() {
     TopicListComponent,
     LoaderComponent,
     SignInComponent,
-    AccountComponent
+    AccountComponent,
+    SubjectNewsComponent,
+    SubjectPostListComponent,
+    TopicHomeComponent
   ],
   imports: [
     BrowserModule,

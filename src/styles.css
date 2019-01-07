@@ -1,7 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* General CSS */
 section.page-content {
     margin-top: 1em;
 }
+
+
+/* Subject / topics / lesson / test list CSS */
+ul.content-list {
+    list-style: none;
+    padding: 0.5em;
+}
+
+ul.content-list li {
+    width: 100%;
+    padding: 0.25em 0;
+}
+
+ul.content-list li button {
+    width: inherit;
+    text-align: center;
+}
+
+
+
 
 
 /* Loading icon for before ajax requests complete */

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import { Subject } from '../classes/Subject';
 import { Topic } from '../classes/Topic';
+import { Post } from '../classes/Posts';
 
 
 /**
@@ -17,21 +18,46 @@ import { Topic } from '../classes/Topic';
 })
 export class SiteService {
 
-  // *** Hold records currently in use, such as Subject record or Topic record, etc. ***
-  // *** Component can subscribe to an Observable of the record, which pushes when record changes. ***
-  // Subject
+  /***** VARIABLES *****/
+  // Subject record observable. Component may subscribe to this to have the value pushed to them when it updates.
+  // Stored as subject record is used in multiple places, not just 1 place at a time. Such as navigation bar.
   private subjectRecord: BehaviorSubject<Subject> = new BehaviorSubject(null);
   public subject(): Observable<Subject> { return this.subjectRecord.asObservable(); }
-  
+
+
+
+
+
+  /**
+   * Constructor.
+   */
+  constructor(
+    private router: Router,
+    private api: ApiService
+  ) { }
+
+
+
+
+
+  /***** METHODS *****/
+  // SET / CLEAR SUBJECT
+  /**
+   * Sets the subject in use. Gets and stores subject with specified id.
+   * @param subjectId - id of subject.
+   */
   public setSubject(subjectId): void {
     this.api.getSubject(subjectId).subscribe((subjects) => {
       this.subjectRecord.next(subjects[0]);
     }, (err) => {
-      console.error('SiteService: ', err);
+      console.error('SiteService - Subject: ', err);
       this.subjectRecord.next(null);
     });
   }
 
+  /**
+   * Clears the currently selected subject by setting it to null.
+   */
   public clearSubject(): void {
     this.subjectRecord.next(null);
     //this.clearTopic();
@@ -41,24 +67,43 @@ export class SiteService {
 
 
 
-  // Topic
-  // Lesson
-  // Test
 
-  constructor(
-    private router: Router,
-    private api: ApiService) { }
 
-  public redirect(route: string): void {
-    this.router.navigate([route]);
-  }
-
+  // SUBJECTS
+  /**
+   * Gets all subjects from api.
+   */
   public getSubjects() {
     return this.api.getSubjects();
   }
 
+  // SUBJECT POSTS
+  /**
+   * Gets all posts in subject from api.
+   */
+  public getPosts(subjectId, count, offset): Observable<Post[]> {
+    return this.api.getPosts(subjectId, count, offset);
+  }
+
+
+
+  // TOPICS
+  /**
+   * Gets all topics in subject from api.
+   * @param subjectId - id of subject.
+   */
   public getTopics(subjectId): Observable<Topic[]> {
     if (this.subjectRecord == null) { return null; }
     return this.api.getTopics(subjectId);
+  }
+  public getTopic(subjectid, topicid): Observable<Topic[]> {
+    return this.api.getTopic(subjectid, topicid);
+  }
+
+
+
+  // Utility
+  public redirect(route: string): void {
+    this.router.navigate([route]);
   }
 }
