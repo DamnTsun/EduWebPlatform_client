@@ -4,8 +4,41 @@
     <h2>
       {{ topic$.name }}
     </h2>
-    <section class="page-sub-content">
+    <div class="page-sub-content">
       <p>{{ topic$.description }}</p>
+    </div>
+
+
+
+    <!-- List lessons / tests in topic. -->
+    <section *ngIf="(this.lessons$ !== null || this.tests$ !== null)">
+      <div class="row">
+        <div class="col" *ngIf="(this.lessons$ !== null)">
+          <h2>Select a Lesson:</h2>
+          <ul class="content-list">
+            <li *ngFor="let lesson of lessons$">
+              <button class="card">
+                <div class="card-body">
+                  {{ lesson.name }}
+                </div>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col" *ngIf="(this.tests$ !== null)">
+          <h2>Select a Test:</h2>
+          <ul class="content-list">
+            <li *ngFor="let test of tests$">
+              <button class="card">
+                <div class="card-body">
+                  {{ test.name }}
+                </div>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
     </section>
   </ng-container>
 
@@ -18,7 +51,7 @@
     <ng-template #loadingErrorTemplate>
       Loading failed
     </ng-template>
-    
+
   </ng-template>
 
 </section>

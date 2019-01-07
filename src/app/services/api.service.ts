@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { Subject } from '../classes/Subject';
 import { Topic } from '../classes/Topic';
 import { Post } from '../classes/Posts';
+import { Lesson } from '../classes/Lesson';
+import { Test } from '../classes/Test';
 
 @Injectable({
   providedIn: 'root'
@@ -35,11 +37,26 @@ export class ApiService {
 
   // TOPICS
   public getTopics(subjectId: number): Observable<Topic[]> {
-    return this.http.get(environment.apiUrl + `subjects/${subjectId}/topics`) as Observable<Topic[]>;
+    return this.http.get(environment.apiUrl +
+      `subjects/${subjectId}/topics`) as Observable<Topic[]>;
   }
   public getTopic(subjectid: number, topicid: number) {
     return this.http.get(
       environment.apiUrl + `subjects/${subjectid}/topics/${topicid}`
     ) as Observable<Topic[]>;
+  }
+
+
+  // LESSONS
+  public getLessons(subjectid: number, topicid: number): Observable<Lesson[]> {
+    return this.http.get(environment.apiUrl +
+      `subjects/${subjectid}/topics/${topicid}/lessons`) as Observable<Lesson[]>;
+  }
+
+
+  // TESTS
+  public getTests(subjectid: number, topicid: number): Observable<Test[]> {
+    return this.http.get(environment.apiUrl +
+      `subjects/${subjectid}/topics/${topicid}/tests`) as Observable<Test[]>;
   }
 }
