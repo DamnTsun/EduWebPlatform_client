@@ -5,11 +5,10 @@
       {{ this.subject$.name }}
     </h2>
     <section class="page-sub-content">
-      <h5>Subject Description:</h5>
       <p>{{ subject$.description }}</p>
-      {{ subject$.homepageContent }}
     </section>
-    <app-loader></app-loader>
+    
+    <app-subject-post-list title="Latest News" showControls="false" count="3"></app-subject-post-list>
   </ng-container>
 
 

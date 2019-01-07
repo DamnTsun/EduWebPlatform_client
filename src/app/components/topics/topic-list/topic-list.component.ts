@@ -15,6 +15,10 @@ export class TopicListComponent implements OnInit {
   private topics$: Topic[];
   private loadingError: boolean = false;
 
+
+
+
+
   constructor(
     private route: ActivatedRoute,
     private site: SiteService,
@@ -35,5 +39,5 @@ export class TopicListComponent implements OnInit {
       console.error(err);
     })
   }
-
+  
 }

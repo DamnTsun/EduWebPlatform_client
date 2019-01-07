@@ -1,0 +1,31 @@
+<ng-container *ngIf="(this.posts$ !== null); else loadingTemplate">
+  <h2>{{ this.title }}</h2>
+  <ul class="content-list">
+    <li *ngFor="let post of posts$">
+      <section class="card">
+        <section class="card-header">
+          Posted on {{ post.modificationDate }}
+        </section>
+
+        <section class="card-body">
+          <h5><strong>{{ post.title }}</strong></h5>
+          <p class="card-text">{{ post.body }}</p>
+        </section>
+      </section>
+    </li>
+  </ul>
+  <section *ngIf="this.showControls" class="controls" style="text-align: center">
+    Showing posts {{ this.offset + 1 }} to {{ this.offset + this.count }}.
+    <button class="btn btn-primary" id="prevPosts" (click)="this.incrementOffset(-this.count)" style="float: left;">
+      Newer Posts
+    </button>
+    <button class="btn btn-primary" id="nextPosts" style="float: right" (click)="this.incrementOffset(this.count)">
+      Older Posts
+    </button>
+  </section>
+</ng-container>
+
+
+<ng-template #loadingTemplate>
+  <app-loader></app-loader>
+</ng-template>

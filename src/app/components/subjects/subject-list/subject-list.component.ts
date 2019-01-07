@@ -30,7 +30,7 @@ export class SubjectListComponent implements OnInit {
    */
   private enterSubject(subjectId: number) {
     let route = environment.routes.subjectHome;
-    route = route.replace(environment.routeParams.subjectid, subjectId.toString());
+    route = route.replace(`:${environment.routeParams.subjectid}`, subjectId.toString());
     this.site.redirect(route);
   }
 }

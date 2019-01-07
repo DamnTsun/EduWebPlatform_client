@@ -13,8 +13,8 @@ import { AuthService, SocialUser } from 'angularx-social-login';
 export class PHeaderComponent implements OnInit {
 
   private routes: object;
+  // store current subject / user as these can change appear of header.
   private subject$: Subject = null;
-
   private user$: SocialUser = null;
 
 
@@ -27,15 +27,19 @@ export class PHeaderComponent implements OnInit {
   ngOnInit() {
     // Store routes for easy use. (used when getting routerLink urls)
     this.routes = environment.routes;
+
     // Subscribe to current subject. (header changes when in / not in a subject)
     this.site.subject().subscribe((subject) => {
       this.subject$ = subject;
     })
+
     // Subscribe to user logged in state. (changes Sign In to Account. Also adds Admin if appropriate (NOT IMPLEMENTED))
     this.auth.authState.subscribe((user) => {
       this.user$ = user;
     });
   }
+
+
 
 
 
@@ -52,24 +56,13 @@ export class PHeaderComponent implements OnInit {
    * @param route 
    */
   private getRoute(route: string): string {
-    let updated: string = '';
-    // Check each section of url.
-    let slugs: string[] = route.split('/');
-    for (let i = 0; i < slugs.length; i++) {
-      // SubjectId
-      if (slugs[i] === environment.routeParams.subjectid) { slugs[i] = this.subject$.id.toString(); }
-      
-      updated += '/' + slugs[i];
+    // Replace url parameters (':name') with corresponding values.
+    // Subjectid.
+    if (this.subject$ != null) {
+      route = route.replace(`:${environment.routeParams.subjectid}`, this.subject$.id.toString());
     }
-    return updated;
+    return route;
   }
 
 
-
-  /**
-   * Returns whether the current user is signed into the platform.
-   */
-  private isUserSignedIn(): boolean {
-    return (this.user$ !== null);
-  }
 }

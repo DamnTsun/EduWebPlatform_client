@@ -1,14 +1,22 @@
 <section class="container page-content">
 
   <ng-container *ngIf="(this.topics$ !== null); else loadingTemplate">
-    <p *ngFor="let topic of topics$">
-      {{ topic.name }}
-    </p>
+    <h2>Select a Topic:</h2>
+    <ul class="content-list">
+      <li *ngFor="let topic of topics$">
+        <button class="card">
+          <section class="card-body">
+            <h5 class="card-title">{{ topic.name }}</h5>
+            <p class="card-text">{{ topic.description }}</p>
+          </section>
+        </button>
+      </li>
+    </ul>
   </ng-container>
 
 
   <ng-template #loadingTemplate>
-
+    <app-loader></app-loader>
   </ng-template>
 
 </section>
