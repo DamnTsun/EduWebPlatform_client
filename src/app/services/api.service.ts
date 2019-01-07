@@ -37,4 +37,9 @@ export class ApiService {
   public getTopics(subjectId: number): Observable<Topic[]> {
     return this.http.get(environment.apiUrl + `subjects/${subjectId}/topics`) as Observable<Topic[]>;
   }
+  public getTopic(subjectid: number, topicid: number) {
+    return this.http.get(
+      environment.apiUrl + `subjects/${subjectid}/topics/${topicid}`
+    ) as Observable<Topic[]>;
+  }
 }

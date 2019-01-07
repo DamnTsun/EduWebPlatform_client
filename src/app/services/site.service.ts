@@ -96,6 +96,9 @@ export class SiteService {
     if (this.subjectRecord == null) { return null; }
     return this.api.getTopics(subjectId);
   }
+  public getTopic(subjectid, topicid): Observable<Topic[]> {
+    return this.api.getTopic(subjectid, topicid);
+  }
 
 
 

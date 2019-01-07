@@ -4,7 +4,7 @@
     <h2>Select a Topic:</h2>
     <ul class="content-list">
       <li *ngFor="let topic of topics$">
-        <button class="card">
+        <button class="card" routerLink="{{ topic.id }}">
           <section class="card-body">
             <h5 class="card-title">{{ topic.name }}</h5>
             <p class="card-text">{{ topic.description }}</p>

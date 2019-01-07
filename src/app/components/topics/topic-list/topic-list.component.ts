@@ -27,8 +27,7 @@ export class TopicListComponent implements OnInit {
 
   ngOnInit() {
     // Set subjectid to set subject. Then get associated topics.
-    let subjectParam = this.util.getRouteParamName(environment.routeParams.subjectid);
-    let subjectId = this.route.snapshot.paramMap.get(subjectParam);
+    let subjectId = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
     this.site.setSubject(subjectId);
 
     // Subscribe to topics.

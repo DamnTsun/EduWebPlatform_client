@@ -23,12 +23,14 @@ import { SignInComponent } from './components/account/sign-in/sign-in.component'
 import { AccountComponent } from './components/account/account/account.component';
 import { SubjectNewsComponent } from './components/subjects/subject-news/subject-news.component';
 import { SubjectPostListComponent } from './components/subjects/subject-post-list/subject-post-list.component';
+import { TopicHomeComponent } from './components/topics/topic-home/topic-home.component';
 
 
 
 const appRoutes = [
   // *** CONTENT RELATED ***
   // SUBJECTS
+  // Redirect from '' to subject list.
   {
     path: '',
     redirectTo: environment.routes.subjectSelect,
@@ -53,6 +55,12 @@ const appRoutes = [
   {
     path: environment.routes.topicSelect,
     component: TopicListComponent
+  },
+
+  // TOPICS
+  {
+    path: environment.routes.topicHome,
+    component: TopicHomeComponent
   },
 
 
@@ -99,7 +107,8 @@ export function provideConfig() {
     SignInComponent,
     AccountComponent,
     SubjectNewsComponent,
-    SubjectPostListComponent
+    SubjectPostListComponent,
+    TopicHomeComponent
   ],
   imports: [
     BrowserModule,

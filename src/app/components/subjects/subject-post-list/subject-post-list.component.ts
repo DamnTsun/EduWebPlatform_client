@@ -22,7 +22,7 @@ export class SubjectPostListComponent implements OnInit {
   private offset: number = 0;
 
   // Posts current being viewed.
-  private posts$: Post[];
+  private posts$: Post[] = null;
 
 
 
@@ -46,6 +46,7 @@ export class SubjectPostListComponent implements OnInit {
 
 
 
+  // Methods not used by HTML
   /**
    * Gets posts for displaying based on count and offset values.
    */
@@ -63,10 +64,45 @@ export class SubjectPostListComponent implements OnInit {
 
 
 
+
+
+  // Methods used by HTML
   /**
-   * Adds the given amount to offset variable.
+   * Decrement offset by count and get posts based on new offset and count.
    */
-  private incrementOffset(increment: number) {
-    this.offset += increment;
+  private getNewerPosts(): void {
+    this.offset -= this.count;
+    this.getPosts();
+  }
+  /**
+   * Increment offset by count and get posts based on new offset and count.
+   */
+  private getOlderPosts(): void {
+    this.offset += this.count;
+    this.getPosts();
+  }
+
+
+
+
+
+  // Conditions for displaying page.
+  /**
+   * Returns whether controls (newer/older posts buttons, etc) should be shown.
+   */
+  private shouldShowControls(): boolean {
+    return (this.showControls);
+  }
+  /**
+   * Returns where posts have been fetched. (API queried successfully)
+   */
+  private postsHaveBeenFetched(): boolean {
+    return (this.posts$ != null);
+  }
+  /**
+   * Returns whether API returned any posts. (subject may contain no posts)
+   */
+  private postsExist(): boolean {
+    return (this.posts$ !== null && this.posts$.length > 0);
   }
 }
