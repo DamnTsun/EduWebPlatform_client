@@ -71,6 +71,7 @@ export class SiteService {
 
 
 
+  // *** GENERAL CONTENT RELATED ***
   // SUBJECTS
   /**
    * Gets all subjects from api.
@@ -78,6 +79,8 @@ export class SiteService {
   public getSubjects() {
     return this.api.getSubjects();
   }
+
+
 
   // SUBJECT POSTS
   /**
@@ -118,6 +121,15 @@ export class SiteService {
   public getLessons(subjectid, topicid): Observable<Lesson[]> {
     return this.api.getLessons(subjectid, topicid);
   }
+  /**
+   * Gets lesson in specified topic, in specified subject.
+   * @param subjectid - id of subject
+   * @param topicid - id of topic
+   * @param lessonid - id of lesson
+   */
+  public getLesson(subjectid, topicid, lessonid): Observable<Lesson[]> {
+    return this.api.getLesson(subjectid, topicid, lessonid);
+  }
 
 
 
@@ -130,6 +142,18 @@ export class SiteService {
   public getTests(subjectid, topicid): Observable<Test[]> {
     return this.api.getTests(subjectid, topicid);
   }
+  /**
+   * Gets test in specified topic, in specified subject.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   */
+  public getTest(subjectid, topicid, testid): Observable<Test[]> {
+    return this.api.getTest(subjectid, topicid, testid);
+  }
+
+
+
 
 
   // Utility

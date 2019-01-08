@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SiteService } from '../../../services/site.service';
-import { Subject } from '../../../classes/Subject';
-import { environment } from '../../../../environments/environment';
+import { SiteService } from 'src/app/services/site.service';
+import { Subject } from 'src/app/classes/Subject';
 
 @Component({
   selector: 'app-subject-list',

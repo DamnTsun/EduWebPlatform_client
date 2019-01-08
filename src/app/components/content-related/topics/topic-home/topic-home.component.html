@@ -17,7 +17,7 @@
           <h2>Select a Lesson:</h2>
           <ul class="content-list">
             <li *ngFor="let lesson of lessons$">
-              <button class="card">
+              <button class="card" routerLink="lessons/{{ lesson.id }}">
                 <div class="card-body">
                   {{ lesson.name }}
                 </div>
@@ -30,7 +30,7 @@
           <h2>Select a Test:</h2>
           <ul class="content-list">
             <li *ngFor="let test of tests$">
-              <button class="card">
+              <button class="card" routerLink="tests/{{ test.id }}">
                 <div class="card-body">
                   {{ test.name }}
                 </div>

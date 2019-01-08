@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SiteService } from '../../../services/site.service';
+import { SiteService } from 'src/app/services/site.service';
 import { ActivatedRoute } from '@angular/router';
-import { UtilService } from '../../../services/util.service';
-import { environment } from '../../../../environments/environment';
-import { Topic } from '../../../classes/Topic';
+import { UtilService } from 'src/app/services/util.service';
+import { environment } from 'src/environments/environment';
+import { Topic } from 'src/app/classes/Topic';
 
 @Component({
   selector: 'app-topic-list',

@@ -1,0 +1,25 @@
+<section class="container page-content">
+
+  <!-- Shown after successfully fetching lesson from api -->
+  <ng-container *ngIf="(lesson$ !== null); else loadingTemplate">
+    <h2>{{ lesson$.name }}</h2>
+    <div style="border-style: solid; border-width: 2px; padding: 1em;">
+      {{ lesson$.body }}
+    </div>
+  </ng-container>
+
+
+
+  <!-- Shown while attempting to fetch lesson from api -->
+  <ng-template #loadingTemplate>
+    <ng-container *ngIf="!loadingError; else loadingErrorTemplate">
+      <app-loader></app-loader>
+    </ng-container>
+    <ng-template #loadingErrorTemplate>
+      Loading failed
+    </ng-template>
+    
+  </ng-template>
+  
+
+</section>

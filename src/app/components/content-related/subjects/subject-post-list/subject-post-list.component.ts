@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Post } from '../../../classes/Posts';
 import { ActivatedRoute } from '@angular/router';
-import { SiteService } from '../../../services/site.service';
-import { environment } from '../../../../environments/environment';
-import { Subject } from '../../../classes/Subject';
+import { SiteService } from 'src/app/services/site.service';
+import { environment } from 'src/environments/environment';
+
+import { Post } from 'src/app/classes/Posts';
 
 @Component({
   selector: 'app-subject-post-list',

@@ -1,0 +1,25 @@
+<section class="container page-content">
+
+  <!-- Shown after test has been successfully fetched from api -->
+  <ng-container *ngIf="(test$ !== null); else loadingTemplate">
+    <h2>{{ test$.name }}</h2>
+    <p>{{ test$.description }}</p>
+  </ng-container>
+
+
+
+  <!-- Shown before test has been fetched from api -->
+  <ng-template #loadingTemplate>
+    <!-- Shown if waiting for api call -->
+    <ng-container *ngIf="(!this.loadingFailed); else loadingFailedTemplate">
+      <app-loader></app-loader>
+    </ng-container>
+    <!-- Shown if api call failed -->
+    <ng-template #loadingFailedTemplate>
+      Loading failed.
+    </ng-template>
+    
+  </ng-template>
+
+
+</section>
