@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment.prod';
 import { Observable } from 'rxjs';
 
@@ -8,6 +8,7 @@ import { Topic } from '../classes/Topic';
 import { Post } from '../classes/Posts';
 import { Lesson } from '../classes/Lesson';
 import { Test } from '../classes/Test';
+import { AuthObject } from '../classes/AuthObject';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,25 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+
   // *** AUTHORIZING WITH BACKEND ***
-  public authorizeWithBackendGoogle(idToken: string) {
-    let data = [{
-      'google_id_token': idToken
-    }];
+  /**
+   * Authorizes with backend api using Google id_token.
+   * @param google_id_token - id_token from Google for signed in user.
+   */
+  public authorizeWithBackendGoogle(google_id_token: string): Observable<AuthObject> {
+    // Build form data. (Backend uses x-www-form-urlencoded)
+    let data = new FormData();
+    data.set('google_id_token', google_id_token);
     return this.http.post(environment.apiUrl +
-      `users/auth/google`, data);
+      `users/auth/google`, data) as Observable<AuthObject>;
+  }
+  public authorizeWithBackendFacebook(facebook_id_token: string): Observable<AuthObject> {
+    // Build form data. (Backend uses x-www-form-urlencoded)
+    let data = new FormData();
+    data.set('facebook_id_token', facebook_id_token);
+    return this.http.post(environment.apiUrl +
+      `users/auth/facebook`, data) as Observable<AuthObject>;
   }
   // *** END OF AUTHORIZATION ***
 

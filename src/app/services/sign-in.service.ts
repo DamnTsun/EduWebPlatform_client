@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
+import { AuthObject } from '../classes/AuthObject';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class SignInService {
   private userRecordCurrent: SocialUser = null;
   public user(): Observable<SocialUser> { return this.userRecord.asObservable(); }
 
-  private jwt: string;
+  private authObject: AuthObject = null;
 
 
 
@@ -24,13 +25,18 @@ export class SignInService {
 
     // Subscribe to AuthService login event to get user.
     this.auth.authState.subscribe((user) => {
+
       // Update observable and store current value.
       this.userRecord.next(user);
       this.userRecordCurrent = user;
+
+
       // Get / clear authentication with backend.
       if (user !== null) {
-        this.authorizeWithAPI();
+        // Authorize with API for social media account type.
+        this.authorizeUser(user.provider);
       } else {
+        // User signed out. Clear authorization.
         this.clearAuthorization();
       }
     }, (err) => {
@@ -39,15 +45,48 @@ export class SignInService {
     });
   }
 
+
+
+  /**
+   * Authorizes a user, or signs them out if provider is not supported.
+   * @param provider - name of provider, such as GOOGLE or FACEBOOK.
+   */
+  private authorizeUser(provider: string): void {
+    switch (provider) {
+      case GoogleLoginProvider.PROVIDER_ID:
+        this.authorizeWithAPIGoogle();
+        break;
+      case FacebookLoginProvider.PROVIDER_ID:
+        this.authorizeWithAPIFacebook();
+        break;
+
+      default:
+        // Provider not supported. Forcably sign user out.
+        this.signOut();
+        break;
+    }
+  }
   /**
    * Attempts to authorize with backend API.
    * If successful, will get a JWT for internal user account.
    */
-  private authorizeWithAPI(): void {
-    console.log(this.userRecordCurrent.idToken);
+  private authorizeWithAPIGoogle(): void {
+    // Attempt to authorize using Google.
     this.api.authorizeWithBackendGoogle(this.userRecordCurrent.idToken).subscribe((res) => {
-      console.log(res);
+      this.authObject = res;
+      console.log(this.authObject);
+    }, (err) => {
+      console.log('SignIn Service - Google - Auth Error:', err);
     })
+  }
+  private authorizeWithAPIFacebook(): void {
+    // Attempt to authorize using Google.
+    this.api.authorizeWithBackendFacebook(this.userRecordCurrent.authToken).subscribe((res) => {
+      this.authObject = res;
+      console.log(this.authObject);
+    }, (err) => {
+      console.log('SignIn Service - Facebook - Auth Error:', err);
+    });
   }
 
   /**
