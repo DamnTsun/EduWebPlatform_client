@@ -13,7 +13,12 @@ export class SignInService {
   private userRecord: BehaviorSubject<SocialUser> = new BehaviorSubject(null);
   private userRecordCurrent: SocialUser = null;
   public user(): Observable<SocialUser> { return this.userRecord.asObservable(); }
+  // Store user admin status.
+  private userIsAdminRecord: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public userIsAdmin(): Observable<boolean> { return this.userIsAdminRecord.asObservable(); }
 
+  // Auth object for signed in user. Contain information about users internal user record.
+  // Such as: JWT for user, when JWT expires.
   private authObject: AuthObject = null;
 
 
@@ -47,6 +52,9 @@ export class SignInService {
 
 
 
+
+
+  // *** AUTHORIZING USER ***
   /**
    * Authorizes a user, or signs them out if provider is not supported.
    * @param provider - name of provider, such as GOOGLE or FACEBOOK.
@@ -59,6 +67,7 @@ export class SignInService {
       case FacebookLoginProvider.PROVIDER_ID:
         this.authorizeWithAPIFacebook();
         break;
+      // TODO LinkedIn login...
 
       default:
         // Provider not supported. Forcably sign user out.
@@ -74,16 +83,20 @@ export class SignInService {
     // Attempt to authorize using Google.
     this.api.authorizeWithBackendGoogle(this.userRecordCurrent.idToken).subscribe((res) => {
       this.authObject = res;
+      this.userIsAdminRecord.next(this.authObject.isAdmin);
       console.log(this.authObject);
     }, (err) => {
       console.log('SignIn Service - Google - Auth Error:', err);
     })
   }
+  /**
+   * Attempts to authorize with backend API.
+   * If successful, will get a JWT for internal user account.
+   */
   private authorizeWithAPIFacebook(): void {
     // Attempt to authorize using Google.
     this.api.authorizeWithBackendFacebook(this.userRecordCurrent.authToken).subscribe((res) => {
       this.authObject = res;
-      console.log(this.authObject);
     }, (err) => {
       console.log('SignIn Service - Facebook - Auth Error:', err);
     });
@@ -93,8 +106,19 @@ export class SignInService {
    * Clears authorization will backend. Deleted JWT.
    */
   private clearAuthorization(): void {
-    this.jwt = null;
+    this.authObject = null;
+    this.userIsAdminRecord.next(false);
   }
+
+
+
+  /**
+   * Checks wheter signed in user is an admin and updates isUserAdminRecord (and observable).
+   */
+  private checkUserAdminStatus(): void {
+    
+  }
+  // *** END OF AUTHORIZING USER ***
 
 
 

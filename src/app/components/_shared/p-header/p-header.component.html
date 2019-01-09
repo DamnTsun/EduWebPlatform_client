@@ -70,6 +70,10 @@
 
             <!-- User signed in -->
             <ng-container *ngIf="this.user$ != null; else accountHeaderNotSignedIn">
+              <!-- If user is an admin -->
+              <li *ngIf="this.isAdmin$">
+                <a class="nav-link">ADMIN (NI)</a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" routerLink="{{ this.getRoute(this.routes.account) }}">Account</a>
               </li>
@@ -85,6 +89,7 @@
           </ul>
         </div>
       </ng-template>
+
     </section>
   </nav>
 </header>

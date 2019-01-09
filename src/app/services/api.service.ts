@@ -30,10 +30,14 @@ export class ApiService {
     return this.http.post(environment.apiUrl +
       `users/auth/google`, data) as Observable<AuthObject>;
   }
-  public authorizeWithBackendFacebook(facebook_id_token: string): Observable<AuthObject> {
+  /**
+   * Authorizes with backend api using Facebook auth_token.
+   * @param google_id_token - id_token from Google for signed in user.
+   */
+  public authorizeWithBackendFacebook(facebook_auth_token: string): Observable<AuthObject> {
     // Build form data. (Backend uses x-www-form-urlencoded)
     let data = new FormData();
-    data.set('facebook_id_token', facebook_id_token);
+    data.set('facebook_id_token', facebook_auth_token);
     return this.http.post(environment.apiUrl +
       `users/auth/facebook`, data) as Observable<AuthObject>;
   }

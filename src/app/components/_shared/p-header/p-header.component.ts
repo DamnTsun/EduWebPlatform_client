@@ -17,6 +17,7 @@ export class PHeaderComponent implements OnInit {
   // store current subject / user as these can change appear of header.
   private subject$: Subject = null;
   private user$: SocialUser = null;
+  private isAdmin$: boolean = false;
 
 
 
@@ -38,6 +39,10 @@ export class PHeaderComponent implements OnInit {
     this.signIn.user().subscribe((user) => {
       this.user$ = user;
     });
+    // Subscribe to user admin status.
+    this.signIn.userIsAdmin().subscribe((isAdmin) => {
+      this.isAdmin$ = isAdmin;
+    })
   }
 
 
