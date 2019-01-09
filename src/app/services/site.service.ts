@@ -8,6 +8,7 @@ import { Topic } from '../classes/Topic';
 import { Post } from '../classes/Posts';
 import { Lesson } from '../classes/Lesson';
 import { Test } from '../classes/Test';
+import { SignInService } from './sign-in.service';
 
 
 /**
@@ -35,7 +36,8 @@ export class SiteService {
    */
   constructor(
     private router: Router,
-    private api: ApiService
+    private api: ApiService,
+    private signIn: SignInService
   ) { }
 
 

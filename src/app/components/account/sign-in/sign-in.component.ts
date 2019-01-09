@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { environment } from 'src/environments/environment';
+import { SignInService } from 'src/app/services/sign-in.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,14 +12,14 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private auth: AuthService
+    private signIn: SignInService
   ) { }
 
 
 
   ngOnInit() {
     // Subscribe to user's logged in status. If they log in, redirect them to account area.
-    this.auth.authState.subscribe((user) => {
+    this.signIn.user().subscribe((user) => {
       if (user !== null) {
         this.router.navigate([ environment.routes.account ]);
       }
@@ -32,10 +32,10 @@ export class SignInComponent implements OnInit {
    * Signs user in with Google account. Sends to them to Google's OAuth stuff if necessary.
    */
   private signInWithGoogle(): void {
-    this.auth.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.signIn.signInWithGoogle();
   }
 
   private signInWithFacebook(): void {
-    this.auth.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.signIn.signInWithFacebook();
   }
 }

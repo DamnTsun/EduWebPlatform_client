@@ -16,6 +16,16 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  // *** AUTHORIZING WITH BACKEND ***
+  public authorizeWithBackendGoogle(idToken: string) {
+    let data = [{
+      'google_id_token': idToken
+    }];
+    return this.http.post(environment.apiUrl +
+      `users/auth/google`, data);
+  }
+  // *** END OF AUTHORIZATION ***
+
 
   // *** GENERAL CONTENT ***
   // SUBJECTS
