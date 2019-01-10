@@ -15,10 +15,95 @@ import { AuthObject } from '../classes/AuthObject';
 })
 export class ApiService {
 
+  // Holds authorization data, such as the JWT for when making requests.
+  private authObject: AuthObject = null;
+
+
+
+
+
   constructor(private http: HttpClient) { }
 
 
+
+
+
+  // *** HEADER INJECTION ***
+  // Injects JWT as header 'HTTP_IDTOKEN' if user is signed in.
+  /**
+   * Adds HTTP_IDTOKEN header if auth object is set.
+   * @param headers 
+   */
+  private createAuthorizationHeader(headers: HttpHeaders) {
+    if (this.authObject !== null) {
+      headers.append('HTTP_IDTOKEN', this.authObject.idToken);
+    }
+  }
+
+  /**
+   * Performs get request. Automatically injects authentification header if possible.
+   * @param url - url of request.
+   */
+  private get(url) {
+    let headers = new HttpHeaders();
+    this.createAuthorizationHeader(headers);
+    return this.http.get(url, {
+      headers: headers
+    });
+  }
+  /**
+   * Performs post request. Automatically injects authentification header if possible.
+   * @param url - url of request.
+   * @param body - body of request.
+   */
+  private post(url, body) {
+    let headers = new HttpHeaders();
+    this.createAuthorizationHeader(headers);
+    return this.http.post(url, body, {
+      headers: headers
+    });
+  }
+  /**
+   * Performs delete request. Automatically injects authentification header if possible.
+   * @param url - url of request.
+   */
+  private delete(url) {
+    let headers = new HttpHeaders();
+    this.createAuthorizationHeader(headers);
+    return this.http.delete(url, {
+      headers: headers
+    });
+  }
+
+
+
+
+
+
+
+
+
+
   // *** AUTHORIZING WITH BACKEND ***
+  /**
+   * Sets authorization object. Contains JWT for request headers.
+   * @param authObject - Authorization object.
+   */
+  public setAuthObject(authObject: AuthObject): void {
+    this.authObject = authObject;
+    console.log(this.authObject);
+  }
+  /**
+   * Clears authorization object.
+   */
+  public clearAuthObject(): void {
+    this.authObject = null;
+  }
+
+
+
+
+
   /**
    * Authorizes with backend api using Google id_token.
    * @param google_id_token - id_token from Google for signed in user.
@@ -27,7 +112,7 @@ export class ApiService {
     // Build form data. (Backend uses x-www-form-urlencoded)
     let data = new FormData();
     data.set('google_id_token', google_id_token);
-    return this.http.post(environment.apiUrl +
+    return this.post(environment.apiUrl +
       `users/auth/google`, data) as Observable<AuthObject>;
   }
   /**
@@ -38,10 +123,18 @@ export class ApiService {
     // Build form data. (Backend uses x-www-form-urlencoded)
     let data = new FormData();
     data.set('facebook_id_token', facebook_auth_token);
-    return this.http.post(environment.apiUrl +
+    return this.post(environment.apiUrl +
       `users/auth/facebook`, data) as Observable<AuthObject>;
   }
   // *** END OF AUTHORIZATION ***
+
+
+
+
+
+
+
+
 
 
   // *** GENERAL CONTENT ***
@@ -50,14 +143,14 @@ export class ApiService {
    * Gets all subjects.
    */
   public getSubjects(): Observable<Subject[]> {
-    return this.http.get(environment.apiUrl + 'subjects') as Observable<Subject[]>;
+    return this.get(environment.apiUrl + 'subjects') as Observable<Subject[]>;
   }
   /**
    * Get a subject by id.
    * @param subjectId - id of subject.
    */
   public getSubject(subjectId: number): Observable<Subject[]> {
-    return this.http.get(environment.apiUrl + `subjects/${subjectId}`) as Observable<Subject[]>;
+    return this.get(environment.apiUrl + `subjects/${subjectId}`) as Observable<Subject[]>;
   }
 
 
@@ -70,7 +163,7 @@ export class ApiService {
    * @param offset - number of posts to skip.
    */
   public getPosts(subjectId: number, count: number, offset: number): Observable<Post[]> {
-    return this.http.get(environment.apiUrl +
+    return this.get(environment.apiUrl +
       `subjects/${subjectId}/posts?count=${count}&offset=${offset}`) as Observable<Post[]>;
   }
 
@@ -82,7 +175,7 @@ export class ApiService {
    * @param subjectId - id of subject.
    */
   public getTopics(subjectId: number): Observable<Topic[]> {
-    return this.http.get(environment.apiUrl +
+    return this.get(environment.apiUrl +
       `subjects/${subjectId}/topics`) as Observable<Topic[]>;
   }
   /**
@@ -91,7 +184,7 @@ export class ApiService {
    * @param topicid - id of topic.
    */
   public getTopic(subjectid: number, topicid: number) {
-    return this.http.get(
+    return this.get(
       environment.apiUrl + `subjects/${subjectid}/topics/${topicid}`
     ) as Observable<Topic[]>;
   }
@@ -105,7 +198,7 @@ export class ApiService {
    * @param topicid - id of topic.
    */
   public getLessons(subjectid: number, topicid: number): Observable<Lesson[]> {
-    return this.http.get(environment.apiUrl +
+    return this.get(environment.apiUrl +
       `subjects/${subjectid}/topics/${topicid}/lessons`) as Observable<Lesson[]>;
   }
   /**
@@ -116,7 +209,7 @@ export class ApiService {
    */
   public getLesson(subjectid: number, topicid: number,
     lessonid: number): Observable<Lesson[]> {
-    return this.http.get(environment.apiUrl +
+    return this.get(environment.apiUrl +
       `subjects/${subjectid}/topics/${topicid}
         /lessons/${lessonid}`
     ) as Observable<Lesson[]>;
@@ -131,12 +224,12 @@ export class ApiService {
    * @param topicid - id of topic.
    */
   public getTests(subjectid: number, topicid: number): Observable<Test[]> {
-    return this.http.get(environment.apiUrl +
+    return this.get(environment.apiUrl +
       `subjects/${subjectid}/topics/${topicid}/tests`) as Observable<Test[]>;
   }
   public getTest(subjectid: number, topicid: number,
     testid: number): Observable<Test[]> {
-    return this.http.get(environment.apiUrl +
+    return this.get(environment.apiUrl +
       `subjects/${subjectid}/topics/${topicid}
         /tests/${testid}`
     ) as Observable<Test[]>;

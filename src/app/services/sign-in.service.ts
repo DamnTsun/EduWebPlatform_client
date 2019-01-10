@@ -17,9 +17,7 @@ export class SignInService {
   private userIsAdminRecord: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public userIsAdmin(): Observable<boolean> { return this.userIsAdminRecord.asObservable(); }
 
-  // Auth object for signed in user. Contain information about users internal user record.
-  // Such as: JWT for user, when JWT expires.
-  private authObject: AuthObject = null;
+
 
 
 
@@ -82,9 +80,8 @@ export class SignInService {
   private authorizeWithAPIGoogle(): void {
     // Attempt to authorize using Google.
     this.api.authorizeWithBackendGoogle(this.userRecordCurrent.idToken).subscribe((res) => {
-      this.authObject = res;
-      this.userIsAdminRecord.next(this.authObject.isAdmin);
-      console.log(this.authObject);
+      this.api.setAuthObject(res);
+      this.userIsAdminRecord.next(res.isAdmin);
     }, (err) => {
       console.log('SignIn Service - Google - Auth Error:', err);
     })
@@ -96,7 +93,8 @@ export class SignInService {
   private authorizeWithAPIFacebook(): void {
     // Attempt to authorize using Google.
     this.api.authorizeWithBackendFacebook(this.userRecordCurrent.authToken).subscribe((res) => {
-      this.authObject = res;
+      this.api.setAuthObject(res);
+      this.userIsAdminRecord.next(res.isAdmin);
     }, (err) => {
       console.log('SignIn Service - Facebook - Auth Error:', err);
     });
@@ -106,7 +104,7 @@ export class SignInService {
    * Clears authorization will backend. Deleted JWT.
    */
   private clearAuthorization(): void {
-    this.authObject = null;
+    this.api.clearAuthObject();
     this.userIsAdminRecord.next(false);
   }
 
