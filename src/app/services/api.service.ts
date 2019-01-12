@@ -9,6 +9,8 @@ import { Post } from '../classes/Posts';
 import { Lesson } from '../classes/Lesson';
 import { Test } from '../classes/Test';
 import { AuthObject } from '../classes/AuthObject';
+import { TestQuestion } from '../classes/TestQuestion';
+import { UserTest } from '../classes/UserTest';
 
 @Injectable({
   providedIn: 'root'
@@ -34,10 +36,12 @@ export class ApiService {
    * Adds HTTP_IDTOKEN header if auth object is set.
    * @param headers 
    */
-  private createAuthorizationHeader(headers: HttpHeaders) {
+  private createAuthorizationHeader() {
+    let headers = new HttpHeaders();
     if (this.authObject !== null) {
-      headers.append('HTTP_IDTOKEN', this.authObject.idToken);
+      headers = headers.set('idToken', this.authObject.idToken);
     }
+    return headers;
   }
 
   /**
@@ -45,8 +49,7 @@ export class ApiService {
    * @param url - url of request.
    */
   private get(url) {
-    let headers = new HttpHeaders();
-    this.createAuthorizationHeader(headers);
+    let headers = this.createAuthorizationHeader();
     return this.http.get(url, {
       headers: headers
     });
@@ -57,8 +60,7 @@ export class ApiService {
    * @param body - body of request.
    */
   private post(url, body) {
-    let headers = new HttpHeaders();
-    this.createAuthorizationHeader(headers);
+    let headers = this.createAuthorizationHeader();
     return this.http.post(url, body, {
       headers: headers
     });
@@ -68,8 +70,7 @@ export class ApiService {
    * @param url - url of request.
    */
   private delete(url) {
-    let headers = new HttpHeaders();
-    this.createAuthorizationHeader(headers);
+    let headers = this.createAuthorizationHeader();
     return this.http.delete(url, {
       headers: headers
     });
@@ -227,12 +228,45 @@ export class ApiService {
     return this.get(environment.apiUrl +
       `subjects/${subjectid}/topics/${topicid}/tests`) as Observable<Test[]>;
   }
+  /**
+   * Gets a test by id, inside a topic, inside a subject.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   */
   public getTest(subjectid: number, topicid: number,
     testid: number): Observable<Test[]> {
     return this.get(environment.apiUrl +
       `subjects/${subjectid}/topics/${topicid}
         /tests/${testid}`
     ) as Observable<Test[]>;
+  }
+
+
+
+  // USER TESTS
+  /**
+   * Gets specified number of test questions inside a test, inside a topic, inside a subject.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   * @param count - number of questions to get.
+   */
+  public getUserTestQuestions(subjectid: number, topicid: number,
+    testid: number, count: number = 10): Observable<TestQuestion[]> {
+      return this.get(environment.apiUrl +
+        `subjects/${subjectid}/topics/${topicid}
+          /tests/${testid}/questions/random?count=${count}`) as Observable<TestQuestion[]>;
+  }
+
+  /**
+   * Sends given user_test object to api to be saved.
+   * @param user_test - user test object.
+   */
+  public addUserTest(user_test): Observable<UserTest[]> {
+    let data = new FormData();
+    data.set('content', JSON.stringify(user_test));
+    return this.post(environment.apiUrl + 'users/user_tests', data) as Observable<UserTest[]>;
   }
   // *** END OF GENERAL CONTENT ***
 

@@ -29,6 +29,7 @@ import { TestHomeComponent } from './components/content-related/tests/test-home/
 // ACCOUNT RELATED
 import { SignInComponent } from './components/account/sign-in/sign-in.component';
 import { AccountComponent } from './components/account/account/account.component';
+import { UserTestAttemptComponent } from './components/content-related/tests/user-test-attempt/user-test-attempt.component';
 
 
 
@@ -77,6 +78,11 @@ const appRoutes = [
   {
     path: environment.routes.testHome,
     component: TestHomeComponent
+  },
+  // USER TEST ATTEMPT
+  {
+    path: environment.routes.userTestAttempt,
+    component: UserTestAttemptComponent
   },
   // *** END OF CONTENT RELATED ***
 
@@ -127,7 +133,8 @@ export function provideConfig() {
     SubjectPostListComponent,
     TopicHomeComponent,
     LessonHomeComponent,
-    TestHomeComponent
+    TestHomeComponent,
+    UserTestAttemptComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,30 @@
+div.questionCountButton {
+    margin: 1em;
+}
+
+div.questionCountButton button {
+    height: 3em;
+    width: 20em;
+}
+
+
+
+/* Modal number input and scroller buttons */
+input#utq_numberinput {
+    -moz-appearance: textfield;
+    height: auto;
+    font-size: 18pt;
+    text-align: center;
+}
+input#utq_numberinput:invalid {
+    border-color: red;
+    color: red;
+}
+
+button#utq_count_decrement {
+    width: 4em;
+}
+
+button#utq_count_increment {
+    width: 4em;
+}

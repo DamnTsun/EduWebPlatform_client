@@ -29,8 +29,6 @@ export class AccountComponent implements OnInit {
       if (user === null) {
         this.router.navigate([ environment.routes.account_signIn ]);
       }
-      // *** DEBUGGING API SIGNING IN USING ID TOKENS - REMOVE THIS BEFORE RELEASE ***
-      console.log(user);
     }, (err) => {
       console.error('Error with authState on account page:', err);
     });

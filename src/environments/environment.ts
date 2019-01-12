@@ -27,6 +27,8 @@ export const environment = {
     // LESSONS / TESTS
     lessonHome: 'subjects/:subjectid/topics/:topicid/lessons/:lessonid',
     testHome: 'subjects/:subjectid/topics/:topicid/tests/:testid',
+    // USER TEST ATTEMPT
+    userTestAttempt: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_test',
     // *** END OF CONTENT RELATED ***
     
     // USERS
