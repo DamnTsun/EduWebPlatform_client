@@ -1,0 +1,52 @@
+<section class="container page-content">
+
+  <!-- When test questions have been fetched from api -->
+  <ng-container *ngIf="(testQuestions$ !== null); else loadingTemplate">
+
+    <!-- Input for user to set user_test name -->
+    <label for="ut_name_input">Test Name:</label>
+    <input type="text" class="form-control form-control-lg" id="ut_name" placeholder="Enter name for test" name="ut_name_input"
+      maxlength="50">
+    <small>Test name can be used to identify a specific test you have completed.</small>
+
+
+
+    <!-- List questions -->
+    <section class="questions">
+      <h2>Questions</h2>
+      <div class="form-group question" *ngFor="let tq of testQuestions$; let i = index">
+        <h5>Question {{ i+1 }}:</h5>
+        <label for="questionInput{{ tq.id }}">{{ tq.question }}</label>
+        <input class="form-control form-control-lg" id="question{{tq.id}}" type="text" placeholder="Please enter answer"
+          name="questionInput{{ tq.id }}" maxlength="50">
+        <img src="{{ tq.imageUrl }}" alt="" *ngIf="(tq.imageUrl !== '')">
+      </div>
+    </section>
+    <!-- Show submit button unless form has already been successfully submitted -->
+    <button class="btn btn-primary submitButton" *ngIf="(!this.hasSubmitted)" (click)="submitQuestions()">SUBMIT</button>
+
+
+
+    <!-- Completed test output (show name, total questions, correct questions) -->
+    <ng-container *ngIf="(completedTest$ !== null)">
+      <h5>Test has been marked and saved.</h5>
+      <p>Title: {{ completedTest$.title }}</p>
+      <p>You scored: {{ completedTest$.score }} out of {{ completedTest$.questionCount }}.</p>
+      <p>Completed on: {{ completedTest$.date }}</p>
+    </ng-container>
+  </ng-container>
+
+
+
+  <!-- Whilst fetching questions from api -->
+  <ng-template #loadingTemplate>
+    <ng-container *ngIf="!loadiingError; else loadingErrorTemplate">
+      <app-loader></app-loader>
+    </ng-container>
+    <ng-template #loadingErrorTemplate>
+      Sorry, An Error Occurred.
+    </ng-template>
+
+  </ng-template>
+
+</section>

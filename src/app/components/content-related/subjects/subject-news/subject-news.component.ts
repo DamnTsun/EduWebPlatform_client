@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SiteService } from '../../../services/site.service';
+import { SiteService } from 'src/app/services/site.service';
 import { ActivatedRoute } from '@angular/router';
-import { Post } from '../../../classes/Posts';
-import { UtilService } from '../../../services/util.service';
-import { environment } from '../../../../environments/environment.prod';
+import { environment } from 'src/environments/environment.prod';
+import { Post } from 'src/app/classes/Posts';
 
 @Component({
   selector: 'app-subject-news',
@@ -18,8 +17,7 @@ export class SubjectNewsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private site: SiteService,
-    private util: UtilService
+    private site: SiteService
   ) { }
 
 

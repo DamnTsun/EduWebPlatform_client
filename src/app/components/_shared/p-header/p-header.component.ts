@@ -4,6 +4,7 @@ import { SiteService } from '../../../services/site.service';
 import { Subject } from '../../../classes/Subject';
 import { environment } from '../../../../environments/environment';
 import { AuthService, SocialUser } from 'angularx-social-login';
+import { SignInService } from 'src/app/services/sign-in.service';
 
 @Component({
   selector: 'app-p-header',
@@ -16,12 +17,13 @@ export class PHeaderComponent implements OnInit {
   // store current subject / user as these can change appear of header.
   private subject$: Subject = null;
   private user$: SocialUser = null;
+  private isAdmin$: boolean = false;
 
 
 
   constructor(
     private site: SiteService,
-    private auth: AuthService
+    private signIn: SignInService
   ) { }
 
   ngOnInit() {
@@ -34,9 +36,13 @@ export class PHeaderComponent implements OnInit {
     })
 
     // Subscribe to user logged in state. (changes Sign In to Account. Also adds Admin if appropriate (NOT IMPLEMENTED))
-    this.auth.authState.subscribe((user) => {
+    this.signIn.user().subscribe((user) => {
       this.user$ = user;
     });
+    // Subscribe to user admin status.
+    this.signIn.userIsAdmin().subscribe((isAdmin) => {
+      this.isAdmin$ = isAdmin;
+    })
   }
 
 

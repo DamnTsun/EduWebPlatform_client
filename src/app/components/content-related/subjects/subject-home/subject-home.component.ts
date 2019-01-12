@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SiteService } from '../../../services/site.service';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from '../../../classes/Subject';
-import { environment } from '../../../../environments/environment';
-import { UtilService } from '../../../services/util.service';
+import { SiteService } from 'src/app/services/site.service';
+import { environment } from 'src/environments/environment';
+
+import { Subject } from 'src/app/classes/Subject';
 
 @Component({
   selector: 'app-subject-home',
