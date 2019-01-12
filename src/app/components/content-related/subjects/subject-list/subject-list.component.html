@@ -2,16 +2,18 @@
   <h2>Select a Subject:</h2>
   <ul class="content-list">
 
-    <li *ngFor="let subject of subjects$">
-      <button class="card" routerLink="{{ subject.id }}">
-
+    <li *ngFor="let subject of subjects$; let i = index">
+      <section class="card">
         <section class="card-body">
           <h5 class="card-title">{{ subject.name }}</h5>
           <p class="card-text">{{ subject.description }}</p>
+          <button class="btn btn-primary enterSubjectButton" routerLink="{{ subject.id }}">View Subject</button>
+          <button class="btn btn-danger adminButton" *ngIf="this.isAdmin" (click)="this.deleteSubject(i)">Delete</button>
+          <button class="btn btn-warning adminButton" *ngIf="this.isAdmin">Edit</button>
         </section>
+      </section>
 
-      </button>
     </li>
-    
+
   </ul>
 </section>

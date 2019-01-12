@@ -154,6 +154,14 @@ export class ApiService {
     return this.get(environment.apiUrl + `subjects/${subjectId}`) as Observable<Subject[]>;
   }
 
+  /**
+   * Deletes a subject.
+   * @param subjectid - id of subject.
+   */
+  public deleteSubject(subjectid: number) {
+    return this.delete(environment.apiUrl + `subjects/${subjectid}`);
+  }
+
 
 
   // POSTS

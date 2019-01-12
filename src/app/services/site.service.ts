@@ -84,6 +84,14 @@ export class SiteService {
     return this.api.getSubjects();
   }
 
+  /**
+   * Deletes a subject.
+   * @param subjectid - id of subject.
+   */
+  public deleteSubject(subjectid) {
+    return this.api.deleteSubject(subjectid);
+  }
+
 
 
   // SUBJECT POSTS
