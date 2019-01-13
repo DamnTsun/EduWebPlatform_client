@@ -151,6 +151,16 @@ export class SiteService {
     return this.api.getLesson(subjectid, topicid, lessonid);
   }
 
+  /**
+   * Deletes a lesson, in a topic, in a subject.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param lessonid - id of lesson.
+   */
+  public deleteLesson(subjectid, topicid, lessonid) {
+    return this.api.deleteLesson(subjectid, topicid, lessonid);
+  }
+
 
 
   // TESTS
@@ -170,6 +180,16 @@ export class SiteService {
    */
   public getTest(subjectid, topicid, testid): Observable<Test[]> {
     return this.api.getTest(subjectid, topicid, testid);
+  }
+
+  /**
+   * Deletes a test, in a topic, in a subject.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   */
+  public deleteTest(subjectid, topicid, testid) {
+    return this.api.deleteTest(subjectid, topicid, testid);
   }
 
 

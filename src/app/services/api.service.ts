@@ -233,6 +233,16 @@ export class ApiService {
     ) as Observable<Lesson[]>;
   }
 
+  /**
+   * Deletes a lesson, in a topic, in a subject.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param lessonid - id of lesson.
+   */
+  public deleteLesson(subjectid: number, topicid: number, lessonid: number) {
+    return this.delete(environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/lessons/${lessonid}`);
+  }
+
 
 
   // TESTS
@@ -257,6 +267,16 @@ export class ApiService {
       `subjects/${subjectid}/topics/${topicid}
         /tests/${testid}`
     ) as Observable<Test[]>;
+  }
+
+  /**
+   * Deletes a test, in a topic, in a subject.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   */
+  public deleteTest(subjectid: number, topicid: number, testid: number) {
+    return this.delete(environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/tests/${testid}`);
   }
 
 

@@ -57,7 +57,7 @@ export class TopicListComponent implements OnInit {
     // Check user is admin.
     if (this.isAdmin) {
       // Check index is valid.
-      if (index >= 0 && index <= this.topics$.length) {
+      if (index >= 0 && index < this.topics$.length) {
         // Get subjectid.
         let subjectId = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
 
