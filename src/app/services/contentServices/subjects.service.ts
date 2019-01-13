@@ -33,8 +33,8 @@ export class SubjectsService {
    * Sets the subject in use. Gets and stores subject with specified id.
    * @param subjectId - id of subject.
    */
-  public setSubject(subjectId): void {
-    this.api.getSubject(subjectId).subscribe((subjects) => {
+  public setSubject(subjectid): void {
+    this.api.get(environment.apiUrl + `subjects/${subjectid}`).subscribe((subjects) => {
       this.subjectRecord.next(subjects[0]);
     }, (err) => {
       console.error('SiteService - Subject: ', err);
@@ -72,9 +72,12 @@ export class SubjectsService {
 
   // SUBJECT POSTS
   /**
-   * Gets all posts in subject from api.
+   * Gets all news posts in subject.
+   * @param subjectId - id of subject.
+   * @param count - number of posts to get.
+   * @param offset - number of posts to skip.
    */
   public getPosts(subjectId, count, offset): Observable<Post[]> {
-    return this.api.getPosts(subjectId, count, offset);
+    return this.api.get(environment.apiUrl + `subjects/${subjectId}/posts?count=${count}&offset=${offset}`) as Observable<Post[]>;
   }
 }

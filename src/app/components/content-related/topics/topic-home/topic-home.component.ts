@@ -8,6 +8,8 @@ import { Test } from 'src/app/classes/Test';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { TopicsService } from 'src/app/services/contentServices/topics.service';
+import { LessonsService } from 'src/app/services/contentServices/lessons.service';
+import { TestsService } from 'src/app/services/contentServices/tests.service';
 
 @Component({
   selector: 'app-topic-home',
@@ -32,7 +34,8 @@ export class TopicHomeComponent implements OnInit {
     private route: ActivatedRoute,
     private subjectService: SubjectsService,
     private topicService: TopicsService,
-    private site: SiteService,
+    private lessonService: LessonsService,
+    private testService: TestsService,
     private signIn: SignInService
   ) { }
 
@@ -54,11 +57,11 @@ export class TopicHomeComponent implements OnInit {
 
     // Lessons / tests.
     // Get lessons in topic from api.
-    this.site.getLessons(subjectid, topicid).subscribe((lessons) => {
+    this.lessonService.getLessons(subjectid, topicid).subscribe((lessons) => {
       this.lessons$ = lessons;
     })
     // Get tests in topic from api.
-    this.site.getTests(subjectid, topicid).subscribe((tests) => {
+    this.testService.getTests(subjectid, topicid).subscribe((tests) => {
       this.tests$ = tests;
     })
 
@@ -89,7 +92,7 @@ export class TopicHomeComponent implements OnInit {
         let topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
 
         // Delete the lesson.
-        this.site.deleteLesson(subjectid, topicid, this.lessons$[index].id).subscribe((res) => {
+        this.lessonService.deleteLesson(subjectid, topicid, this.lessons$[index].id).subscribe((res) => {
           // Successful. Remove from list.
           this.lessons$ = this.lessons$.filter((l, i, a) => {
             return i !== index;
@@ -115,7 +118,7 @@ export class TopicHomeComponent implements OnInit {
         let topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
 
         // Delete the test.
-        this.site.deleteTest(subjectid, topicid, this.tests$[index].id).subscribe((res) => {
+        this.testService.deleteTest(subjectid, topicid, this.tests$[index].id).subscribe((res) => {
           // Successful. Remove from list.
           this.tests$ = this.tests$.filter((t, i, a) => {
             return i !== index;

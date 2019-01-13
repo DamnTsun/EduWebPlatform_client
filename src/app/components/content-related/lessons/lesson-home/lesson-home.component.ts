@@ -4,6 +4,7 @@ import { SiteService } from 'src/app/services/site.service';
 import { Lesson } from 'src/app/classes/Lesson';
 import { environment } from 'src/environments/environment';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
+import { LessonsService } from 'src/app/services/contentServices/lessons.service';
 
 @Component({
   selector: 'app-lesson-home',
@@ -20,7 +21,7 @@ export class LessonHomeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private subjectService: SubjectsService,
-    private site: SiteService
+    private lessonService: LessonsService
   ) { }
 
   ngOnInit() {
@@ -33,7 +34,7 @@ export class LessonHomeComponent implements OnInit {
     this.subjectService.setSubject(subjectid);
 
     // Get lesson from api.
-    this.site.getLesson(subjectid, topicid, lessonid).subscribe((lessons) => {
+    this.lessonService.getLesson(subjectid, topicid, lessonid).subscribe((lessons) => {
       this.lesson$ = lessons[0];
     }, (err) => {
       this.loadingError = true;
