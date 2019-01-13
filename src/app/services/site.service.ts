@@ -122,6 +122,14 @@ export class SiteService {
     return this.api.getTopic(subjectid, topicid);
   }
 
+  /**
+   * Deletes a topic, in a subject.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   */
+  public deleteTopic(subjectid, topicid) {
+    return this.api.deleteTopic(subjectid, topicid);
+  }
 
 
   // LESSONS

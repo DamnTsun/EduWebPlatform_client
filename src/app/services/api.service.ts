@@ -198,6 +198,15 @@ export class ApiService {
     ) as Observable<Topic[]>;
   }
 
+  /**
+   * Deletes a topic, in a subject.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   */
+  public deleteTopic(subjectid: number, topicid: number) {
+    return this.delete(environment.apiUrl + `subjects/${subjectid}/topics/${topicid}`);
+  }
+
 
 
   // LESSONS

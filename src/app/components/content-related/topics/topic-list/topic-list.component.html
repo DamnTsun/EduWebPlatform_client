@@ -1,20 +1,26 @@
 <section class="container page-content">
 
+  <!-- After topics have been fetched from api -->
   <ng-container *ngIf="(this.topics$ !== null); else loadingTemplate">
     <h2>Select a Topic:</h2>
     <ul class="content-list">
-      <li *ngFor="let topic of topics$">
-        <button class="card" routerLink="{{ topic.id }}">
+
+      <!-- Add item for each topic from api -->
+      <li *ngFor="let topic of topics$; let i = index">
+        <section class="card">
           <section class="card-body">
             <h5 class="card-title">{{ topic.name }}</h5>
             <p class="card-text">{{ topic.description }}</p>
+            <button class="btn btn-primary enterTopicButton" routerLink="{{ topic.id }}">View Topic</button>
+            <button class="btn btn-danger adminButton" *ngIf="this.isAdmin" (click)="this.deleteTopic(i)">Delete</button>
+            <button class="btn btn-warning adminButton" *ngIf="this.isAdmin">Edit</button>
           </section>
-        </button>
+        </section>
       </li>
     </ul>
   </ng-container>
 
-
+  <!-- Whilst topics being fetched OR fetching topics failed -->
   <ng-template #loadingTemplate>
     <app-loader></app-loader>
   </ng-template>

@@ -39,12 +39,16 @@ export class SubjectListComponent implements OnInit {
   }
 
 
-  // Deletes a subject.
+  
+  /**
+   * Deletes subject with given index.
+   * @param index - index of subject in subjects$.
+   */
   private deleteSubject(index): void {
     // Check user is an admin.
     if (this.isAdmin) {
       // Check index is valid.
-      if (index >= 0 || index < this.subjects$.length) { 
+      if (index >= 0 && index < this.subjects$.length) { 
         // Delete the subject.
         this.site.deleteSubject(this.subjects$[index].id).subscribe((a) => {
           // Successful. Remove subject from list.
