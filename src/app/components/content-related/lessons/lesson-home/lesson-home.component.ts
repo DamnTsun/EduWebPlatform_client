@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SiteService } from 'src/app/services/site.service';
 import { Lesson } from 'src/app/classes/Lesson';
 import { environment } from 'src/environments/environment';
+import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 
 @Component({
   selector: 'app-lesson-home',
@@ -18,6 +19,7 @@ export class LessonHomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private subjectService: SubjectsService,
     private site: SiteService
   ) { }
 
@@ -28,7 +30,7 @@ export class LessonHomeComponent implements OnInit {
     let lessonid = this.route.snapshot.paramMap.get(environment.routeParams.lessonid);
 
     // Set subject id in site service based on url parameter.
-    this.site.setSubject(subjectid);
+    this.subjectService.setSubject(subjectid);
 
     // Get lesson from api.
     this.site.getLesson(subjectid, topicid, lessonid).subscribe((lessons) => {

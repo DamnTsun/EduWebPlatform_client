@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Topic } from 'src/app/classes/Topic';
 import { SignInService } from 'src/app/services/sign-in.service';
+import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 
 @Component({
   selector: 'app-topic-list',
@@ -22,6 +23,7 @@ export class TopicListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private subjectService: SubjectsService,
     private site: SiteService,
     private signIn: SignInService
   ) { }
@@ -29,7 +31,7 @@ export class TopicListComponent implements OnInit {
   ngOnInit() {
     // Set subjectid to set subject. Then get associated topics.
     let subjectId = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
-    this.site.setSubject(subjectId);
+    this.subjectService.setSubject(subjectId);
 
     // Subscribe to topics.
     this.site.getTopics(subjectId).subscribe((topics) => {

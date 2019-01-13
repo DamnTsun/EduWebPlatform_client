@@ -48,7 +48,7 @@ export class ApiService {
    * Performs get request. Automatically injects authentification header if possible.
    * @param url - url of request.
    */
-  private get(url) {
+  public get(url) {
     let headers = this.createAuthorizationHeader();
     return this.http.get(url, {
       headers: headers
@@ -59,7 +59,7 @@ export class ApiService {
    * @param url - url of request.
    * @param body - body of request.
    */
-  private post(url, body) {
+  public post(url, body) {
     let headers = this.createAuthorizationHeader();
     return this.http.post(url, body, {
       headers: headers
@@ -69,17 +69,12 @@ export class ApiService {
    * Performs delete request. Automatically injects authentification header if possible.
    * @param url - url of request.
    */
-  private delete(url) {
+  public delete(url) {
     let headers = this.createAuthorizationHeader();
     return this.http.delete(url, {
       headers: headers
     });
   }
-
-
-
-
-
 
 
 
@@ -101,6 +96,12 @@ export class ApiService {
     this.authObject = null;
   }
 
+
+
+
+
+
+  
 
 
 

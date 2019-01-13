@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment.prod';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { TestQuestion } from 'src/app/classes/TestQuestion';
 import { UserTest } from 'src/app/classes/UserTest';
+import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 
 @Component({
   selector: 'app-user-test-attempt',
@@ -32,6 +33,7 @@ export class UserTestAttemptComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private subjectService: SubjectsService,
     private site: SiteService,
     private signIn: SignInService
   ) { }
@@ -43,7 +45,7 @@ export class UserTestAttemptComponent implements OnInit {
     this.testid = this.route.snapshot.paramMap.get(environment.routeParams.testid);
 
     // Set subject.
-    this.site.setSubject(subjectid);
+    this.subjectService.setSubject(subjectid);
 
 
     // Check user is signed in.

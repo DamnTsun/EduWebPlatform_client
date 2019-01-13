@@ -6,6 +6,7 @@ import { Topic } from 'src/app/classes/Topic';
 import { Lesson } from 'src/app/classes/Lesson';
 import { Test } from 'src/app/classes/Test';
 import { SignInService } from 'src/app/services/sign-in.service';
+import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 
 @Component({
   selector: 'app-topic-home',
@@ -28,6 +29,7 @@ export class TopicHomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private subjectService: SubjectsService,
     private site: SiteService,
     private signIn: SignInService
   ) { }
@@ -38,8 +40,8 @@ export class TopicHomeComponent implements OnInit {
     let subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
     let topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
 
-    // Set subject id in site service based on url parameter.
-    this.site.setSubject(subjectid);
+    // Set subject id in subject service.
+    this.subjectService.setSubject(subjectid);
     
     // Get topic from api.
     this.site.getTopic(subjectid, topicid).subscribe((topics) => {

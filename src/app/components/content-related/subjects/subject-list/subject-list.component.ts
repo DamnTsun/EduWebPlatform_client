@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SiteService } from 'src/app/services/site.service';
 import { Subject } from 'src/app/classes/Subject';
 import { SignInService } from 'src/app/services/sign-in.service';
+import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 
 @Component({
   selector: 'app-subject-list',
@@ -18,14 +18,14 @@ export class SubjectListComponent implements OnInit {
 
 
   constructor(
-    private site: SiteService,
+    private subjectService: SubjectsService,
     private signIn: SignInService
   ) { }
 
 
   ngOnInit() {
     // Get list of subjects.
-    this.site.getSubjects()
+    this.subjectService.getSubjects()
       .subscribe((subjects) => {
         this.subjects$ = subjects
     });
@@ -50,7 +50,7 @@ export class SubjectListComponent implements OnInit {
       // Check index is valid.
       if (index >= 0 && index < this.subjects$.length) { 
         // Delete the subject.
-        this.site.deleteSubject(this.subjects$[index].id).subscribe((a) => {
+        this.subjectService.deleteSubject(this.subjects$[index].id).subscribe((a) => {
           // Successful. Remove subject from list.
           this.subjects$ = this.subjects$.filter((s, i, a) => {
             return i !== index;

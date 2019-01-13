@@ -4,6 +4,7 @@ import { SiteService } from 'src/app/services/site.service';
 import { environment } from 'src/environments/environment';
 
 import { Post } from 'src/app/classes/Posts';
+import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 
 @Component({
   selector: 'app-subject-post-list',
@@ -30,7 +31,7 @@ export class SubjectPostListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private site: SiteService
+    private subjectService: SubjectsService
   ) { }
 
   ngOnInit() {
@@ -55,7 +56,7 @@ export class SubjectPostListComponent implements OnInit {
     let subjectId = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
     
     // Get subjects.
-    this.site.getPosts(subjectId, this.count, this.offset).subscribe((posts) => {
+    this.subjectService.getPosts(subjectId, this.count, this.offset).subscribe((posts) => {
       this.posts$ = posts;
     }, (err) => {
       console.error(err);

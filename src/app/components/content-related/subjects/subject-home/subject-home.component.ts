@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SiteService } from 'src/app/services/site.service';
 import { environment } from 'src/environments/environment';
 
 import { Subject } from 'src/app/classes/Subject';
+import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 
 @Component({
   selector: 'app-subject-home',
@@ -17,16 +17,16 @@ export class SubjectHomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private site: SiteService
+    private subjectService: SubjectsService
   ) { }
 
 
   ngOnInit() {
     // Set subject id in site service based on url parameter.
-    this.site.setSubject(this.route.snapshot.paramMap.get(environment.routeParams.subjectid));
+    this.subjectService.setSubject(this.route.snapshot.paramMap.get(environment.routeParams.subjectid));
     
     // Subscribe to subject record to get its data.
-    this.site.subject().subscribe((subject) => {
+    this.subjectService.subject().subscribe((subject) => {
       this.subject$ = subject;
     }, (err) => {
       this.loadingError = true;
