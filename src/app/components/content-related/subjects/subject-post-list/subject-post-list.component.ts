@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SiteService } from 'src/app/services/site.service';
 import { environment } from 'src/environments/environment';
 
 import { Post } from 'src/app/classes/Posts';

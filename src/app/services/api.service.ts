@@ -130,37 +130,4 @@ export class ApiService {
   }
   // *** END OF AUTHORIZATION ***
 
-
-
-
-
-
-
-  // USER TESTS
-  /**
-   * Gets specified number of test questions inside a test, inside a topic, inside a subject.
-   * @param subjectid - id of subject.
-   * @param topicid - id of topic.
-   * @param testid - id of test.
-   * @param count - number of questions to get.
-   */
-  public getUserTestQuestions(subjectid: number, topicid: number,
-    testid: number, count: number = 10): Observable<TestQuestion[]> {
-      return this.get(environment.apiUrl +
-        `subjects/${subjectid}/topics/${topicid}
-          /tests/${testid}/questions/random?count=${count}`) as Observable<TestQuestion[]>;
-  }
-
-  /**
-   * Sends given user_test object to api to be saved.
-   * @param user_test - user test object.
-   */
-  public addUserTest(user_test): Observable<UserTest[]> {
-    let data = new FormData();
-    data.set('content', JSON.stringify(user_test));
-    return this.post(environment.apiUrl + 'users/user_tests', data) as Observable<UserTest[]>;
-  }
-  // *** END OF GENERAL CONTENT ***
-
-
 }

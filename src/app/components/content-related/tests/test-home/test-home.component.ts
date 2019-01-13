@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Test } from 'src/app/classes/Test';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SiteService } from 'src/app/services/site.service';
 import { environment } from 'src/environments/environment';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { TestsService } from 'src/app/services/contentServices/tests.service';
