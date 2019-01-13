@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Topic } from 'src/app/classes/Topic';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
+import { TopicsService } from 'src/app/services/contentServices/topics.service';
 
 @Component({
   selector: 'app-topic-list',
@@ -24,7 +25,7 @@ export class TopicListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private subjectService: SubjectsService,
-    private site: SiteService,
+    private topicService: TopicsService,
     private signIn: SignInService
   ) { }
 
@@ -34,7 +35,7 @@ export class TopicListComponent implements OnInit {
     this.subjectService.setSubject(subjectId);
 
     // Subscribe to topics.
-    this.site.getTopics(subjectId).subscribe((topics) => {
+    this.topicService.getTopics(subjectId).subscribe((topics) => {
       this.topics$ = topics;
     }, (err) => {
       this.loadingError = true;
@@ -64,7 +65,7 @@ export class TopicListComponent implements OnInit {
         let subjectId = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
 
         // Delete the topic.
-        this.site.deleteTopic(subjectId, this.topics$[index].id).subscribe((res) => {
+        this.topicService.deleteTopic(subjectId, this.topics$[index].id).subscribe((res) => {
           // Successful. Remove topic from list.
           this.topics$ = this.topics$.filter((t, i, a) => {
             return i !== index;

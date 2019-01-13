@@ -7,6 +7,7 @@ import { Lesson } from 'src/app/classes/Lesson';
 import { Test } from 'src/app/classes/Test';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
+import { TopicsService } from 'src/app/services/contentServices/topics.service';
 
 @Component({
   selector: 'app-topic-home',
@@ -30,6 +31,7 @@ export class TopicHomeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private subjectService: SubjectsService,
+    private topicService: TopicsService,
     private site: SiteService,
     private signIn: SignInService
   ) { }
@@ -44,7 +46,7 @@ export class TopicHomeComponent implements OnInit {
     this.subjectService.setSubject(subjectid);
     
     // Get topic from api.
-    this.site.getTopic(subjectid, topicid).subscribe((topics) => {
+    this.topicService.getTopic(subjectid, topicid).subscribe((topics) => {
       this.topic$ = topics[0];
     }, (err) => {
       console.error('Topic-Home Error:', err);
