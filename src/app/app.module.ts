@@ -36,6 +36,7 @@ import { UserTestAttemptComponent } from './components/content-related/tests/use
 import { SubjectCreatorComponent } from './components/content-related/subjects/subject-creator/subject-creator.component';
 import { SubjectEditorComponent } from './components/content-related/subjects/subject-editor/subject-editor.component';
 import { TopicCreatorComponent } from './components/content-related/topics/topic-creator/topic-creator.component';
+import { TopicEditorComponent } from './components/content-related/topics/topic-editor/topic-editor.component';
 
 
 
@@ -79,7 +80,8 @@ export function provideConfig() {
     UserTestAttemptComponent,
     SubjectCreatorComponent,
     SubjectEditorComponent,
-    TopicCreatorComponent
+    TopicCreatorComponent,
+    TopicEditorComponent
   ],
   imports: [
     BrowserModule,

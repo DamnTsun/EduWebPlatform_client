@@ -46,6 +46,19 @@ export class TopicsService {
     return this.api.post(environment.apiUrl + `subjects/${subjectid}/topics`, data);
   }
 
+
+  /**
+   * Updates existing topic based on given topic object.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param topicObject - object containing new values for topic.
+   */
+  public editTopic(subjectid, topicid, topicObject) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(topicObject));
+    return this.api.post(environment.apiUrl + `subjects/${subjectid}/topics/${topicid}`, data);
+  }
+
   /**
    * Deletes a topic, in a subject.
    * @param subjectid - id of subject.

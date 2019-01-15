@@ -12,6 +12,7 @@ import { AccountComponent } from "./components/account/account/account.component
 import { SubjectCreatorComponent } from "./components/content-related/subjects/subject-creator/subject-creator.component";
 import { SubjectEditorComponent } from "./components/content-related/subjects/subject-editor/subject-editor.component";
 import { TopicCreatorComponent } from "./components/content-related/topics/topic-creator/topic-creator.component";
+import { TopicEditorComponent } from "./components/content-related/topics/topic-editor/topic-editor.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -53,9 +54,10 @@ export const appRoutes = [
     path: environment.routes.topicCreator,
     component: TopicCreatorComponent
   },
-  /*{ // Topic editor. (todo)
-
-  },*/
+  { // Topic editor. (todo)
+    path: environment.routes.topicEditor,
+    component: TopicEditorComponent
+  },
   { // Topic select.
     path: environment.routes.topicSelect,
     component: TopicListComponent

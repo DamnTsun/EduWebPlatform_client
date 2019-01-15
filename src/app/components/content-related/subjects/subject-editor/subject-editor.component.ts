@@ -34,7 +34,7 @@ export class SubjectEditorComponent implements OnInit {
 
     // Get user admin status.
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
-      // Send to subject select.
+      // Send to subject select if not admin.
       if (!isAdmin) {
         this.router.navigate([ environment.routes.subjectSelect ]);
       }
