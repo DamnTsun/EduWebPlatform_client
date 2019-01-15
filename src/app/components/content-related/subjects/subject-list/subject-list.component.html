@@ -9,7 +9,7 @@
           <p class="card-text">{{ subject.description }}</p>
           <button class="btn btn-primary enterSubjectButton" routerLink="{{ subject.id }}">View Subject</button>
           <button class="btn btn-danger adminButton" *ngIf="this.isAdmin" (click)="this.deleteSubject(i)">Delete</button>
-          <button class="btn btn-warning adminButton" *ngIf="this.isAdmin">Edit</button>
+          <button class="btn btn-warning adminButton" *ngIf="this.isAdmin" routerLink="{{ subject.id }}/edit">Edit</button>
         </section>
       </section>
 

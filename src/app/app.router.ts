@@ -10,6 +10,7 @@ import { UserTestAttemptComponent } from "./components/content-related/tests/use
 import { SignInComponent } from "./components/account/sign-in/sign-in.component";
 import { AccountComponent } from "./components/account/account/account.component";
 import { SubjectCreatorComponent } from "./components/content-related/subjects/subject-creator/subject-creator.component";
+import { SubjectEditorComponent } from "./components/content-related/subjects/subject-editor/subject-editor.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -25,6 +26,11 @@ export const appRoutes = [
   {
     path: environment.routes.subjectCreator,
     component: SubjectCreatorComponent
+  },
+  // Subject editor.
+  {
+    path: environment.routes.subjectEditor,
+    component: SubjectEditorComponent
   },
   // Subject list.
   {

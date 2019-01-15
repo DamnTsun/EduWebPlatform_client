@@ -21,6 +21,7 @@ export const environment = {
     subjectNews: 'subjects/:subjectid/news',
     topicSelect: 'subjects/:subjectid/topics',
     subjectCreator: 'subjects/create',
+    subjectEditor: 'subjects/:subjectid/edit',
 
     // TOPICS
     topicHome: 'subjects/:subjectid/topics/:topicid',

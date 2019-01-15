@@ -34,6 +34,7 @@ import { SignInComponent } from './components/account/sign-in/sign-in.component'
 import { AccountComponent } from './components/account/account/account.component';
 import { UserTestAttemptComponent } from './components/content-related/tests/user-test-attempt/user-test-attempt.component';
 import { SubjectCreatorComponent } from './components/content-related/subjects/subject-creator/subject-creator.component';
+import { SubjectEditorComponent } from './components/content-related/subjects/subject-editor/subject-editor.component';
 
 
 
@@ -75,7 +76,8 @@ export function provideConfig() {
     LessonHomeComponent,
     TestHomeComponent,
     UserTestAttemptComponent,
-    SubjectCreatorComponent
+    SubjectCreatorComponent,
+    SubjectEditorComponent
   ],
   imports: [
     BrowserModule,

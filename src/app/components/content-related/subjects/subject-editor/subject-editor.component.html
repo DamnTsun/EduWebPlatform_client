@@ -1,8 +1,8 @@
 <section class="container page-content">
-  <h2>Create a Subject:</h2>
-  <!-- Message if something goes wrong with api request. -->
-  <div class="alert alert-warning" role="alert" *ngIf="errorMessage !== null">
-    <div>Unable to add subject:</div>
+  <h2>Edit a Subject</h2>
+  <!-- Error message if something goes wrong. -->
+  <div class="alert alert-warning" role="alert" *ngIf="(this.errorMessage !== null)">
+    <div>Unable to edit subject:</div>
     {{ this.errorMessage }}
   </div>
 
@@ -34,6 +34,6 @@
     </small>
   </div>
 
-  <button class="btn btn-primary" (click)="createSubject()" *ngIf="!this.submitted">Submit</button>
+  <button class="btn btn-primary" (click)="editSubject()" *ngIf="!this.submitted">Submit</button>
 
 </section>
