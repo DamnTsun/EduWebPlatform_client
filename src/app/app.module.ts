@@ -33,6 +33,7 @@ import { TestHomeComponent } from './components/content-related/tests/test-home/
 import { SignInComponent } from './components/account/sign-in/sign-in.component';
 import { AccountComponent } from './components/account/account/account.component';
 import { UserTestAttemptComponent } from './components/content-related/tests/user-test-attempt/user-test-attempt.component';
+import { SubjectCreatorComponent } from './components/content-related/subjects/subject-creator/subject-creator.component';
 
 
 
@@ -73,7 +74,8 @@ export function provideConfig() {
     TopicHomeComponent,
     LessonHomeComponent,
     TestHomeComponent,
-    UserTestAttemptComponent
+    UserTestAttemptComponent,
+    SubjectCreatorComponent
   ],
   imports: [
     BrowserModule,

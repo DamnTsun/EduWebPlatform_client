@@ -1,4 +1,4 @@
-import { environment } from "src/environments/environment.prod";
+import { environment } from "src/environments/environment";
 import { SubjectListComponent } from "./components/content-related/subjects/subject-list/subject-list.component";
 import { SubjectHomeComponent } from "./components/content-related/subjects/subject-home/subject-home.component";
 import { SubjectNewsComponent } from "./components/content-related/subjects/subject-news/subject-news.component";
@@ -9,6 +9,7 @@ import { TestHomeComponent } from "./components/content-related/tests/test-home/
 import { UserTestAttemptComponent } from "./components/content-related/tests/user-test-attempt/user-test-attempt.component";
 import { SignInComponent } from "./components/account/sign-in/sign-in.component";
 import { AccountComponent } from "./components/account/account/account.component";
+import { SubjectCreatorComponent } from "./components/content-related/subjects/subject-creator/subject-creator.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -19,6 +20,11 @@ export const appRoutes = [
     path: '',
     redirectTo: environment.routes.subjectSelect,
     pathMatch: 'full'
+  },
+  // Subject creator.
+  {
+    path: environment.routes.subjectCreator,
+    component: SubjectCreatorComponent
   },
   // Subject list.
   {

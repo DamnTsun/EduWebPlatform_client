@@ -60,6 +60,18 @@ export class SubjectsService {
     return this.api.get(environment.apiUrl + `subjects`) as Observable<Subject[]>;
   }
 
+
+  /**
+   * Attempts to create new subject on API based on given object.
+   * @param subjectObject - object representing subject.
+   */
+  public createSubject(subjectObject) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(subjectObject));
+    return this.api.post(environment.apiUrl + `subjects`, data) as Observable<Subject[]>;
+  }
+
+
   /**
    * Deletes a subject.
    * @param subjectid - id of subject.
