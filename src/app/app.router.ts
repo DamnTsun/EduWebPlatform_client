@@ -11,50 +11,56 @@ import { SignInComponent } from "./components/account/sign-in/sign-in.component"
 import { AccountComponent } from "./components/account/account/account.component";
 import { SubjectCreatorComponent } from "./components/content-related/subjects/subject-creator/subject-creator.component";
 import { SubjectEditorComponent } from "./components/content-related/subjects/subject-editor/subject-editor.component";
+import { TopicCreatorComponent } from "./components/content-related/topics/topic-creator/topic-creator.component";
 
 // Routes for app.
 export const appRoutes = [
-    // *** CONTENT RELATED ***
-  // SUBJECTS
-  // Redirect from '' to subject list.
-  {
+  { // Default route. Go to subject select.
     path: '',
     redirectTo: environment.routes.subjectSelect,
     pathMatch: 'full'
   },
-  // Subject creator.
-  {
+
+
+
+  // *** CONTENT RELATED ***
+  // SUBJECTS
+  { // Subject creator.
     path: environment.routes.subjectCreator,
     component: SubjectCreatorComponent
   },
-  // Subject editor.
-  {
+  { // Subject editor.
     path: environment.routes.subjectEditor,
     component: SubjectEditorComponent
   },
-  // Subject list.
-  {
+  { // Subject list.
     path: environment.routes.subjectSelect,
     component: SubjectListComponent
   },
-  // Subject home page.
-  {
+  { // Subject home page.
     path: environment.routes.subjectHome,
     component: SubjectHomeComponent
   },
-  // Subject news page.
-  {
+  { // Subject news page.
     path: environment.routes.subjectNews,
     component: SubjectNewsComponent
   },
-  // Subject topic list.
-  {
+
+
+
+  // TOPICS
+  { // Topic creator.
+    path: environment.routes.topicCreator,
+    component: TopicCreatorComponent
+  },
+  /*{ // Topic editor. (todo)
+
+  },*/
+  { // Topic select.
     path: environment.routes.topicSelect,
     component: TopicListComponent
   },
-
-  // TOPICS
-  {
+  { // Topic home.
     path: environment.routes.topicHome,
     component: TopicHomeComponent
   },

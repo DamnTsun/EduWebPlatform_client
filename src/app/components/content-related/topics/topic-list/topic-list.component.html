@@ -4,7 +4,7 @@
   <ng-container *ngIf="(this.topics$ !== null); else loadingTemplate">
     <h2>Select a Topic:</h2>
     <ul class="content-list">
-
+      <button class="btn btn-primary" *ngIf="this.isAdmin" routerLink="create">Create a Topic</button>
       <!-- Add item for each topic from api -->
       <li *ngFor="let topic of topics$; let i = index">
         <section class="card">

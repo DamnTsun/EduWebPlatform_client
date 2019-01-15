@@ -25,6 +25,7 @@ export const environment = {
 
     // TOPICS
     topicHome: 'subjects/:subjectid/topics/:topicid',
+    topicCreator: 'subjects/:subjectid/topics/create',
     // LESSONS / TESTS
     lessonHome: 'subjects/:subjectid/topics/:topicid/lessons/:lessonid',
     testHome: 'subjects/:subjectid/topics/:topicid/tests/:testid',

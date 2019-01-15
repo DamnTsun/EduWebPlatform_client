@@ -34,6 +34,18 @@ export class TopicsService {
     return this.api.get(environment.apiUrl + `subjects/${subjectid}/topics/${topicid}`) as Observable<Topic[]>;
   }
 
+  
+  /**
+   * Attempts to create new topic inside given subject.
+   * @param subjectid - id of subject.
+   * @param topicObject - object representing new topic.
+   */
+  public createTopic(subjectid, topicObject) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(topicObject));
+    return this.api.post(environment.apiUrl + `subjects/${subjectid}/topics`, data);
+  }
+
   /**
    * Deletes a topic, in a subject.
    * @param subjectid - id of subject.

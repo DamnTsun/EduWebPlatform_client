@@ -1,6 +1,10 @@
 <section class="container page-content">
+
   <h2>Select a Subject:</h2>
+
+  <!-- Create subject button (admin-only) -->
   <ul class="content-list">
+    <button class="btn btn-primary" *ngIf="this.isAdmin" routerLink="create">Create a Subject</button>
 
     <li *ngFor="let subject of subjects$; let i = index">
       <section class="card">
@@ -16,7 +20,4 @@
     </li>
 
   </ul>
-
-  <!-- Create subject button (admin-only) -->
-  <button class="btn btn-primary" *ngIf="this.isAdmin" routerLink="create">Create a Subject</button>
 </section>
