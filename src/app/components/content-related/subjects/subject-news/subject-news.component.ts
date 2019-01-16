@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SiteService } from 'src/app/services/site.service';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
 import { Post } from 'src/app/classes/Posts';
+import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 
 @Component({
   selector: 'app-subject-news',
@@ -17,12 +17,12 @@ export class SubjectNewsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private site: SiteService
+    private subjectService: SubjectsService
   ) { }
 
 
   ngOnInit() {
-    this.site.setSubject(this.route.snapshot.paramMap.get(environment.routeParams.subjectid));
+    this.subjectService.setSubject(this.route.snapshot.paramMap.get(environment.routeParams.subjectid));
   }
 
 }

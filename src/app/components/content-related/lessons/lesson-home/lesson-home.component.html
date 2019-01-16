@@ -3,8 +3,8 @@
   <!-- Shown after successfully fetching lesson from api -->
   <ng-container *ngIf="(lesson$ !== null); else loadingTemplate">
     <h2>{{ lesson$.name }}</h2>
-    <div style="border-style: solid; border-width: 2px; padding: 1em;">
-      {{ lesson$.body }}
+    <div class="card">
+      <div class="card-body" [innerHTML]="lessonBody"></div>
     </div>
   </ng-container>
 

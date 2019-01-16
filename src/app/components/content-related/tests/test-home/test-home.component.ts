@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Test } from 'src/app/classes/Test';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SiteService } from 'src/app/services/site.service';
 import { environment } from 'src/environments/environment';
+import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
+import { TestsService } from 'src/app/services/contentServices/tests.service';
 
 @Component({
   selector: 'app-test-home',
@@ -18,7 +19,8 @@ export class TestHomeComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private site: SiteService
+    private subjectService: SubjectsService,
+    private testService: TestsService
   ) { }
 
   ngOnInit() {
@@ -28,10 +30,10 @@ export class TestHomeComponent implements OnInit {
     let testid = this.route.snapshot.paramMap.get(environment.routeParams.testid);
 
     // Set subject id in site service based on url parameter.
-    this.site.setSubject(subjectid);
+    this.subjectService.setSubject(subjectid);
 
     // Get test from api.
-    this.site.getTest(subjectid, topicid, testid).subscribe((tests) => {
+    this.testService.getTest(subjectid, topicid, testid).subscribe((tests) => {
       this.test$ = tests[0];
     }, (err) => {
       this.loadingError = true;

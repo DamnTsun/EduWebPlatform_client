@@ -1,0 +1,42 @@
+<section class="container page-content">
+  <!-- Message if something goes wrong with api request. -->
+  <div class="alert alert-danger" route="alert" *ngIf="errorMessage !== null">
+    <div>Unable to add lesson:</div>
+    {{ this.errorMessage }}
+  </div>
+
+  <h2>Create a Lesson:</h2>
+  <!-- Name -->
+  <div class="form-group">
+    <label for="name">Lesson Name</label>
+    <input name="name" class="form-control form-control-lg" id="lessonName" type="text" placeholder="Enter Lesson Name"
+      maxlength="50">
+    <small class="form-text text-muted">
+      Lesson Name Must Not:
+      <ul>
+        <li>Be blank.</li>
+        <li>Contain more than 50 characters.</li>
+        <li>Be the same as an existing lessons name, in this topic.</li>
+      </ul>
+    </small>
+  </div>
+
+  <!-- Body -->
+  <div class="form-group">
+    <label for="body">Lesson Body</label>
+    <quill-editor #body [style]="{ height: '50em' }"></quill-editor>
+    <small class="form-text text-muted">
+      <div>Lesson body may contain rich-text elements, such as bold and italics, as well as images.</div>
+      Lesson Body Must Not:
+      <ul>
+        <li>Be blank.</li>
+        <li>Contain more than 65,535 characters.</li>
+      </ul>
+      <div>Current encoded lesson body: {{ getBodyLength() }} characters.</div>
+    </small>
+  </div>
+
+
+  <button class="btn btn-primary" (click)="createLesson()" *ngIf="!this.submitted">Submit</button>
+
+</section>

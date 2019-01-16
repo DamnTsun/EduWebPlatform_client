@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SiteService } from '../../../services/site.service';
 
 import { Subject } from '../../../classes/Subject';
 import { environment } from '../../../../environments/environment';
 import { AuthService, SocialUser } from 'angularx-social-login';
 import { SignInService } from 'src/app/services/sign-in.service';
+import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 
 @Component({
   selector: 'app-p-header',
@@ -22,7 +22,7 @@ export class PHeaderComponent implements OnInit {
 
 
   constructor(
-    private site: SiteService,
+    private subjectService: SubjectsService,
     private signIn: SignInService
   ) { }
 
@@ -31,7 +31,7 @@ export class PHeaderComponent implements OnInit {
     this.routes = environment.routes;
 
     // Subscribe to current subject. (header changes when in / not in a subject)
-    this.site.subject().subscribe((subject) => {
+    this.subjectService.subject().subscribe((subject) => {
       this.subject$ = subject;
     })
 
@@ -53,8 +53,8 @@ export class PHeaderComponent implements OnInit {
    * Clears currently selected subject. Sets SiteService subject to null, which updates the header.
    */
   private clearSubject(): void {
-    this.site.clearSubject();
-    this.site.redirect(environment.routes.subjectSelect);
+    this.subjectService.clearSubject();
+    //this.site.redirect(environment.routes.subjectSelect);
   }
 
   /**

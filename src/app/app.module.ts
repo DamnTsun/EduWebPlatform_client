@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { environment } from '../environments/environment';
 
+// App routes.
+import { appRoutes } from './app.router';
+
 // HTTP module.
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,6 +14,8 @@ import { RouterModule, Routes } from '@angular/router';
 // Social login.
 import { SocialLoginModule, AuthServiceConfig, LoginOpt } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
+// tinyMCE
+import { QuillModule } from 'ngx-quill';
 
 // Components.
 // AppComponent and shared stuff (header, animated CSS loading icon thingy, etc)
@@ -30,73 +35,17 @@ import { TestHomeComponent } from './components/content-related/tests/test-home/
 import { SignInComponent } from './components/account/sign-in/sign-in.component';
 import { AccountComponent } from './components/account/account/account.component';
 import { UserTestAttemptComponent } from './components/content-related/tests/user-test-attempt/user-test-attempt.component';
+import { SubjectCreatorComponent } from './components/content-related/subjects/subject-creator/subject-creator.component';
+import { SubjectEditorComponent } from './components/content-related/subjects/subject-editor/subject-editor.component';
+import { TopicCreatorComponent } from './components/content-related/topics/topic-creator/topic-creator.component';
+import { TopicEditorComponent } from './components/content-related/topics/topic-editor/topic-editor.component';
+import { LessonCreatorComponent } from './components/content-related/lessons/lesson-creator/lesson-creator.component';
+import { LessonEditorComponent } from './components/content-related/lessons/lesson-editor/lesson-editor.component';
+import { TestCreatorComponent } from './components/content-related/tests/test-creator/test-creator.component';
+import { TestEditorComponent } from './components/content-related/tests/test-editor/test-editor.component';
 
 
 
-const appRoutes = [
-  // *** CONTENT RELATED ***
-  // SUBJECTS
-  // Redirect from '' to subject list.
-  {
-    path: '',
-    redirectTo: environment.routes.subjectSelect,
-    pathMatch: 'full'
-  },
-  // Subject list.
-  {
-    path: environment.routes.subjectSelect,
-    component: SubjectListComponent
-  },
-  // Subject home page.
-  {
-    path: environment.routes.subjectHome,
-    component: SubjectHomeComponent
-  },
-  // Subject news page.
-  {
-    path: environment.routes.subjectNews,
-    component: SubjectNewsComponent
-  },
-  // Subject topic list.
-  {
-    path: environment.routes.topicSelect,
-    component: TopicListComponent
-  },
-
-  // TOPICS
-  {
-    path: environment.routes.topicHome,
-    component: TopicHomeComponent
-  },
-
-  // LESSONS
-  {
-    path: environment.routes.lessonHome,
-    component: LessonHomeComponent
-  },
-  // TESTS
-  {
-    path: environment.routes.testHome,
-    component: TestHomeComponent
-  },
-  // USER TEST ATTEMPT
-  {
-    path: environment.routes.userTestAttempt,
-    component: UserTestAttemptComponent
-  },
-  // *** END OF CONTENT RELATED ***
-
-
-  // Sign in and account related.
-  {
-    path: environment.routes.account_signIn,
-    component: SignInComponent
-  },
-  {
-    path: environment.routes.account,
-    component: AccountComponent
-  }
-]
 
 
 // Social login config.
@@ -134,14 +83,23 @@ export function provideConfig() {
     TopicHomeComponent,
     LessonHomeComponent,
     TestHomeComponent,
-    UserTestAttemptComponent
+    UserTestAttemptComponent,
+    SubjectCreatorComponent,
+    SubjectEditorComponent,
+    TopicCreatorComponent,
+    TopicEditorComponent,
+    LessonCreatorComponent,
+    LessonEditorComponent,
+    TestCreatorComponent,
+    TestEditorComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
-    SocialLoginModule
+    SocialLoginModule,
+    QuillModule
   ],
   providers: [
     {

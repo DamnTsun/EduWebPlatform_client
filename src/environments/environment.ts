@@ -19,13 +19,21 @@ export const environment = {
     subjectSelect: 'subjects',
     subjectHome: 'subjects/:subjectid',
     subjectNews: 'subjects/:subjectid/news',
-
     topicSelect: 'subjects/:subjectid/topics',
+    subjectCreator: 'subjects/create',
+    subjectEditor: 'subjects/:subjectid/edit',
 
     // TOPICS
     topicHome: 'subjects/:subjectid/topics/:topicid',
+    topicCreator: 'subjects/:subjectid/topics/create',
+    topicEditor: 'subjects/:subjectid/topics/:topicid/edit',
+
     // LESSONS / TESTS
+    lessonCreator: 'subjects/:subjectid/topics/:topicid/lessons/create',
+    lessonEditor: 'subjects/:subjectid/topics/:topicid/lessons/:lessonid/edit',
     lessonHome: 'subjects/:subjectid/topics/:topicid/lessons/:lessonid',
+    testCreator: 'subjects/:subjectid/topics/:topicid/tests/create',
+    testEditor: 'subjects/:subjectid/topics/:topicid/tests/:testid/edit',
     testHome: 'subjects/:subjectid/topics/:topicid/tests/:testid',
     // USER TEST ATTEMPT
     userTestAttempt: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_test',

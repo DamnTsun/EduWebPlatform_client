@@ -1,0 +1,39 @@
+<section class="container page-content">
+  <h2>Create a Subject:</h2>
+  <!-- Message if something goes wrong with api request. -->
+  <div class="alert alert-warning" role="alert" *ngIf="errorMessage !== null">
+    <div>Unable to add subject:</div>
+    {{ this.errorMessage }}
+  </div>
+
+  <!-- Name -->
+  <div class="form-group">
+    <label for="name">Subject Name</label>
+    <input name="name" class="form-control form-control-lg" id="subjectName" type="text" placeholder="Enter Subject Name"
+      maxlength="50">
+    <small class="form-text text-muted">
+      Subject Name Must Not:
+      <ul>
+        <li>Be blank.</li>
+        <li>Contain more than 50 characters.</li>
+        <li>Be the same as an existing subjects name.</li>
+      </ul>
+    </small>
+  </div>
+
+  <!-- Description -->
+  <div class="form-group">
+    <label for="description">Subject Description (Optional)</label>
+    <textarea name="description" class="form-control" id="subjectDescription" placeholder="Enter Subject Desciption (Optional)"
+      rows="10" maxlength="1024"></textarea>
+    <small class="form-text text-muted">
+      Subject Description Must Not:
+      <ul>
+        <li>Contain more than 1024 characters.</li>
+      </ul>
+    </small>
+  </div>
+
+  <button class="btn btn-primary" (click)="createSubject()" *ngIf="!this.submitted">Submit</button>
+
+</section>

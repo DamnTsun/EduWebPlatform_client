@@ -1,0 +1,9 @@
+button.enterContentButton {
+    width: 15em;
+}
+
+button.adminButton {
+    float: right;
+    margin-left: 1em;
+    width: 5em;
+}
