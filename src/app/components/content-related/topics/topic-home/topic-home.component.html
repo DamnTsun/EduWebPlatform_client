@@ -18,6 +18,9 @@
         <div class="col" *ngIf="(this.lessons$ !== null)">
           <h2>Select a Lesson:</h2>
           <ul class="content-list">
+            <!-- Create lesson button -->
+            <button class="btn btn-primary" *ngIf="this.isAdmin" routerLink="lessons/create">Create a Lesson</button>
+
             <!-- Show each lesson as an item on a list. -->
             <li *ngFor="let lesson of lessons$; let i = index">
               <div class="card">

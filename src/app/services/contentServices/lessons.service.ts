@@ -45,6 +45,23 @@ export class LessonsService {
 
   
   /**
+   * Creates new lesson, in the specified topic, in the specified subject, based on given lesson object.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param lessonObject - object containing values for lesson.
+   */
+  public createLesson(subjectid, topicid, lessonObject) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(lessonObject));
+    return this.api.post(
+      environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/lessons`,
+      data
+    );
+  }
+
+
+  
+  /**
    * Deletes a lesson, in a topic, in a subject.
    * @param subjectid - id of subject.
    * @param topicid - id of topic.

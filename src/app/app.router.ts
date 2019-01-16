@@ -13,6 +13,7 @@ import { SubjectCreatorComponent } from "./components/content-related/subjects/s
 import { SubjectEditorComponent } from "./components/content-related/subjects/subject-editor/subject-editor.component";
 import { TopicCreatorComponent } from "./components/content-related/topics/topic-creator/topic-creator.component";
 import { TopicEditorComponent } from "./components/content-related/topics/topic-editor/topic-editor.component";
+import { LessonCreatorComponent } from "./components/content-related/lessons/lesson-creator/lesson-creator.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -67,8 +68,14 @@ export const appRoutes = [
     component: TopicHomeComponent
   },
 
+
+
   // LESSONS
-  {
+  { // Lesson creator.
+    path: environment.routes.lessonCreator,
+    component: LessonCreatorComponent
+  },
+  { // Lesson home.
     path: environment.routes.lessonHome,
     component: LessonHomeComponent
   },

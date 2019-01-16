@@ -14,6 +14,8 @@ import { RouterModule, Routes } from '@angular/router';
 // Social login.
 import { SocialLoginModule, AuthServiceConfig, LoginOpt } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
+// tinyMCE
+import { EditorModule } from '@tinyMCE/tinymce-angular';
 
 // Components.
 // AppComponent and shared stuff (header, animated CSS loading icon thingy, etc)
@@ -37,6 +39,7 @@ import { SubjectCreatorComponent } from './components/content-related/subjects/s
 import { SubjectEditorComponent } from './components/content-related/subjects/subject-editor/subject-editor.component';
 import { TopicCreatorComponent } from './components/content-related/topics/topic-creator/topic-creator.component';
 import { TopicEditorComponent } from './components/content-related/topics/topic-editor/topic-editor.component';
+import { LessonCreatorComponent } from './components/content-related/lessons/lesson-creator/lesson-creator.component';
 
 
 
@@ -81,14 +84,16 @@ export function provideConfig() {
     SubjectCreatorComponent,
     SubjectEditorComponent,
     TopicCreatorComponent,
-    TopicEditorComponent
+    TopicEditorComponent,
+    LessonCreatorComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
-    SocialLoginModule
+    SocialLoginModule,
+    EditorModule
   ],
   providers: [
     {
