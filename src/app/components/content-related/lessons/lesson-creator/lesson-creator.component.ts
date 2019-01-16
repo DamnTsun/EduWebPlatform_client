@@ -50,6 +50,14 @@ export class LessonCreatorComponent implements OnInit {
     });
 
     // Set event listener onto editor to get the current text.
+    this.editor.onEditorCreated.subscribe(e => {
+      let tool = e.getModule('toolbar');
+      tool.addHandler('image', (val) => {
+        console.log('add image')
+      });
+      this.editor = e;
+      console.log(e);
+    });
     this.editor.onContentChanged.subscribe(e => {
       this.body = e.html;
     })
