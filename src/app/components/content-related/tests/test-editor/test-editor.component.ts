@@ -43,7 +43,7 @@ export class TestEditorComponent implements OnInit {
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
       // If user not admin, redirect to topic home.
       if (!isAdmin) {
-        //this.redirectToTopicHome();
+        this.redirectToTopicHome();
       }
     }, (err) => {
       console.error('Test-Editor isAdmin Error:', err);
