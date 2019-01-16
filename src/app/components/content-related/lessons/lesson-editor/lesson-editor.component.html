@@ -1,0 +1,39 @@
+<section class="container page-content">
+    <!-- Error message if something goes wrong. -->
+    <div class="alert alert-danger" role="alert" *ngIf="this.errorMessage !== null">
+      <div>Unable to edit lesson:</div>
+      {{ this.errorMessage }}
+    </div>
+  
+    <h2>Edit a Lesson:</h2>
+    <!-- Name -->
+    <div class="form-group">
+      <label for="name">Lesson Name</label>
+      <input name="name" class="form-control form-control-lg" id="lessonName" type="text" placeholder="Enter Lesson Name"
+        maxlength="50">
+      <small class="form-text text-muted">
+        Lesson Name Must Not:
+        <ul>
+          <li>Be blank.</li>
+          <li>Contain more than 50 characters.</li>
+          <li>Be the same as an existing lessons name, in this topic.</li>
+        </ul>
+      </small>
+    </div>
+  
+    <!-- Description -->
+    <div class="form-group">
+      <label for="body">Lesson Body</label>
+      <quill-editor #body [style]="{ height: '50em' }"></quill-editor>
+      <small class="form-text text-muted">
+        Lesson Body Must Not:
+        <ul>
+          <li>Contain more than 65,535 characters.</li>
+        </ul>
+        <div>Current encoded lesson body: {{ getBodyLength() }} characters.</div>
+      </small>
+    </div>
+  
+    <button class="btn btn-primary" (click)="editLesson()" *ngIf="!this.submitted">Submit</button>
+  
+  </section>

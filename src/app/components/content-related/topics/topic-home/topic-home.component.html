@@ -29,7 +29,7 @@
                   <button class="btn btn-primary enterContentButton" routerLink="lessons/{{ lesson.id }}">View Lesson</button>
 
                   <button class="btn btn-danger adminButton" *ngIf="this.isAdmin" (click)="this.deleteLesson(i)">Delete</button>
-                  <button class="btn btn-warning adminButton" *ngIf="this.isAdmin">Edit</button>
+                  <button class="btn btn-warning adminButton" *ngIf="this.isAdmin" routerLink="lessons/{{ lesson.id }}/edit">Edit</button>
                 </div>
               </div>
             </li>

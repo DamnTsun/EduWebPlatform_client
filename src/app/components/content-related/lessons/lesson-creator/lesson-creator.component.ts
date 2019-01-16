@@ -104,21 +104,16 @@ export class LessonCreatorComponent implements OnInit {
     lesson.name = nameInput.value;
 
     // Body
-    // Editor doesn't like 'tinymce' though it works fine in the compiled JS. Putting in try-catch anyway.
-    try {
-      if (this.body == null ||
-          this.body == '') {
-        this.errorMessage = 'You must enter a description.';
-        return null;
-      }
-      if (this.body.length > 65535) {
-        this.errorMessage = 'Encoded body cannot contain more than 65,535 characters.';
-        return null;
-      }
-      lesson.body = this.body;
-    } catch {
+    if (this.body == null ||
+        this.body == '') {
+      this.errorMessage = 'You must enter a body.';
       return null;
     }
+    if (this.body.length > 65535) {
+      this.errorMessage = 'Encoded body cannot contain more than 65,535 characters.';
+      return null;
+    }
+    lesson.body = this.body;
 
     // Clear error since inputs must be valid.
     this.errorMessage = null;

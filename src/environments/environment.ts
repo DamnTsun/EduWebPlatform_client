@@ -30,6 +30,7 @@ export const environment = {
 
     // LESSONS / TESTS
     lessonCreator: 'subjects/:subjectid/topics/:topicid/lessons/create',
+    lessonEditor: 'subjects/:subjectid/topics/:topicid/lessons/:lessonid/edit',
     lessonHome: 'subjects/:subjectid/topics/:topicid/lessons/:lessonid',
     testHome: 'subjects/:subjectid/topics/:topicid/tests/:testid',
     // USER TEST ATTEMPT

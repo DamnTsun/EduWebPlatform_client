@@ -60,6 +60,22 @@ export class LessonsService {
   }
 
 
+  /**
+   * Edits an existing lesson, in the specified topic, in the specified subject, based on given lesson object.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param lessonid - id of lesson.
+   * @param lessonObject - object containing values for lesson.
+   */
+  public editLesson(subjectid, topicid, lessonid, lessonObject) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(lessonObject));
+    return this.api.post(
+      environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/lessons/${lessonid}`,
+      data
+    );
+  }
+  
   
   /**
    * Deletes a lesson, in a topic, in a subject.

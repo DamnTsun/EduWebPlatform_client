@@ -14,6 +14,7 @@ import { SubjectEditorComponent } from "./components/content-related/subjects/su
 import { TopicCreatorComponent } from "./components/content-related/topics/topic-creator/topic-creator.component";
 import { TopicEditorComponent } from "./components/content-related/topics/topic-editor/topic-editor.component";
 import { LessonCreatorComponent } from "./components/content-related/lessons/lesson-creator/lesson-creator.component";
+import { LessonEditorComponent } from "./components/content-related/lessons/lesson-editor/lesson-editor.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -74,6 +75,10 @@ export const appRoutes = [
   { // Lesson creator.
     path: environment.routes.lessonCreator,
     component: LessonCreatorComponent
+  },
+  { // Lesson editor
+    path: environment.routes.lessonEditor,
+    component: LessonEditorComponent
   },
   { // Lesson home.
     path: environment.routes.lessonHome,
