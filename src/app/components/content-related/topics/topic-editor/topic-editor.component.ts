@@ -118,13 +118,13 @@ export class TopicEditorComponent implements OnInit {
 
     // Name.
     let name = (<HTMLInputElement>document.getElementById('topicName')).value;
-    if (name == '') {
+    if (name.trim() == '') {
       this.errorMessage = 'You must enter a name.'
       return null;
     }
     // Add to object if name has changed.
     if (name !== this.topic$.name) {
-      topic['name'] = name;
+      topic['name'] = name.trim();
     }
 
 

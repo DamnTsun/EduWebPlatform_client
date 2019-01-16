@@ -1,0 +1,40 @@
+<section class="container page-content">
+  <!-- Message if something goes wrong with api request. -->
+  <div class="alert alert-danger" route="alert" *ngIf="errorMessage !== null">
+    <div>Unable to add test:</div>
+    {{ this.errorMessage }}
+  </div>
+  
+  <h2>Create a Test:</h2>
+  <!-- Name -->
+  <div class="form-group">
+    <label for="name">Test Name</label>
+    <input name="name" class="form-control form-control-lg" id="testName" type="text" placeholder="Enter Test Name"
+      maxlength="50">
+    <small class="form-text text-muted">
+      Test Name Must Not:
+      <ul>
+        <li>Be blank.</li>
+        <li>Contain more than 50 characters.</li>
+        <li>Be the same as an existing tests name, in this topic.</li>
+      </ul>
+    </small>
+  </div>
+
+  <!-- Description -->
+  <div class="form-group">
+    <label for="description">Test Description (Optional)</label>
+    <textarea name="description" class="form-control" id="testDescription" placeholder="Enter Test Desciption (Optional)"
+      rows="10" maxlength="1024"></textarea>
+    <small class="form-text text-muted">
+      Test Description Must Not:
+      <ul>
+        <li>Contain more than 1024 characters.</li>
+      </ul>
+    </small>
+  </div>
+
+
+  <button class="btn btn-primary" (click)="createTest()" *ngIf="!this.submitted">Submit</button>
+
+</section>

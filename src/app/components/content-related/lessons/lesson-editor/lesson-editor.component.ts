@@ -127,13 +127,13 @@ export class LessonEditorComponent implements OnInit {
 
     // Name
     let name = (<HTMLInputElement>document.getElementById('lessonName')).value;
-    if (name == '') {
+    if (name.trim() == '') {
       this.errorMessage = 'You must enter a name.';
       return null;
     }
     // Store name if it has changed.
     if (name !== this.lesson$.name) {
-      lesson['name'] = name;
+      lesson['name'] = name.trim();
     }
 
 

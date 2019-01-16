@@ -35,6 +35,22 @@ export class TestsService {
     return this.api.get(environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/tests/${testid}`) as Observable<Test[]>
   }
 
+
+  /**
+   * Creates a new test, in the given topic, in the given subject, based on values in given test object.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testObject - object containing values for new test.
+   */
+  public createTest(subjectid, topicid, testObject) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(testObject));
+    return this.api.post(
+      environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/tests`,
+      data
+    );
+  }
+
   /**
    * Deletes a test, in a topic, in a subject.
    * @param subjectid - id of subject.

@@ -43,6 +43,9 @@
         <div class="col" *ngIf="(this.tests$ !== null)">
           <h2>Select a Test:</h2>
           <ul class="content-list">
+            <!-- Create test button -->
+            <button class="btn btn-primary" *ngIf="this.isAdmin" routerLink="tests/create">Create a Test</button>
+
             <!-- Show each test as an item on a list. -->
             <li *ngFor="let test of tests$; let i = index">
               <div class="card">

@@ -97,11 +97,11 @@ export class LessonCreatorComponent implements OnInit {
     // Name
     let nameInput = <HTMLInputElement>document.getElementById('lessonName');
     if (nameInput == null) { return null; }
-    if (nameInput.value == '') {
+    if (nameInput.value.trim() == '') {
       this.errorMessage = 'You must enter a name.';
       return null;
     }
-    lesson.name = nameInput.value;
+    lesson.name = nameInput.value.trim();
 
     // Body
     if (this.body == null ||
