@@ -42,6 +42,7 @@ import { TopicEditorComponent } from './components/content-related/topics/topic-
 import { LessonCreatorComponent } from './components/content-related/lessons/lesson-creator/lesson-creator.component';
 import { LessonEditorComponent } from './components/content-related/lessons/lesson-editor/lesson-editor.component';
 import { TestCreatorComponent } from './components/content-related/tests/test-creator/test-creator.component';
+import { TestEditorComponent } from './components/content-related/tests/test-editor/test-editor.component';
 
 
 
@@ -89,7 +90,8 @@ export function provideConfig() {
     TopicEditorComponent,
     LessonCreatorComponent,
     LessonEditorComponent,
-    TestCreatorComponent
+    TestCreatorComponent,
+    TestEditorComponent
   ],
   imports: [
     BrowserModule,

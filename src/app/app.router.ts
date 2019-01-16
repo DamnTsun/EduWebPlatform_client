@@ -16,6 +16,7 @@ import { TopicEditorComponent } from "./components/content-related/topics/topic-
 import { LessonCreatorComponent } from "./components/content-related/lessons/lesson-creator/lesson-creator.component";
 import { LessonEditorComponent } from "./components/content-related/lessons/lesson-editor/lesson-editor.component";
 import { TestCreatorComponent } from "./components/content-related/tests/test-creator/test-creator.component";
+import { TestEditorComponent } from "./components/content-related/tests/test-editor/test-editor.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -89,6 +90,10 @@ export const appRoutes = [
   { // Test creator.
     path: environment.routes.testCreator,
     component: TestCreatorComponent
+  },
+  { // Test editor.
+    path: environment.routes.testEditor,
+    component: TestEditorComponent
   },
   { // Test home.
     path: environment.routes.testHome,

@@ -33,6 +33,7 @@ export const environment = {
     lessonEditor: 'subjects/:subjectid/topics/:topicid/lessons/:lessonid/edit',
     lessonHome: 'subjects/:subjectid/topics/:topicid/lessons/:lessonid',
     testCreator: 'subjects/:subjectid/topics/:topicid/tests/create',
+    testEditor: 'subjects/:subjectid/topics/:topicid/tests/:testid/edit',
     testHome: 'subjects/:subjectid/topics/:topicid/tests/:testid',
     // USER TEST ATTEMPT
     userTestAttempt: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_test',

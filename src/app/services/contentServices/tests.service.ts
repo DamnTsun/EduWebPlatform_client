@@ -51,6 +51,24 @@ export class TestsService {
     );
   }
 
+
+  /**
+   * Edit an existing test, in given topic, in given subject, based on values in given object.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   * @param testObject - object containing values for test.
+   */
+  public editTest(subjectid, topicid, testid, testObject) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(testObject));
+    return this.api.post(
+      environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/tests/${testid}`,
+      data
+    );
+  }
+
+  
   /**
    * Deletes a test, in a topic, in a subject.
    * @param subjectid - id of subject.
