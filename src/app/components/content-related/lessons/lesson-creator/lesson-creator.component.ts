@@ -4,6 +4,8 @@ import { LessonsService } from 'src/app/services/contentServices/lessons.service
 import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Body } from '@angular/http/src/body';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-lesson-creator',
@@ -17,6 +19,9 @@ export class LessonCreatorComponent implements OnInit {
   private topicid = null;
   private submitted: boolean = false;           // Whether page has been submitted.
   private errorMessage: string = null;          // Error message to display if something goes wrong.
+
+  @ViewChild('body') editor: QuillEditorComponent;      // Rich-text editor for body.
+  private body: string = null;                          // User input for body.
 
 
   constructor(
@@ -38,11 +43,16 @@ export class LessonCreatorComponent implements OnInit {
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
       // Send back to topic home if not admin.
       if (!isAdmin) {
-        //this.redirectToTopicHome();
+        this.redirectToTopicHome();
       }
     }, (err) => {
       console.error('Lesson-Creator isAdmin Error:', err);
     });
+
+    // Set event listener onto editor to get the current text.
+    this.editor.onContentChanged.subscribe(e => {
+      this.body = e.html;
+    })
   }
 
 
@@ -88,12 +98,16 @@ export class LessonCreatorComponent implements OnInit {
     // Body
     // Editor doesn't like 'tinymce' though it works fine in the compiled JS. Putting in try-catch anyway.
     try {
-      let body = tinymce.activeEditor.getContent();
-      if (body == '') {
+      if (this.body == null ||
+          this.body == '') {
         this.errorMessage = 'You must enter a description.';
         return null;
       }
-      lesson.body = body;
+      if (this.body.length > 65535) {
+        this.errorMessage = 'Encoded body cannot contain more than 65,535 characters.';
+        return null;
+      }
+      lesson.body = this.body;
     } catch {
       return null;
     }
@@ -137,6 +151,11 @@ export class LessonCreatorComponent implements OnInit {
     }
   }
 
+
+  private getBodyLength() {
+    if (this.body == null) { return 0; }
+    return this.body.length;
+  }
 
 
   /**

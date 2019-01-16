@@ -24,30 +24,7 @@
   <!-- Body -->
   <div class="form-group">
     <label for="body">Lesson Body</label>
-    <editor name="body" [init]="{ height: '30em' }" plugins="
-      advlist
-      anchor
-      autolink
-      codesample
-      colorpicker
-      contextmenu
-      fullscreen
-      help
-      image
-      imagetools
-      lists
-      link
-      media
-      noneditable
-      preview
-      searchreplace
-      table
-      template
-      textcolor
-      visualblocks
-      wordcount
-    ">
-    </editor>
+    <quill-editor #body></quill-editor>
     <small class="form-text text-muted">
       <div>Lesson body may contain rich-text elements, such as bold and italics, as well as images.</div>
       Lesson Body Must Not:
@@ -55,6 +32,7 @@
         <li>Be blank.</li>
         <li>Contain more than 65,535 characters.</li>
       </ul>
+      <div>Current encoded lesson body: {{ getBodyLength() }} characters.</div>
     </small>
   </div>
 

@@ -15,7 +15,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SocialLoginModule, AuthServiceConfig, LoginOpt } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
 // tinyMCE
-import { EditorModule } from '@tinyMCE/tinymce-angular';
+import { QuillModule } from 'ngx-quill';
 
 // Components.
 // AppComponent and shared stuff (header, animated CSS loading icon thingy, etc)
@@ -93,7 +93,7 @@ export function provideConfig() {
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     SocialLoginModule,
-    EditorModule
+    QuillModule
   ],
   providers: [
     {
