@@ -35,6 +35,9 @@ export const environment = {
     testCreator: 'subjects/:subjectid/topics/:topicid/tests/create',
     testEditor: 'subjects/:subjectid/topics/:topicid/tests/:testid/edit',
     testHome: 'subjects/:subjectid/topics/:topicid/tests/:testid',
+
+    // TEST QUESTIONS
+    testQuestionList: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions',
     // USER TEST ATTEMPT
     userTestAttempt: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_test',
     // *** END OF CONTENT RELATED ***

@@ -14,8 +14,10 @@ import { RouterModule, Routes } from '@angular/router';
 // Social login.
 import { SocialLoginModule, AuthServiceConfig, LoginOpt } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
-// tinyMCE
+// Quill RCT
 import { QuillModule } from 'ngx-quill';
+// Infinite-Scroll
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 // Components.
 // AppComponent and shared stuff (header, animated CSS loading icon thingy, etc)
@@ -43,6 +45,7 @@ import { LessonCreatorComponent } from './components/content-related/lessons/les
 import { LessonEditorComponent } from './components/content-related/lessons/lesson-editor/lesson-editor.component';
 import { TestCreatorComponent } from './components/content-related/tests/test-creator/test-creator.component';
 import { TestEditorComponent } from './components/content-related/tests/test-editor/test-editor.component';
+import { TestQuestionListComponent } from './components/content-related/testQuestions/test-question-list/test-question-list.component';
 
 
 
@@ -91,7 +94,8 @@ export function provideConfig() {
     LessonCreatorComponent,
     LessonEditorComponent,
     TestCreatorComponent,
-    TestEditorComponent
+    TestEditorComponent,
+    TestQuestionListComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +103,8 @@ export function provideConfig() {
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     SocialLoginModule,
-    QuillModule
+    QuillModule,
+    InfiniteScrollModule
   ],
   providers: [
     {

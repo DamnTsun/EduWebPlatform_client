@@ -2,6 +2,9 @@
 
   <!-- Shown after test has been successfully fetched from api -->
   <ng-container *ngIf="(test$ !== null); else loadingTemplate">
+
+    <button class="btn btn-primary" *ngIf="this.isAdmin" routerLink="questions">Test Questions</button>
+
     <h2>{{ test$.name }}</h2>
     <p>{{ test$.description }}</p>
 

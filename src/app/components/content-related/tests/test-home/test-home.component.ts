@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { TestsService } from 'src/app/services/contentServices/tests.service';
+import { SignInService } from 'src/app/services/sign-in.service';
 
 @Component({
   selector: 'app-test-home',
@@ -14,13 +15,15 @@ export class TestHomeComponent implements OnInit {
 
   private test$: Test = null;
   private loadingError: boolean = false;
+  private isAdmin: boolean = false;
 
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private subjectService: SubjectsService,
-    private testService: TestsService
+    private testService: TestsService,
+    private signIn: SignInService
   ) { }
 
   ngOnInit() {
@@ -31,6 +34,15 @@ export class TestHomeComponent implements OnInit {
 
     // Set subject id in site service based on url parameter.
     this.subjectService.setSubject(subjectid);
+
+
+    // Get user admin status.
+    this.signIn.userIsAdmin().subscribe((isAdmin) => {
+      this.isAdmin = isAdmin;
+    }, (err) => {
+      console.error('Test-Home isAdmin Error:', err);
+    })
+
 
     // Get test from api.
     this.testService.getTest(subjectid, topicid, testid).subscribe((tests) => {

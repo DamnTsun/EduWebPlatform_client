@@ -1,0 +1,47 @@
+<section class="container page-content">
+
+
+  <!-- List of test questions-->
+  <ul class="content-list">
+    <!-- Create question button -->
+    <button class="btn btn-primary addButton">Create a Question</button>
+    <h5>Test Questions:</h5>
+    <li *ngFor="let question of testQuestions$; let i = index">
+      <div class="card">
+        <div class="card-body">
+          <h5>{{ question.question }}</h5>
+          <p>{{ question.answer }}</p>
+          <div>
+            <button class="btn btn-primary viewButton">View Question</button>
+          </div>
+          <div>
+            <button class="btn btn-warning adminButton adminButtonEdit">Edit</button>
+            <button class="btn btn-danger adminButton adminButtonDelete">Delete</button>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+
+
+  <!-- Inifinite scroll div. Loads more questions unless all loaded. -->
+  <div
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="1000"
+    (scrolled)="onScroll()">
+  </div>
+
+
+
+  <!-- Shows loading icon unless all questions loaded, in which case message is shown -->
+  <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
+  <ng-template #endOfContentTemplate>
+    <div class="alert alert-warning">
+      End of Test Questions
+    </div>
+  </ng-template>
+
+
+</section>
