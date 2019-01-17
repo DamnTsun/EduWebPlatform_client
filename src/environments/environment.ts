@@ -39,6 +39,7 @@ export const environment = {
 
     // TEST QUESTIONS
     testQuestionCreator: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions/create',
+    testQuestionEditor: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions/:testquestionid/edit',
     testQuestionList: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions',
     testQuestionHome: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions/:testquestionid',
     // USER TEST ATTEMPT

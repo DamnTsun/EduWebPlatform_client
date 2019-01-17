@@ -51,4 +51,22 @@ export class TestQuestionsService {
       data
     );
   }
+
+
+  /**
+   * Edits an existing test question, in a test, in a topic, in a subject, based on value of given object.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   * @param questionid - id of question.
+   * @param questionObject - values for test question.
+   */
+  public editTestQuestion(subjectid, topicid, testid, questionid, questionObject) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(questionObject));
+    return this.api.post(
+      environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/tests/${testid}/questions/${questionid}`,
+      data
+    );
+  }
 }
