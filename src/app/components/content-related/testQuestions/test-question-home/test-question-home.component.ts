@@ -43,7 +43,7 @@ export class TestQuestionHomeComponent implements OnInit {
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
       // If user is not admin, redirect to test home.
       if (!isAdmin) {
-        //this.redirectToTestHome();
+        this.redirectToTestHome();
       }
     }, (err) => {
       // Error. Redirect.

@@ -38,6 +38,7 @@ export const environment = {
     testHome: 'subjects/:subjectid/topics/:topicid/tests/:testid',
 
     // TEST QUESTIONS
+    testQuestionCreator: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions/create',
     testQuestionList: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions',
     testQuestionHome: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions/:testquestionid',
     // USER TEST ATTEMPT

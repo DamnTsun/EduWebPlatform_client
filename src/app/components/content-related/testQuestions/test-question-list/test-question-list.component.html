@@ -4,7 +4,7 @@
   <!-- List of test questions-->
   <ul class="content-list">
     <!-- Create question button -->
-    <button class="btn btn-primary addButton">Create a Question</button>
+    <button class="btn btn-primary addButton" routerLink="create">Create a Question</button>
     <h5>Test Questions:</h5>
     <li *ngFor="let question of testQuestions$; let i = index">
       <div class="card">

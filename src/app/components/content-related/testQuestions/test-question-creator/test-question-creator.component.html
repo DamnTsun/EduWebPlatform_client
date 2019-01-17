@@ -1,0 +1,54 @@
+<section class="container page-content">
+  <!-- Message if something goes wrong with api request. -->
+  <div class="alert alert-danger" route="alert" *ngIf="errorMessage !== null">
+    <div>Unable to add test question:</div>
+    {{ this.errorMessage }}
+  </div>
+
+  <h2>Create a Test Question:</h2>
+  <!-- Name -->
+  <div class="form-group">
+    <label for="name">Question Text</label>
+    <input name="name" class="form-control form-control-lg" id="questionText" type="text" placeholder="Enter Question Text"
+      maxlength="50">
+    <small class="form-text text-muted">
+      Question Text Must Not:
+      <ul>
+        <li>Be blank.</li>
+        <li>Contain more than 50 characters.</li>
+      </ul>
+    </small>
+  </div>
+
+  <!-- Answer -->
+  <div class="form-group">
+    <label for="answer">Question Answer</label>
+    <input name="answer" class="form-control form-control-lg" id="questionAnswer" type="text" placeholder="Enter Question Answer"
+      maxlength="50">
+    <small class="form-text text-muted">
+      Question Answer Must Not:
+      <ul>
+        <li>Be blank.</li>
+        <li>Contain more than 50 characters.</li>
+      </ul>
+    </small>
+  </div>
+
+  <!-- Image url-->
+  <div>
+    <label for="imageUrl">Question Image URL (Optional)</label>
+    <input name="imageUrl" class="form-control form-control-lg" id="questionImageUrl" type="text" placeholder="Enter Question Image Url (Optional)"
+      maxlength="255">
+    <small class="form-text text-muted">
+      Question Image URL Must not:
+      <ul>
+        <li>Contain more than 255 characters.</li>
+      </ul>
+    </small>
+  </div>
+
+
+
+  <button class="btn btn-primary" (click)="createTestQuestion()" *ngIf="!this.submitted">Submit</button>
+
+</section>

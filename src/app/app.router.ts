@@ -19,6 +19,7 @@ import { TestCreatorComponent } from "./components/content-related/tests/test-cr
 import { TestEditorComponent } from "./components/content-related/tests/test-editor/test-editor.component";
 import { TestQuestionListComponent } from "./components/content-related/testQuestions/test-question-list/test-question-list.component";
 import { TestQuestionHomeComponent } from "./components/content-related/testQuestions/test-question-home/test-question-home.component";
+import { TestQuestionCreatorComponent } from "./components/content-related/testQuestions/test-question-creator/test-question-creator.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -105,6 +106,10 @@ export const appRoutes = [
 
 
   // TEST QUESTIONS
+  { // Test question creator.
+    path: environment.routes.testQuestionCreator,
+    component: TestQuestionCreatorComponent
+  },
   { // Test question list.
     path: environment.routes.testQuestionList,
     component: TestQuestionListComponent

@@ -34,4 +34,21 @@ export class TestQuestionsService {
   public getTestQuestions(subjectid, topicid, testid, count, offset) {
     return this.api.get(environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/tests/${testid}/questions?count=${count}&offset=${offset}`);
   }
+
+
+  /**
+   * Creates a test question, in a test, in a topic, in a subject, based on values of given question object.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   * @param questionObject - values for test question.
+   */
+  public createTestQuestion(subjectid, topicid, testid, questionObject) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(questionObject));
+    return this.api.post(
+      environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/tests/${testid}/questions`,
+      data
+    );
+  }
 }

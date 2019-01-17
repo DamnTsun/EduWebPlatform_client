@@ -47,6 +47,7 @@ import { TestCreatorComponent } from './components/content-related/tests/test-cr
 import { TestEditorComponent } from './components/content-related/tests/test-editor/test-editor.component';
 import { TestQuestionListComponent } from './components/content-related/testQuestions/test-question-list/test-question-list.component';
 import { TestQuestionHomeComponent } from './components/content-related/testQuestions/test-question-home/test-question-home.component';
+import { TestQuestionCreatorComponent } from './components/content-related/testQuestions/test-question-creator/test-question-creator.component';
 
 
 
@@ -97,7 +98,8 @@ export function provideConfig() {
     TestCreatorComponent,
     TestEditorComponent,
     TestQuestionListComponent,
-    TestQuestionHomeComponent
+    TestQuestionHomeComponent,
+    TestQuestionCreatorComponent
   ],
   imports: [
     BrowserModule,
