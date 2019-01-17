@@ -1,16 +1,19 @@
 <section class="container page-content">
 
-  <h2>Select a Subject:</h2>
 
-  <!-- Create subject button (admin-only) -->
+  <!-- List of subjects -->
   <ul class="content-list">
+    <!-- Create subject button (admin-only) -->
     <button class="btn btn-primary" *ngIf="this.isAdmin" routerLink="create">Create a Subject</button>
 
+    <h2>Select a Subject:</h2>
     <li *ngFor="let subject of subjects$; let i = index">
       <section class="card">
         <section class="card-body">
           <h5 class="card-title">{{ subject.name }}</h5>
           <p class="card-text">{{ subject.description }}</p>
+
+          <!-- Buttons -->
           <button class="btn btn-primary enterSubjectButton" routerLink="{{ subject.id }}">View Subject</button>
           <button class="btn btn-danger adminButton" *ngIf="this.isAdmin" (click)="this.deleteSubject(i)">Delete</button>
           <button class="btn btn-warning adminButton" *ngIf="this.isAdmin" routerLink="{{ subject.id }}/edit">Edit</button>
@@ -18,6 +21,18 @@
       </section>
 
     </li>
+
+
+    <!-- Infinite scroll div -->
+    <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+
+    <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
+    <ng-template #endOfContentTemplate>
+      <div class="alert alert-warning">
+        End of Subjects
+      </div>
+    </ng-template>
+    
 
   </ul>
 </section>

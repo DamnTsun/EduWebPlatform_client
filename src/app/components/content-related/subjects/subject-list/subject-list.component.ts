@@ -10,7 +10,13 @@ import { SubjectsService } from 'src/app/services/contentServices/subjects.servi
 })
 export class SubjectListComponent implements OnInit {
 
-  private subjects$: Subject[] = null;
+  // Constants
+  private count = 10;
+  private offset = 0;
+
+  private subjects$: Subject[] = [];
+  private endOfContent: boolean = false;
+
   private isAdmin: boolean = false;
 
 
@@ -24,20 +30,44 @@ export class SubjectListComponent implements OnInit {
 
 
   ngOnInit() {
-    // Get list of subjects.
-    this.subjectService.getSubjects()
-      .subscribe((subjects) => {
-        this.subjects$ = subjects
-    });
-
     // Get user admin status.
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
       this.isAdmin = isAdmin;
     }, (err) => {
       console.log('Subject-List isAdmin Error:', err);
     });
+
+
+    // Get initial subjects to show.
+    this.getSubjects();
   }
 
+
+  /**
+   * Scroll event for infinite scroll.
+   */
+  private onScroll() {
+    if (!this.endOfContent) {
+      this.getSubjects();
+    }
+  }
+
+  /**
+   * Attempts to get subjects from api.
+   */
+  private getSubjects() {
+    this.subjectService.getSubjects(this.count, this.offset).subscribe((subjects: Subject[]) => {
+      if (subjects.length > 0) {
+        this.subjects$ = this.subjects$.concat(subjects);
+        this.offset += subjects.length;
+      } else {
+        // Empty list fetched. Must be end of subjects.
+        this.endOfContent = true;
+      }
+    }, (err) => {
+      console.error('Subject-List error getting subjects:', err);
+    })
+  }
 
   
   /**

@@ -56,8 +56,8 @@ export class SubjectsService {
   /**
    * Gets all subjects from api.
    */
-  public getSubjects() {
-    return this.api.get(environment.apiUrl + `subjects`) as Observable<Subject[]>;
+  public getSubjects(count, offset) {
+    return this.api.get(environment.apiUrl + `subjects?count=${count}&offset=${offset}`) as Observable<Subject[]>;
   }
 
 
