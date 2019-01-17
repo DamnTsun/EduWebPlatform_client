@@ -13,7 +13,13 @@ import { TopicsService } from 'src/app/services/contentServices/topics.service';
 })
 export class TopicListComponent implements OnInit {
 
-  private topics$: Topic[];
+  // Constants
+  private count = 10;
+  private offset = 0;
+
+  private subjectid = null;
+  private topics$: Topic[] = [];
+  private endOfContent: boolean = false;
   private loadingError: boolean = false;
   private isAdmin: boolean = false;
 
@@ -30,16 +36,9 @@ export class TopicListComponent implements OnInit {
 
   ngOnInit() {
     // Set subjectid to set subject. Then get associated topics.
-    let subjectId = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
-    this.subjectService.setSubject(subjectId);
+    this.subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
+    this.subjectService.setSubject(this.subjectid);
 
-    // Subscribe to topics.
-    this.topicService.getTopics(subjectId).subscribe((topics) => {
-      this.topics$ = topics;
-    }, (err) => {
-      this.loadingError = true;
-      console.error(err);
-    });
 
     // Get user admin status.
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
@@ -47,8 +46,38 @@ export class TopicListComponent implements OnInit {
     }, (err) => {
       console.error('Topic-List isAdmin Error:', err);
     });
+
+
+    // Get initial topics.
+    this.getTopics();
   }
   
+
+  /**
+   * Scroll event for infinite scroll.
+   */
+  private onScroll() {
+    if (!this.endOfContent) {
+      this.getTopics();
+    }
+  }
+
+  /**
+   * Attempts to get topics from api.
+   */
+  private getTopics() {
+    this.topicService.getTopics(this.subjectid, this.count, this.offset).subscribe((topics: Topic[]) => {
+      if (topics.length > 0) {
+        this.topics$ = this.topics$.concat(topics);
+        this.offset += topics.length;
+      } else {
+        // Empty list fetched. Must be end of topics.
+        this.endOfContent = true;
+      }
+    }, (err) => {
+      console.error('Topic-List error getting topics:', err);
+    });
+  }
 
 
   /**
