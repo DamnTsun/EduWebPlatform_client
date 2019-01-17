@@ -4,7 +4,7 @@
   <!-- List of topics -->
   <ul class="content-list">
     <!-- Create topic button -->
-    <button class="btn btn-primary" *ngIf="this.isAdmin" routerLink="create">Create a Topic</button>
+    <button class="btn btn-primary createButton" *ngIf="this.isAdmin" routerLink="create">Create a Topic</button>
 
     <h2>Select a Topic:</h2>
     <li *ngFor="let topic of topics$; let i = index">
@@ -14,9 +14,13 @@
           <p class="card-text">{{ topic.description }}</p>
 
           <!-- buttons -->
-          <button class="btn btn-primary enterTopicButton" routerLink="{{ topic.id }}">View Topic</button>
-          <button class="btn btn-danger adminButton" *ngIf="this.isAdmin" (click)="this.deleteTopic(i)">Delete</button>
-          <button class="btn btn-warning adminButton" *ngIf="this.isAdmin" routerLink="{{ topic.id }}/edit">Edit</button>
+          <div>
+            <button class="btn btn-primary viewButton" routerLink="{{ topic.id }}">View Topic</button>
+          </div>
+          <div>
+            <button class="btn btn-warning adminButton adminButtonEdit" *ngIf="this.isAdmin" routerLink="{{ topic.id }}/edit">Edit</button>
+            <button class="btn btn-danger adminButton adminButtonDelete" *ngIf="this.isAdmin" (click)="this.deleteTopic(i)">Delete</button>
+          </div>
         </section>
       </section>
     </li>

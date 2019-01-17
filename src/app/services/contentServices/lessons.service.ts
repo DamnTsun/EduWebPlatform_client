@@ -22,9 +22,9 @@ export class LessonsService {
    * @param subjectid - id of subject.
    * @param topicid - id of topic.
    */
-  public getLessons(subjectid, topicid): Observable<Lesson[]> {
+  public getLessons(subjectid, topicid, count, offset): Observable<Lesson[]> {
     return this.api.get(environment.apiUrl +
-      `subjects/${subjectid}/topics/${topicid}/lessons`) as Observable<Lesson[]>;
+      `subjects/${subjectid}/topics/${topicid}/lessons?count=${count}&offset=${offset}`) as Observable<Lesson[]>;
   }
 
 

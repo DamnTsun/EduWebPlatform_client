@@ -20,7 +20,6 @@ export const environment = {
     subjectSelect: 'subjects',
     subjectHome: 'subjects/:subjectid',
     subjectNews: 'subjects/:subjectid/news',
-    topicSelect: 'subjects/:subjectid/topics',
     subjectCreator: 'subjects/create',
     subjectEditor: 'subjects/:subjectid/edit',
 
@@ -28,14 +27,17 @@ export const environment = {
     topicHome: 'subjects/:subjectid/topics/:topicid',
     topicCreator: 'subjects/:subjectid/topics/create',
     topicEditor: 'subjects/:subjectid/topics/:topicid/edit',
+    topicSelect: 'subjects/:subjectid/topics',
 
     // LESSONS / TESTS
     lessonCreator: 'subjects/:subjectid/topics/:topicid/lessons/create',
     lessonEditor: 'subjects/:subjectid/topics/:topicid/lessons/:lessonid/edit',
     lessonHome: 'subjects/:subjectid/topics/:topicid/lessons/:lessonid',
+    lessonList: 'subjects/:subjectid/topics/:topicid/lessons',
     testCreator: 'subjects/:subjectid/topics/:topicid/tests/create',
     testEditor: 'subjects/:subjectid/topics/:topicid/tests/:testid/edit',
     testHome: 'subjects/:subjectid/topics/:topicid/tests/:testid',
+    testList: 'subjects/:subjectid/topics/:topicid/tests',
 
     // TEST QUESTIONS
     testQuestionCreator: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions/create',

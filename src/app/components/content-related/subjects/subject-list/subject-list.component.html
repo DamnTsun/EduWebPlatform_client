@@ -4,7 +4,7 @@
   <!-- List of subjects -->
   <ul class="content-list">
     <!-- Create subject button (admin-only) -->
-    <button class="btn btn-primary" *ngIf="this.isAdmin" routerLink="create">Create a Subject</button>
+    <button class="btn btn-primary createButton" *ngIf="this.isAdmin" routerLink="create">Create a Subject</button>
 
     <h2>Select a Subject:</h2>
     <li *ngFor="let subject of subjects$; let i = index">
@@ -14,9 +14,9 @@
           <p class="card-text">{{ subject.description }}</p>
 
           <!-- Buttons -->
-          <button class="btn btn-primary enterSubjectButton" routerLink="{{ subject.id }}">View Subject</button>
-          <button class="btn btn-danger adminButton" *ngIf="this.isAdmin" (click)="this.deleteSubject(i)">Delete</button>
-          <button class="btn btn-warning adminButton" *ngIf="this.isAdmin" routerLink="{{ subject.id }}/edit">Edit</button>
+          <button class="btn btn-primary viewButton" routerLink="{{ subject.id }}">View Subject</button>
+          <button class="btn btn-warning adminButton adminButtonEdit" *ngIf="this.isAdmin" routerLink="{{ subject.id }}/edit">Edit</button>
+          <button class="btn btn-danger adminButton adminButtonDelete" *ngIf="this.isAdmin" (click)="this.deleteSubject(i)">Delete</button>
         </section>
       </section>
     </li>

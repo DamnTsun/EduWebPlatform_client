@@ -1,0 +1,79 @@
+import { Component, OnInit } from '@angular/core';
+import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
+import { LessonsService } from 'src/app/services/contentServices/lessons.service';
+import { SignInService } from 'src/app/services/sign-in.service';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { Lesson } from 'src/app/classes/Lesson';
+
+@Component({
+  selector: 'app-lesson-list',
+  templateUrl: './lesson-list.component.html',
+  styleUrls: ['./lesson-list.component.css']
+})
+export class LessonListComponent implements OnInit {
+
+  // Constants
+  private count = 10;                       // Number of lesson to get at a time.
+  private offset = 0;                       // How many lessons have already been fetched.
+
+  private subjectid = null;
+  private topicid = null;
+  private endOfContent: boolean = false;
+  private isAdmin: boolean = false;
+  private lessons$: Lesson[] = [];
+
+
+  constructor(
+    private subjectService: SubjectsService,
+    private lessonService: LessonsService,
+    private signIn: SignInService,
+    private route: ActivatedRoute
+  ) { }
+
+  ngOnInit() {
+    // Get route params.
+    this.subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
+    this.topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
+    // Set subject.
+    this.subjectService.setSubject(this.subjectid);
+
+
+    // Get user admin status.
+    this.signIn.userIsAdmin().subscribe((isAdmin) => {
+      this.isAdmin = isAdmin;
+    }, (err) => {
+      console.error('Lesson-List isAdmin error:', err);
+    });
+
+
+    // Get initial lessons.
+    this.getLessons();
+  }
+
+
+  /**
+   * Scroll event for infinite scroll.
+   */
+  private onScroll() {
+    if (!this.endOfContent) {
+      this.getLessons();
+    }
+  }
+
+  /**
+   * Attempt to get more lessons from api.
+   */
+  private getLessons() {
+    this.lessonService.getLessons(this.subjectid, this.topicid, this.count, this.offset)
+      .subscribe((lessons: Lesson[]) => {
+        if (lessons.length > 0) {
+          this.lessons$ = this.lessons$.concat(lessons);
+          this.offset += lessons.length;
+        } else {
+          // Empty list. Must be end of lessons.
+          this.endOfContent = true;
+        }
+    })
+  }
+}

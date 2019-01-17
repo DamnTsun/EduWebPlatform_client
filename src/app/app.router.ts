@@ -21,6 +21,8 @@ import { TestQuestionListComponent } from "./components/content-related/testQues
 import { TestQuestionHomeComponent } from "./components/content-related/testQuestions/test-question-home/test-question-home.component";
 import { TestQuestionCreatorComponent } from "./components/content-related/testQuestions/test-question-creator/test-question-creator.component";
 import { TestQuestionEditorComponent } from "./components/content-related/testQuestions/test-question-editor/test-question-editor.component";
+import { LessonListComponent } from "./components/content-related/lessons/lesson-list/lesson-list.component";
+import { TestListComponent } from "./components/content-related/tests/test-list/test-list.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -86,6 +88,10 @@ export const appRoutes = [
     path: environment.routes.lessonEditor,
     component: LessonEditorComponent
   },
+  { // Lesson select.
+    path: environment.routes.lessonList,
+    component: LessonListComponent
+  },
   { // Lesson home.
     path: environment.routes.lessonHome,
     component: LessonHomeComponent
@@ -98,6 +104,10 @@ export const appRoutes = [
   { // Test editor.
     path: environment.routes.testEditor,
     component: TestEditorComponent
+  },
+  { // Test list.
+    path: environment.routes.testList,
+    component: TestListComponent
   },
   { // Test home.
     path: environment.routes.testHome,
