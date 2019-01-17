@@ -59,8 +59,10 @@ export class TestQuestionListComponent implements OnInit {
 
 
 
+  /**
+   * Scroll event for infinite scroll. Will load more questions if it should.
+   */
   private onScroll() {
-    console.log(this.endOfContent);
     if (!this.endOfContent) {
       this.getTestQuestion();
     }
@@ -77,6 +79,7 @@ export class TestQuestionListComponent implements OnInit {
         // Increment offset for when more questions are loaded.
         this.offset += questions.length;
       } else {
+        // Empty list fetched. Must be at end of questions.
         this.endOfContent = true;
       }
     }, (err) => {

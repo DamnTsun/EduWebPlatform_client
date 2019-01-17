@@ -9,10 +9,21 @@
     <li *ngFor="let question of testQuestions$; let i = index">
       <div class="card">
         <div class="card-body">
-          <h5>{{ question.question }}</h5>
-          <p>{{ question.answer }}</p>
+          <div class="questionTextContainer">
+            <!-- Left section (text) -->
+            <div class="questionTopSection50">
+              <h5>{{ question.question }}</h5>
+              <p>{{ question.answer }}</p>
+            </div>
+            <!-- Right section (image) -->
+            <div class="questionTopSection50 questionTopSectionImage">
+              <img src="https://placehold.it/128x128" alt="Question Image" height="100%">
+            </div>
+          </div>
+
+          <!-- Buttons at bottom -->
           <div>
-            <button class="btn btn-primary viewButton">View Question</button>
+            <button class="btn btn-primary viewButton" routerLink="{{ question.id }}">View Question</button>
           </div>
           <div>
             <button class="btn btn-warning adminButton adminButtonEdit">Edit</button>
@@ -26,11 +37,7 @@
 
 
   <!-- Inifinite scroll div. Loads more questions unless all loaded. -->
-  <div
-    infiniteScroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="1000"
-    (scrolled)="onScroll()">
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
   </div>
 
 

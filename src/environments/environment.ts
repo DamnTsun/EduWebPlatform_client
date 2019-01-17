@@ -11,7 +11,8 @@ export const environment = {
     subjectid: 'subjectid',
     topicid: 'topicid',
     lessonid: 'lessonid',
-    testid: 'testid'
+    testid: 'testid',
+    questionId: 'testquestionid'
   },
   routes: {
     // *** CONTENT RELATED ***
@@ -38,6 +39,7 @@ export const environment = {
 
     // TEST QUESTIONS
     testQuestionList: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions',
+    testQuestionHome: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions/:testquestionid',
     // USER TEST ATTEMPT
     userTestAttempt: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_test',
     // *** END OF CONTENT RELATED ***

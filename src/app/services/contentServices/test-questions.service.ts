@@ -12,6 +12,18 @@ export class TestQuestionsService {
   ) { }
 
 
+
+  /**
+   * Gets a test question, in a test, in a topic, in a subject.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   * @param testquestionid - id of test question.
+   */
+  public getTestQuestion(subjectid, topicid, testid, testquestionid) {
+    return this.api.get(environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/tests/${testid}/questions/${testquestionid}`);
+  }
+
   /**
    * Gets test questions inside of a test, inside a topic, inside of subject.
    * Only possible if admin idToken passed to server. - Aka user is signed in AND admin.
