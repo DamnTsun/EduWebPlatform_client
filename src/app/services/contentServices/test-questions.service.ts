@@ -69,4 +69,19 @@ export class TestQuestionsService {
       data
     );
   }
+
+
+
+  /**
+   * Deletes a test question, in a test, in a topic, in a subject.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   * @param questionid - id of question.
+   */
+  public deleteTestQuestion(subjectid, topicid, testid, questionid) {
+    return this.api.delete(
+      environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/tests/${testid}/questions/${questionid}`
+    );
+  }
 }

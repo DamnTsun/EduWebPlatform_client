@@ -19,7 +19,7 @@
           </div>
           <div>
             <button class="btn btn-warning adminButton adminButtonEdit" *ngIf="this.isAdmin" routerLink="{{ lesson.id }}/edit">Edit</button>
-            <button class="btn btn-danger adminButton adminButtonDelete" *ngIf="this.isAdmin">Delete</button>
+            <button class="btn btn-danger adminButton adminButtonDelete" *ngIf="this.isAdmin" (click)="deleteLesson(i)">Delete</button>
           </div>
         </div>
       </div>

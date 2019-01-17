@@ -76,19 +76,20 @@ export class SubjectListComponent implements OnInit {
    */
   private deleteSubject(index): void {
     // Check user is an admin.
-    if (this.isAdmin) {
-      // Check index is valid.
-      if (index >= 0 && index < this.subjects$.length) { 
-        // Delete the subject.
-        this.subjectService.deleteSubject(this.subjects$[index].id).subscribe((a) => {
-          // Successful. Remove subject from list.
-          this.subjects$ = this.subjects$.filter((s, i, a) => {
-            return i !== index;
-          });
-        }, (err) => {
-          console.error('Subject-List delete subject Error:', err);
-        })
-      }
-    }
+    if (!this.isAdmin) { return; }
+    // Check index is valid.
+    if (index < 0 || index >= this.subjects$.length) { return; }
+    // Get confirmation from user.
+    if (!confirm(`Are you sure you want to delete subject '${this.subjects$[index].name}'?`)) { return; }
+
+    // Delete the subject.
+    this.subjectService.deleteSubject(this.subjects$[index].id).subscribe((a) => {
+      // Successful. Remove subject from list.
+      this.subjects$ = this.subjects$.filter((s, i, a) => {
+        return i !== index;
+      });
+    }, (err) => {
+      console.error('Subject-List delete subject Error:', err);
+    });
   }
 }

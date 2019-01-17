@@ -27,7 +27,7 @@
           </div>
           <div>
             <button class="btn btn-warning adminButton adminButtonEdit" routerLink="{{ question.id }}/edit">Edit</button>
-            <button class="btn btn-danger adminButton adminButtonDelete">Delete</button>
+            <button class="btn btn-danger adminButton adminButtonDelete" (click)="deleteTestQuestion(i)">Delete</button>
           </div>
         </div>
       </div>

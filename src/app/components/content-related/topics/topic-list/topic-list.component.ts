@@ -86,22 +86,20 @@ export class TopicListComponent implements OnInit {
    */
   private deleteTopic(index) {
     // Check user is admin.
-    if (this.isAdmin) {
-      // Check index is valid.
-      if (index >= 0 && index < this.topics$.length) {
-        // Get subjectid.
-        let subjectId = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
+    if (!this.isAdmin) { return; }
+    // Check index is valid.
+    if (index < 0 || index >= this.topics$.length) { return; }
+    // Get confirmation from user.
+    if (!confirm(`Are you sure you want to delete topic '${this.topics$[index].name}'?`)) { return; }
 
-        // Delete the topic.
-        this.topicService.deleteTopic(subjectId, this.topics$[index].id).subscribe((res) => {
-          // Successful. Remove topic from list.
-          this.topics$ = this.topics$.filter((t, i, a) => {
-            return i !== index;
-          });
-        }, (err) => {
-          console.error('Topic-List delete topic Error:', err);
-        });
-      }
-    }
+    // Attempt to delete.
+    this.topicService.deleteTopic(this.subjectid, this.topics$[index].id).subscribe((res) => {
+      // Successful. Remove topic from list.
+      this.topics$ = this.topics$.filter((t, i, a) => {
+        return i !== index;
+      });
+    }, (err) => {
+      console.error('Topic-List delete topic Error:', err);
+    });
   }
 }

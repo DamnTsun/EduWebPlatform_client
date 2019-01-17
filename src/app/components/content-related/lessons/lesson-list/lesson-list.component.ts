@@ -76,4 +76,29 @@ export class LessonListComponent implements OnInit {
         }
     })
   }
+
+
+
+  /**
+   * Deletes lesson with given index in array.
+   * @param index - index of lesson.
+   */
+  private deleteLesson(index) {
+    // Check user is an admin.
+    if (!this.isAdmin) { return; }
+    // Check index is valid.
+    if (index < 0 || index >= this.lessons$.length) { return; }
+    // Get confirmation from user.
+    if (!confirm(`Are you sure you want to delete lesson '${this.lessons$[index].name}'?`)) { return; }
+
+    // Attempt to delete.
+    this.lessonService.deleteLesson(this.subjectid, this.topicid, this.lessons$[index].id).subscribe((res) => {
+      // Successful, remove from list.
+      this.lessons$ = this.lessons$.filter((l, i, a) => {
+        return i !== index;
+      })
+    }, (err) => {
+      console.error('Lesson-List delete lesson error:', err);
+    })
+  }
 }

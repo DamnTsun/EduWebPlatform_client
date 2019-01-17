@@ -101,4 +101,24 @@ export class TestQuestionListComponent implements OnInit {
     route = route.replace(`:${environment.routeParams.testid}`, this.testid);
     this.router.navigate([ route ]);
   }
+
+
+
+  private deleteTestQuestion(index) {
+    // User should be admin to be on the component. Request will fail if they're not.
+    // Check index valid.
+    if (index < 0 || index >= this.testQuestions$.length) { return; }
+    // Get confirmation from user.
+    if (!confirm(`Are you sure you want to delete test question '${this.testQuestions$[index].question}'?`)) { return; }
+
+    // Attempt to delete.
+    this.testQuestionService.deleteTestQuestion(this.subjectid, this.topicid, this.testid, this.testQuestions$[index].id).subscribe((res) => {
+      // Successful. Remove from list.
+      this.testQuestions$ = this.testQuestions$.filter((tq, i, a) => {
+        return i !== index;
+      })
+    }, (err) => {
+      console.error('TestQuestion-List delete question Error:', err);
+    })
+  }
 }

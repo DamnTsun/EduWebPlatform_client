@@ -76,4 +76,29 @@ export class TestListComponent implements OnInit {
         }
       }); 
   }
+
+
+
+  /**
+   * Deletes test with given index in array.
+   * @param index - index of test.
+   */
+  private deleteTest(index) {
+    // Check user is admin.
+    if (!this.isAdmin) { return; }
+    // Check index is valid.
+    if (index < 0 || index >= this.tests$.length) { return; }
+    // Get confirmation from user.
+    if (!confirm(`Are you sure you want to delete test '${this.tests$[index].name}'?`)) { return; }
+
+    // Attempt to delete.
+    this.testService.deleteTest(this.subjectid, this.topicid, this.tests$[index].id).subscribe((res) => {
+      // Successful. Remove from list.
+      this.tests$ = this.tests$.filter((t, i, a) => {
+        return i !== index;
+      })
+    }, (err) => {
+      console.error('Test-List delete test error:', err);
+    })
+  }
 }
