@@ -1,5 +1,54 @@
 <section class="container page-content">
-  <button type="button" class="btn btn-primary" (click)="this.signOut()">
+
+  <!-- Error message section -->
+  <div class="alert alert-danger" *ngIf="this.errorMessage !== null">
+    {{ errorMessage }}
+  </div>
+
+  <div class="card" *ngIf="this.user$ !== null" style="text-align: center;">
+    <h2 class="card-header">Account Dashboard:</h2>
+    <div class="card-body">
+
+      <!-- Display name -->
+      <div class="dashboard-section">
+        <h5>DisplayName:</h5>
+        <p>{{ user$.displayname }}</p>
+        <div class="form-group">
+          <input class="form-control form-control-lg" id="displayNameInput" type="text" placeholder="Enter new DisplayName"
+            value="{{ user$.displayname }}">
+          <small class="form-text text-muted">
+            Note: Your DisplayName can be seen by admins and any user you send a message to.
+          </small>
+        </div>
+        <button class="btn btn-primary btn-block" (click)="updateName()">Change DisplayName</button>
+      </div>
+
+
+
+      <!-- Danger zone (delete stuff) -->
+      <div class="dashboard-section">
+        <div class="form-group">
+          <h5>Danger Zone:</h5>
+          <small class="form-text text-muted">
+            Note: These actions cannot be undone.
+          </small>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-danger btn-block" (click)="deleteAccount()">Delete Account</button>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-danger btn-block" (click)="deleteAllUserTests()">Delete ALL Previous Test Results</button>
+          <small class="form-text text-muted">
+            You can delete individual tests when viewing your user tests.
+          </small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sign out button -->
+  <button type="button" class="btn btn-primary btn-block signOutButton" (click)="this.signOut()">
     Sign Out
   </button>
 </section>

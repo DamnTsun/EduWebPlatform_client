@@ -42,13 +42,15 @@
 
 
   <!-- Infinite scroll div -->
-  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()" *ngIf="this.doInfiniteScroll"></div>
-
-  <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
-  <ng-template #endOfContentTemplate>
-    <div class="alert alert-warning">
-      End of Posts
-    </div>
-  </ng-template>
+  <div *ngIf="this.doInfiniteScroll">
+    <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()" *ngIf="this.doInfiniteScroll"></div>
+  
+    <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
+    <ng-template #endOfContentTemplate>
+      <div class="alert alert-warning">
+        End of Posts
+      </div>
+    </ng-template>
+  </div>
 
 </section>
