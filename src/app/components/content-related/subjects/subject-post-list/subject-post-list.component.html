@@ -1,49 +1,54 @@
-<!-- Show posts once posts have been fetched -->
-<ng-container *ngIf="(this.postsHaveBeenFetched()); else loadingTemplate">
-  <h2>{{ this.title }}</h2>
-  
-  <!-- Show posts if any were fetched. Otherwise show no posts found template -->
-  <ng-container *ngIf="(this.postsExist()); else noPostsTemplate">
-    <ul class="content-list">
-      <li *ngFor="let post of posts$">
-        <section class="card">
-          <section class="card-header">
-            Posted on {{ post.modificationDate }}
-          </section>
-  
-          <section class="card-body">
-            <h5><strong>{{ post.title }}</strong></h5>
-            <p class="card-text">{{ post.body }}</p>
-          </section>
-        </section>
-      </li>
-    </ul>
-  </ng-container>
+<section class="container page-content">
+
+
+  <!-- List of posts -->
+  <ul class="content-list">
+
+    <h2>News Posts:</h2>
+    <li *ngFor="let post of posts$; let i = index">
+
+      <div class="card">
+        <h5 class="card-header">Posted on {{ post.modificationDate }}</h5>
+        <div class="card-body">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p class="card-text">{{ post.body }}</p>
+
+          <!-- admin buttons -->
+          <div class="dropdown show" *ngIf="this.isAdmin">
+            <a class="options-dropdown" id="postOptionsDropdownLink" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="material-icons options-icon">settings</i>
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="postOptionsDropdownLink">
+              <a class="dropdown-item">
+                <i class="material-icons options-icon">edit</i>
+                Edit
+              </a>
+              <a class="dropdown-item deleteButton">
+                <i class="material-icons options-icon">delete</i>
+                Delete
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </li>
+  </ul>
 
 
 
-  <!-- Template if no posts exist / were found -->
-  <ng-template #noPostsTemplate>
-    Sorry, no news posts were found.
+  <!-- Infinite scroll div -->
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()" *ngIf="this.doInfiniteScroll"></div>
+
+  <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
+  <ng-template #endOfContentTemplate>
+    <div class="alert alert-warning">
+      End of Posts
+    </div>
   </ng-template>
 
-
-
-  <!-- Show controls if specified -->
-  <section *ngIf="(this.shouldShowControls())" class="controls" style="text-align: center">
-    Showing posts {{ this.offset + 1 }} to {{ this.offset + this.count }}.
-    <button class="btn btn-primary" id="prevPosts" (click)="this.getNewerPosts()" style="float: left;">
-      Newer Posts
-    </button>
-    <button class="btn btn-primary" id="nextPosts" style="float: right" (click)="this.getOlderPosts()">
-      Older Posts
-    </button>
-  </section>
-</ng-container>
-
-
-
-<!-- Template whilst posts are being fetched -->
-<ng-template #loadingTemplate>
-  <app-loader></app-loader>
-</ng-template>
+</section>

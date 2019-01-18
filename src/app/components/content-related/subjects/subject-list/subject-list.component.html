@@ -15,8 +15,25 @@
 
           <!-- Buttons -->
           <button class="btn btn-primary viewButton" routerLink="{{ subject.id }}">View Subject</button>
-          <button class="btn btn-warning adminButton adminButtonEdit" *ngIf="this.isAdmin" routerLink="{{ subject.id }}/edit">Edit</button>
-          <button class="btn btn-danger adminButton adminButtonDelete" *ngIf="this.isAdmin" (click)="this.deleteSubject(i)">Delete</button>
+
+          <!-- Admin buttons (dropdown)-->
+          <div class="dropdown show" *ngIf="this.isAdmin">
+            <a class="options-dropdown" id="subjectOptionsDropdownLink" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="material-icons options-icon">settings</i>
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="subjectOptionsDropdownLink">
+              <a class="dropdown-item" routerLink="{{ subject.id }}/edit">
+                <i class="material-icons options-icon">edit</i>
+                Edit
+              </a>
+              <a class="dropdown-item deleteButton" (click)="deleteSubject(i)">
+                <i class="material-icons options-icon">delete</i>
+                Delete
+              </a>
+            </div>
+          </div>
         </section>
       </section>
     </li>

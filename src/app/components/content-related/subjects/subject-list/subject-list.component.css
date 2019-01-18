@@ -14,14 +14,18 @@ button.viewButton {
     margin-bottom: 1em;
 }
 
-button.adminButton {
-    width: 45%;
+i.options-icon {
+    font-size: 16pt;
 }
 
-button.adminButtonEdit {
-    margin-right: 5%;
+.dropdown-item {
+    cursor: pointer;
 }
 
-button.adminButtonDelete {
-    margin-left: 5%;
+.options-dropdown {
+    cursor: pointer;
+}
+
+a.deleteButton {
+    color: red !important;
 }

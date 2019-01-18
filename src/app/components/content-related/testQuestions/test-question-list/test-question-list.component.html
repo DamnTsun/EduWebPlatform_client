@@ -21,14 +21,25 @@
             </div>
           </div>
 
-          <!-- Buttons at bottom -->
-          <div>
-            <button class="btn btn-primary viewButton" routerLink="{{ question.id }}">View Question</button>
+          <!-- Admin buttons (dropdown)-->
+          <div class="dropdown show">
+            <a class="options-dropdown" id="questionOptionsDropdownLink" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="material-icons options-icon">settings</i>
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="questionOptionsDropdownLink">
+              <a class="dropdown-item" routerLink="{{ question.id }}/edit">
+                <i class="material-icons options-icon">edit</i>
+                Edit
+              </a>
+              <a class="dropdown-item deleteButton" (click)="deleteTestQuestion(i)">
+                <i class="material-icons options-icon">delete</i>
+                Delete
+              </a>
+            </div>
           </div>
-          <div>
-            <button class="btn btn-warning adminButton adminButtonEdit" routerLink="{{ question.id }}/edit">Edit</button>
-            <button class="btn btn-danger adminButton adminButtonDelete" (click)="deleteTestQuestion(i)">Delete</button>
-          </div>
+
         </div>
       </div>
     </li>
