@@ -1,0 +1,23 @@
+i.options-icon {
+    font-size: 16pt;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+.options-dropdown {
+    cursor: pointer;
+}
+
+a.deleteButton {
+    color: red !important;
+}
+
+div.user-name {
+    float: left;
+}
+
+div.options-button {
+    float: right;
+}

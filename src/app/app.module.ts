@@ -51,6 +51,8 @@ import { TestQuestionCreatorComponent } from './components/content-related/testQ
 import { TestQuestionEditorComponent } from './components/content-related/testQuestions/test-question-editor/test-question-editor.component';
 import { LessonListComponent } from './components/content-related/lessons/lesson-list/lesson-list.component';
 import { TestListComponent } from './components/content-related/tests/test-list/test-list.component';
+import { UsersListComponent } from './components/account/users-list/users-list.component';
+import { MessageListComponent } from './components/account/messages/message-list/message-list.component';
 
 
 
@@ -105,7 +107,9 @@ export function provideConfig() {
     TestQuestionCreatorComponent,
     TestQuestionEditorComponent,
     LessonListComponent,
-    TestListComponent
+    TestListComponent,
+    UsersListComponent,
+    MessageListComponent
   ],
   imports: [
     BrowserModule,

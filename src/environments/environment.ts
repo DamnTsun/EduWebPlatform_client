@@ -50,7 +50,11 @@ export const environment = {
     
     // USERS
     account_signIn: 'users/signin',
-    account: 'users/account'
+    account: 'users/account',
+    usersList: 'users',
+
+    // MESSAGES
+    messageList: 'users/messages'
   }
 };
 

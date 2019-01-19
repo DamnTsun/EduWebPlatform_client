@@ -1,0 +1,63 @@
+<section class="container page-content">
+
+
+  <!-- List of messages -->
+  <ul class="content-list">
+
+    <h2>Received Messages:</h2>
+    <li *ngFor="let message of messages$">
+
+      <div class="card">
+        <h5 class="card-header">Date: {{ message.date }}</h5>
+        <div class="card-body">
+          <!-- Main content (left) -->
+          <div class="message-content">
+            <h5>{{ message.message }}</h5>
+            <div>From: {{ message.sender_displayname }} (#{{ message.sender_id }})</div>
+          </div>
+
+
+          <!-- Options buttons (right) -->
+          <div class="dropdown show message-options">
+            <a class="options-dropdown" id="messageOptionsDropdownLink" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="material-icons options-icon">settings</i>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messageOptionsDropdownLink">
+              <!-- Reply -->
+              <a class="dropdown-item">
+                <i class="material-icons options-icon">edit</i>
+                Reply
+              </a>
+              <!-- View all messages from user -->
+              <a class="dropdown-item">
+                <i class="material-icons options-icon">edit</i>
+                View all Messages
+              </a>
+              <!-- Delete -->
+              <a class="dropdown-item">
+                <i class="material-icons options-icon">delete</i>
+                Delete
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </li>
+  </ul>
+
+
+  <!-- Infinite scroll div -->
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+
+  <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
+  <ng-template #endOfContentTemplate>
+    <div class="alert alert-warning">
+      End of Messages
+    </div>
+  </ng-template>
+
+</section>

@@ -23,6 +23,8 @@ import { TestQuestionCreatorComponent } from "./components/content-related/testQ
 import { TestQuestionEditorComponent } from "./components/content-related/testQuestions/test-question-editor/test-question-editor.component";
 import { LessonListComponent } from "./components/content-related/lessons/lesson-list/lesson-list.component";
 import { TestListComponent } from "./components/content-related/tests/test-list/test-list.component";
+import { UsersListComponent } from "./components/account/users-list/users-list.component";
+import { MessageListComponent } from "./components/account/messages/message-list/message-list.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -145,12 +147,24 @@ export const appRoutes = [
 
 
   // Sign in and account related.
-  {
+  { // Sign in.
     path: environment.routes.account_signIn,
     component: SignInComponent
   },
-  {
+  { // Account dashboard.
     path: environment.routes.account,
     component: AccountComponent
+  },
+  { // Users list.
+    path: environment.routes.usersList,
+    component: UsersListComponent
+  },
+
+
+
+  // Messages
+  { // Received message list.
+    path: environment.routes.messageList,
+    component: MessageListComponent
   }
 ];

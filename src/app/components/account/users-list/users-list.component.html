@@ -1,0 +1,77 @@
+<section class="container page-content">
+
+
+  <!-- List of users -->
+  <ul class="content-list">
+
+    <h2>Users:</h2>
+    <li *ngFor="let user of users$">
+      
+      <!-- Show a card for each user. Skip if user is the current user. -->
+      <div class="card" *ngIf="user.id !== userid">
+        <div class="card-body">
+          <div class="user-name">
+            <h5>{{ user.displayname }} (#{{ user.id }})</h5>
+          </div>
+
+          <!-- Admin buttons (dropdown)-->
+          <div class="dropdown show options-button">
+            <a class="options-dropdown" id="userOptionsDropdownLink" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="material-icons options-icon">settings</i>
+            </a>
+
+            <!-- Options message -->
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userOptionsDropdownLink">
+              <!-- Send message -->
+              <a class="dropdown-item">
+                <i class="material-icons options-icon">chat</i>
+                Send Message
+              </a>
+
+              <!-- Give / Remove admin status (admin-only) -->
+              <div class="dropdown-divider" *ngIf="isAdmin"></div>
+              <a class="dropdown-item" *ngIf="isAdmin">
+                <ng-container *ngIf="user.admin; else notAdminTemplate">
+                  <i class="material-icons options-icon">arrow_downward</i>
+                  Demote to Regular User
+                </ng-container>
+                <ng-template #notAdminTemplate>
+                  <i class="material-icons options-icon">arrow_upward</i>
+                  Promote to Admin User
+                </ng-template>
+              </a> 
+
+              <!-- Ban / unban user (admin-only) -->
+              <a class="dropdown-item" *ngIf="isAdmin">
+                <ng-container *ngIf="user.banned; else notBannedTemplate">
+                  <i class="material-icons options-icon">block</i>
+                  Unban user
+                </ng-container>
+                <ng-template #notBannedTemplate>
+                  <i class="material-icons options-icon">sentiment_satisfied_alt</i>
+                  Ban User
+                </ng-template>
+                
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </li>
+  </ul>
+
+
+
+  <!-- Infinite scroll div -->
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+
+  <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
+  <ng-template #endOfContentTemplate>
+    <div class="alert alert-warning">
+      End of Users
+    </div>
+  </ng-template>
+</section>
