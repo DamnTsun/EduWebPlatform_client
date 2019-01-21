@@ -4,7 +4,9 @@
   <!-- List of lessons -->
   <ul class="content-list">
     <!-- Create lesson button -->
-    <button class="btn btn-primary createButton" *ngIf="this.isAdmin" routerLink="create">Create a Lesson</button>
+    <div class="viewButtonContainer">
+      <button class="btn btn-primary createButton" *ngIf="this.isAdmin" routerLink="create">Create a Lesson</button>
+    </div>
 
     <h2>Select a Lesson:</h2>
     <li *ngFor="let lesson of lessons$; let i = index">
@@ -14,7 +16,7 @@
           <h5 class="card-title lessonName">{{ lesson.name }}</h5>
 
           <!-- buttons -->
-          <div>
+          <div class="viewButtonContainer">
             <button class="btn btn-primary viewButton" routerLink="{{ lesson.id }}">View Lesson</button>
           </div>
 
