@@ -4,7 +4,7 @@
   <!-- list of messages -->
   <ul class="content-list">
 
-    <h2>Messages Sent to User:</h2>
+    <h2 *ngIf="receivername !== null">Messages Sent to: {{ receivername }}</h2>
     <li *ngFor="let message of messages$; let i = index">
 
       <div class="card">
@@ -13,7 +13,6 @@
           <!-- main content (left) -->
           <div class="message-content">
             <h5>{{ message.message }}</h5>
-            <div>To: {{ message.receiver_displayname }} (#{{ message.receiver_id }})</div>
           </div>
 
 

@@ -4,7 +4,7 @@
   <!-- List of messages -->
   <ul class="content-list">
 
-    <h2>Messages from User:</h2>
+    <h2 *ngIf="sendername !== null">Messages from: {{ sendername }}</h2>
     <li *ngFor="let message of messages$; let i = index">
 
       <div class="card">
@@ -13,7 +13,6 @@
           <!-- Main content (left) -->
           <div class="message-content">
             <h5>{{ message.message }}</h5>
-            <div>From: {{ message.sender_displayname }} (#{{ message.sender_id }})</div>
           </div>
 
 

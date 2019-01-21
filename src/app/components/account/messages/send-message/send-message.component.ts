@@ -57,7 +57,12 @@ export class SendMessageComponent implements OnInit {
     this.errorMessage = null;
     // Attempt to send message.
     this.userService.sendMessage(this.receiverid, message.value.trim()).subscribe((res) => {
-      console.log(res);
+      // Successful. Redirect to sent messages area.
+      let route = environment.routes.messageSentToList;
+      route = route.replace(`:${environment.routeParams.userid}`, this.receiverid);
+      this.router.navigate([ route ]);
+    }, (err) => {
+      console.error('Send Message error:', err);
     })
   }
 }
