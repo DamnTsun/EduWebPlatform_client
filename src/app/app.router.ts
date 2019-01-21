@@ -25,6 +25,10 @@ import { LessonListComponent } from "./components/content-related/lessons/lesson
 import { TestListComponent } from "./components/content-related/tests/test-list/test-list.component";
 import { UsersListComponent } from "./components/account/users-list/users-list.component";
 import { MessageListComponent } from "./components/account/messages/message-list/message-list.component";
+import { MessageFromUserListComponent } from "./components/account/messages/message-from-user-list/message-from-user-list.component";
+import { SendMessageComponent } from "./components/account/messages/send-message/send-message.component";
+import { MessageSentListComponent } from "./components/account/messages/message-sent-list/message-sent-list.component";
+import { MessageSentToUserListComponent } from "./components/account/messages/message-sent-to-user-list/message-sent-to-user-list.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -163,8 +167,24 @@ export const appRoutes = [
 
 
   // Messages
+  { // Sent messages.
+    path: environment.routes.messageSentList,
+    component: MessageSentListComponent
+  },
+  { // Sent messages to a specific user.
+    path: environment.routes.messageSentToList,
+    component: MessageSentToUserListComponent
+  },
+  { // Send message
+    path: environment.routes.sendMessage,
+    component: SendMessageComponent
+  },
   { // Received message list.
     path: environment.routes.messageList,
     component: MessageListComponent
+  }, 
+  { // Received message list from a specific user.
+    path: environment.routes.messageFromList,
+    component: MessageFromUserListComponent
   }
 ];

@@ -6,7 +6,7 @@
 
     <h2>Users:</h2>
     <li *ngFor="let user of users$">
-      
+
       <!-- Show a card for each user. Skip if user is the current user. -->
       <div class="card" *ngIf="user.id !== userid">
         <div class="card-body">
@@ -24,7 +24,7 @@
             <!-- Options message -->
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userOptionsDropdownLink">
               <!-- Send message -->
-              <a class="dropdown-item">
+              <a class="dropdown-item" routerLink="messages/send/{{ user.id }}">
                 <i class="material-icons options-icon">chat</i>
                 Send Message
               </a>
@@ -40,19 +40,19 @@
                   <i class="material-icons options-icon">arrow_upward</i>
                   Promote to Admin User
                 </ng-template>
-              </a> 
+              </a>
 
               <!-- Ban / unban user (admin-only) -->
               <a class="dropdown-item" *ngIf="isAdmin">
                 <ng-container *ngIf="user.banned; else notBannedTemplate">
-                  <i class="material-icons options-icon">block</i>
+                  <i class="material-icons options-icon">sentiment_satisfied_alt</i>
                   Unban user
                 </ng-container>
                 <ng-template #notBannedTemplate>
-                  <i class="material-icons options-icon">sentiment_satisfied_alt</i>
+                  <i class="material-icons options-icon">block</i>
                   Ban User
                 </ng-template>
-                
+
               </a>
             </div>
 

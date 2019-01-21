@@ -4,7 +4,7 @@
   <!-- List of messages -->
   <ul class="content-list">
 
-    <h2>Messages Received:</h2>
+    <h2>Messages Sent:</h2>
     <li *ngFor="let message of messages$; let i = index">
 
       <div class="card">
@@ -13,7 +13,7 @@
           <!-- Main content (left) -->
           <div class="message-content">
             <h5>{{ message.message }}</h5>
-            <div>From: {{ message.sender_displayname }} (#{{ message.sender_id }})</div>
+            <div>To: {{ message.receiver_displayname }} (#{{ message.receiver_id }})</div>
           </div>
 
 
@@ -25,15 +25,9 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messageOptionsDropdownLink">
-              <!-- Reply -->
-              <a class="dropdown-item">
-                <i class="material-icons options-icon">chat</i>
-                Reply
-              </a>
-              <!-- View all messages from user -->
-              <a class="dropdown-item" routerLink="{{ message.sender_id }}">
-                <i class="material-icons options-icon">pageview</i>
-                View All Messages From User
+              <!-- View all sent messages to user -->
+              <a class="dropdown-item" routerLink="{{ message.receiver_id }}">
+                View Messages Sent to User
               </a>
               <!-- Delete -->
               <a class="dropdown-item" (click)="deleteMessage(i)">
@@ -41,8 +35,8 @@
                 Delete
               </a>
             </div>
-
           </div>
+
         </div>
       </div>
 

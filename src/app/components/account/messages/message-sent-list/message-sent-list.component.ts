@@ -5,11 +5,11 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-message-list',
-  templateUrl: './message-list.component.html',
-  styleUrls: ['./message-list.component.css']
+  selector: 'app-message-sent-list',
+  templateUrl: './message-sent-list.component.html',
+  styleUrls: ['./message-sent-list.component.css']
 })
-export class MessageListComponent implements OnInit {
+export class MessageSentListComponent implements OnInit {
 
   // Constants
   private count = 10;
@@ -33,7 +33,7 @@ export class MessageListComponent implements OnInit {
         this.router.navigate([ environment.routes.account_signIn ]);
       }
     }, (err) => {
-      console.error('Message-List user record error:', err);
+      console.error('MessageSent-List user record error:', err);
     });
 
 
@@ -56,16 +56,17 @@ export class MessageListComponent implements OnInit {
    * Attempts to get messages from api.
    */
   private getMessages() {
-    this.userService.getUserMessages(this.count, this.offset).subscribe((messages: object[]) => {
+    this.userService.getUserMessagesSent(this.count, this.offset).subscribe((messages: object[]) => {
       if (messages.length > 0) {
+        // Add messages to list.
         this.messages$ = this.messages$.concat(messages);
         this.offset += messages.length;
-        // If less records retreived than asked for, must be end of messages.
+        // If less recorded retreived than asked for, must be at end of messages.
         if (messages.length < this.count) {
           this.endOfContent = true;
         }
       } else {
-        // Empty list fetched. Must be end of messages.
+        // Empty list fetched. Must be end of content.
         this.endOfContent = true;
       }
     })

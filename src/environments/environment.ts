@@ -12,7 +12,10 @@ export const environment = {
     topicid: 'topicid',
     lessonid: 'lessonid',
     testid: 'testid',
-    questionId: 'testquestionid'
+    questionId: 'testquestionid',
+
+    // User / Messaging related.
+    userid: 'userid'
   },
   routes: {
     // *** CONTENT RELATED ***
@@ -54,7 +57,16 @@ export const environment = {
     usersList: 'users',
 
     // MESSAGES
-    messageList: 'users/messages'
+    // Messages received
+    messageList: 'users/messages',
+    messageFromList: 'users/messages/:userid',
+    // Messages sent.
+    messageSentList: 'users/messages/sent',
+    messageSentToList: 'users/messages/sent/:userid',
+
+    sendMessage: 'users/messages/send/:userid'
+
+    // sentList -> sentTolist -> sendMessage -> messageFromlist ->  messagelist
   }
 };
 

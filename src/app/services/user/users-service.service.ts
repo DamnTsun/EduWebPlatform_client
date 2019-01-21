@@ -34,6 +34,9 @@ export class UsersServiceService {
   }
 
 
+
+
+
   /**
    * Gets messages sent to user.
    * @param count - number of messages to get.
@@ -52,5 +55,57 @@ export class UsersServiceService {
    */
   public getUserMessagesFromUser(userid, count, offset) {
     return this.api.get(environment.apiUrl + `users/messages/${userid}?count=${count}&offset=${offset}`);
+  }
+
+
+
+
+  
+  /**
+   * Gets messages a user has sent.
+   * @param count - number of messages to get.
+   * @param offset - number of messages to skip.
+   */
+  public getUserMessagesSent(count, offset) {
+    return this.api.get(environment.apiUrl + `users/messages/sent?count=${count}&offset=${offset}`);
+  }
+
+
+  /**
+   * Get messages user has sent to a specific user.
+   * @param userid - userid of user.
+   * @param count - number of messages to get.
+   * @param offset - number of messages to skip.
+   */
+  public getUserMessagesSentToUser(userid, count, offset) {
+    return this.api.get(environment.apiUrl + `users/messages/sent/${userid}?count=${count}&offset=${offset}`);
+  }
+
+
+
+
+
+  /**
+   * Sends message to user.
+   * @param userid - user that message is being sent to.
+   * @param message - message contents.
+   */
+  public sendMessage(userid, message) {
+    let data = new FormData();
+    data.set('content', JSON.stringify({ message: message }));
+    return this.api.post(
+      environment.apiUrl + `users/messages/${userid}`,
+      data
+    );
+  }
+
+
+
+  /**
+   * Deletes a message. (Must be sender or receiver)
+   * @param messageid - id of message.
+   */
+  public deleteUserMessage(messageid) {
+    return this.api.delete(environment.apiUrl + `users/messages/${messageid}`);
   }
 }
