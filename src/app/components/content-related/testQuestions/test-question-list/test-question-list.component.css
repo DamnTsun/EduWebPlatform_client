@@ -1,0 +1,43 @@
+button.addButton {
+    width: 100%;
+    height: 3em;
+    margin-bottom: 1em;
+}
+
+button.viewButton {
+    width: 100%;
+    height: 3em;
+    margin-bottom: 1em;
+}
+
+i.options-icon {
+    font-size: 16pt;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+.options-dropdown {
+    cursor: pointer;
+}
+
+a.deleteButton {
+    color: red !important;
+}
+
+
+div.questionTextContainer {
+    margin-bottom: 1em;
+}
+
+div.questionTopSection50 {
+    display: inline-block;          /* Display horizontally. */
+    width: 50%;                     /* Ensure 2 takes up 100% of space. */
+    height: 10em;
+    vertical-align: top;
+}
+
+div.questionTopSectionImage {
+    text-align: right;              /* Align image right. */
+}

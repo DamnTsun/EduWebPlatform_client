@@ -1,0 +1,59 @@
+<section class="container page-content">
+
+
+  <!-- List of tests -->
+  <ul class="content-list">
+    <!-- Create test button -->
+    <div class="createButtonContainer">
+      <button class="btn btn-primary createButton" *ngIf="this.isAdmin" routerLink="create">Create a Test</button>
+    </div>
+
+    <h2>Select a Test:</h2>
+    <li *ngFor="let test of tests$; let i = index">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title testName">{{ test.name }}</h5>
+
+          <!-- buttons -->
+          <div class="viewButtonContainer">
+            <button class="btn btn-primary viewButton" routerLink="{{ test.id }}">View Test</button>
+          </div>
+
+
+          <!-- Admin buttons (dropdown)-->
+          <div class="dropdown show" *ngIf="this.isAdmin">
+            <a class="options-dropdown" id="testOptionsDropdownLink" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="material-icons options-icon">settings</i>
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="testOptionsDropdownLink">
+              <a class="dropdown-item" routerLink="{{ test.id }}/edit">
+                <i class="material-icons options-icon">edit</i>
+                Edit
+              </a>
+              <a class="dropdown-item deleteButton" (click)="deleteTest(i)">
+                <i class="material-icons options-icon">delete</i>
+                Delete
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </li>
+  </ul>
+
+  <!-- Infinite scroll div -->
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+
+  <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
+  <ng-template #endOfContentTemplate>
+    <div class="alert alert-warning">
+      End of Tests
+    </div>
+  </ng-template>
+
+</section>

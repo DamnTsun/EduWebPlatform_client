@@ -1,0 +1,65 @@
+<section class="container page-content">
+
+
+  <!-- List of test questions-->
+  <ul class="content-list">
+    <!-- Create question button -->
+    <button class="btn btn-primary addButton" routerLink="create">Create a Question</button>
+    <h5>Test Questions:</h5>
+    <li *ngFor="let question of testQuestions$; let i = index">
+      <div class="card">
+        <div class="card-body">
+          <div class="questionTextContainer">
+            <!-- Left section (text) -->
+            <div class="questionTopSection50">
+              <h5>{{ question.question }}</h5>
+              <p>{{ question.answer }}</p>
+            </div>
+            <!-- Right section (image) -->
+            <div class="questionTopSection50 questionTopSectionImage">
+              <img src="https://placehold.it/128x128" alt="Question Image" height="100%">
+            </div>
+          </div>
+
+          <!-- Admin buttons (dropdown)-->
+          <div class="dropdown show">
+            <a class="options-dropdown" id="questionOptionsDropdownLink" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="material-icons options-icon">settings</i>
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="questionOptionsDropdownLink">
+              <a class="dropdown-item" routerLink="{{ question.id }}/edit">
+                <i class="material-icons options-icon">edit</i>
+                Edit
+              </a>
+              <a class="dropdown-item deleteButton" (click)="deleteTestQuestion(i)">
+                <i class="material-icons options-icon">delete</i>
+                Delete
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </li>
+  </ul>
+
+
+
+  <!-- Inifinite scroll div. Loads more questions unless all loaded. -->
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
+  </div>
+
+
+
+  <!-- Shows loading icon unless all questions loaded, in which case message is shown -->
+  <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
+  <ng-template #endOfContentTemplate>
+    <div class="alert alert-warning">
+      End of Test Questions
+    </div>
+  </ng-template>
+
+
+</section>

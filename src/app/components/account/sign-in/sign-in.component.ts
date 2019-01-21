@@ -28,9 +28,9 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  /**
-   * Signs user in with Google account. Sends to them to Google's OAuth stuff if necessary.
-   */
+
+
+  // Methods for signing in with social media account.
   private signInWithGoogle(): void {
     this.signIn.signInWithGoogle();
   }
@@ -38,4 +38,12 @@ export class SignInComponent implements OnInit {
   private signInWithFacebook(): void {
     this.signIn.signInWithFacebook();
   }
+
+  private signInWithLinkedIn(): void {
+    // todo
+  }
+
+
+
+  
 }

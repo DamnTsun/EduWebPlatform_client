@@ -17,6 +17,18 @@ import { LessonCreatorComponent } from "./components/content-related/lessons/les
 import { LessonEditorComponent } from "./components/content-related/lessons/lesson-editor/lesson-editor.component";
 import { TestCreatorComponent } from "./components/content-related/tests/test-creator/test-creator.component";
 import { TestEditorComponent } from "./components/content-related/tests/test-editor/test-editor.component";
+import { TestQuestionListComponent } from "./components/content-related/testQuestions/test-question-list/test-question-list.component";
+import { TestQuestionHomeComponent } from "./components/content-related/testQuestions/test-question-home/test-question-home.component";
+import { TestQuestionCreatorComponent } from "./components/content-related/testQuestions/test-question-creator/test-question-creator.component";
+import { TestQuestionEditorComponent } from "./components/content-related/testQuestions/test-question-editor/test-question-editor.component";
+import { LessonListComponent } from "./components/content-related/lessons/lesson-list/lesson-list.component";
+import { TestListComponent } from "./components/content-related/tests/test-list/test-list.component";
+import { UsersListComponent } from "./components/account/users-list/users-list.component";
+import { MessageListComponent } from "./components/account/messages/message-list/message-list.component";
+import { MessageFromUserListComponent } from "./components/account/messages/message-from-user-list/message-from-user-list.component";
+import { SendMessageComponent } from "./components/account/messages/send-message/send-message.component";
+import { MessageSentListComponent } from "./components/account/messages/message-sent-list/message-sent-list.component";
+import { MessageSentToUserListComponent } from "./components/account/messages/message-sent-to-user-list/message-sent-to-user-list.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -82,6 +94,10 @@ export const appRoutes = [
     path: environment.routes.lessonEditor,
     component: LessonEditorComponent
   },
+  { // Lesson select.
+    path: environment.routes.lessonList,
+    component: LessonListComponent
+  },
   { // Lesson home.
     path: environment.routes.lessonHome,
     component: LessonHomeComponent
@@ -95,10 +111,37 @@ export const appRoutes = [
     path: environment.routes.testEditor,
     component: TestEditorComponent
   },
+  { // Test list.
+    path: environment.routes.testList,
+    component: TestListComponent
+  },
   { // Test home.
     path: environment.routes.testHome,
     component: TestHomeComponent
   },
+
+
+
+  // TEST QUESTIONS
+  { // Test question creator.
+    path: environment.routes.testQuestionCreator,
+    component: TestQuestionCreatorComponent
+  },
+  { // Test question editor.
+    path: environment.routes.testQuestionEditor,
+    component: TestQuestionEditorComponent
+  },
+  { // Test question list.
+    path: environment.routes.testQuestionList,
+    component: TestQuestionListComponent
+  },
+  { // Test question home.
+    path: environment.routes.testQuestionHome,
+    component: TestQuestionHomeComponent
+  },
+
+
+
   // USER TEST ATTEMPT
   {
     path: environment.routes.userTestAttempt,
@@ -108,12 +151,40 @@ export const appRoutes = [
 
 
   // Sign in and account related.
-  {
+  { // Sign in.
     path: environment.routes.account_signIn,
     component: SignInComponent
   },
-  {
+  { // Account dashboard.
     path: environment.routes.account,
     component: AccountComponent
+  },
+  { // Users list.
+    path: environment.routes.usersList,
+    component: UsersListComponent
+  },
+
+
+
+  // Messages
+  { // Sent messages.
+    path: environment.routes.messageSentList,
+    component: MessageSentListComponent
+  },
+  { // Sent messages to a specific user.
+    path: environment.routes.messageSentToList,
+    component: MessageSentToUserListComponent
+  },
+  { // Send message
+    path: environment.routes.sendMessage,
+    component: SendMessageComponent
+  },
+  { // Received message list.
+    path: environment.routes.messageList,
+    component: MessageListComponent
+  }, 
+  { // Received message list from a specific user.
+    path: environment.routes.messageFromList,
+    component: MessageFromUserListComponent
   }
 ];

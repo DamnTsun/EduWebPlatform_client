@@ -19,9 +19,6 @@ export class TopicHomeComponent implements OnInit {
 
   private topic$: Topic = null;
   private loadingError: boolean = false;
-  // List of lessons / tests in topic.
-  private lessons$: Lesson[] = null;
-  private tests$: Test[] = null;
 
   private isAdmin: boolean = false;
 
@@ -33,8 +30,6 @@ export class TopicHomeComponent implements OnInit {
     private route: ActivatedRoute,
     private subjectService: SubjectsService,
     private topicService: TopicsService,
-    private lessonService: LessonsService,
-    private testService: TestsService,
     private signIn: SignInService
   ) { }
 
@@ -54,15 +49,6 @@ export class TopicHomeComponent implements OnInit {
       console.error('Topic-Home Error:', err);
     });
 
-    // Lessons / tests.
-    // Get lessons in topic from api.
-    this.lessonService.getLessons(subjectid, topicid).subscribe((lessons) => {
-      this.lessons$ = lessons;
-    })
-    // Get tests in topic from api.
-    this.testService.getTests(subjectid, topicid).subscribe((tests) => {
-      this.tests$ = tests;
-    })
 
     // Get whether user is an admin.
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
@@ -72,60 +58,4 @@ export class TopicHomeComponent implements OnInit {
     })
   }
 
-
-
-
-
-  // Admin button functions.
-  /**
-   * Deletes lesson with index in array.
-   * @param index - index of lesson in lessons$.
-   */
-  private deleteLesson(index) {
-    // Check user is an admin.
-    if (this.isAdmin) {
-      // Check index is valid.
-      if (index >= 0 && index < this.lessons$.length) {
-        // Get subjectid and topicid.
-        let subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
-        let topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
-
-        // Delete the lesson.
-        this.lessonService.deleteLesson(subjectid, topicid, this.lessons$[index].id).subscribe((res) => {
-          // Successful. Remove from list.
-          this.lessons$ = this.lessons$.filter((l, i, a) => {
-            return i !== index;
-          })
-        }, (err) => {
-          console.error('Topic-Home delete lesson Error:', err);
-        })
-      }
-    }
-  }
-
-  /**
-   * Deletes test with index in array.
-   * @param index - index of test in tests$.
-   */
-  private deleteTest(index) {
-    // Check user is an admin.
-    if (this.isAdmin) {
-      // Check index is valid.
-      if (index >= 0 && index < this.tests$.length) {
-        // Get subjectid and topicid.
-        let subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
-        let topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
-
-        // Delete the test.
-        this.testService.deleteTest(subjectid, topicid, this.tests$[index].id).subscribe((res) => {
-          // Successful. Remove from list.
-          this.tests$ = this.tests$.filter((t, i, a) => {
-            return i !== index;
-          })
-        }, (err) => {
-          console.error('Topic-Home delete test Error:', err);
-        })
-      }
-    }
-  }
 }

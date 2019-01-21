@@ -22,8 +22,9 @@ export class TestsService {
    * @param subjectid - id of subject topic is in.
    * @param topicid - id of topic.
    */
-  public getTests(subjectid, topicid): Observable<Test[]> {
-    return this.api.get(environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/tests`) as Observable<Test[]>;
+  public getTests(subjectid, topicid, count, offset): Observable<Test[]> {
+    return this.api.get(
+      environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/tests?count=${count}&offset=${offset}`) as Observable<Test[]>;
   }
   /**
    * Gets test in specified topic, in specified subject.

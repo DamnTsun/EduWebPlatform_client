@@ -70,10 +70,21 @@
 
             <!-- User signed in -->
             <ng-container *ngIf="this.user$ != null; else accountHeaderNotSignedIn">
-              <!-- If user is an admin -->
-              <li *ngIf="this.isAdmin$">
-                <a class="nav-link">ADMIN (NI)</a>
+              <!-- Social dropdown-->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="socialDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Social
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="socialDropdown">
+                  <a class="dropdown-item" routerLink="{{ this.getRoute(this.routes.usersList) }}">Users List</a>
+                  <a class="dropdown-item" routerLink="{{ this.getRoute(this.routes.messageList) }}">Messages Received</a>
+                  <a class="dropdown-item" routerLink="{{ this.getRoute(this.routes.messageSentList) }}">Messages Sent</a>
+                  <a class="dropdown-item" routerLink="{{ this.getRoute(this.routes.usersList) }}">Groups</a>
+                </div>
               </li>
+
+              <!-- Account dashboard-->
               <li class="nav-item">
                 <a class="nav-link" routerLink="{{ this.getRoute(this.routes.account) }}">Account</a>
               </li>
@@ -81,6 +92,7 @@
 
             <!-- User not signed in -->
             <ng-template #accountHeaderNotSignedIn>
+              <!-- Sign in area -->
               <li class="nav-item">
                 <a class="nav-link" routerLink="{{ this.getRoute(this.routes.account_signIn) }}">Sign In</a>
               </li>

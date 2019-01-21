@@ -22,8 +22,8 @@ export class TopicsService {
    * Gets all topics in subject from api.
    * @param subjectId - id of subject.
    */
-  public getTopics(subjectid): Observable<Topic[]> {
-    return this.api.get(environment.apiUrl + `subjects/${subjectid}/topics`) as Observable<Topic[]>;
+  public getTopics(subjectid, count, offset): Observable<Topic[]> {
+    return this.api.get(environment.apiUrl + `subjects/${subjectid}/topics?count=${count}&offset=${offset}`) as Observable<Topic[]>;
   }
   /**
    * Gets topic with specific subjectid and topicid.

@@ -14,8 +14,10 @@ import { RouterModule, Routes } from '@angular/router';
 // Social login.
 import { SocialLoginModule, AuthServiceConfig, LoginOpt } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
-// tinyMCE
+// Quill RCT
 import { QuillModule } from 'ngx-quill';
+// Infinite-Scroll
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 // Components.
 // AppComponent and shared stuff (header, animated CSS loading icon thingy, etc)
@@ -43,6 +45,18 @@ import { LessonCreatorComponent } from './components/content-related/lessons/les
 import { LessonEditorComponent } from './components/content-related/lessons/lesson-editor/lesson-editor.component';
 import { TestCreatorComponent } from './components/content-related/tests/test-creator/test-creator.component';
 import { TestEditorComponent } from './components/content-related/tests/test-editor/test-editor.component';
+import { TestQuestionListComponent } from './components/content-related/testQuestions/test-question-list/test-question-list.component';
+import { TestQuestionHomeComponent } from './components/content-related/testQuestions/test-question-home/test-question-home.component';
+import { TestQuestionCreatorComponent } from './components/content-related/testQuestions/test-question-creator/test-question-creator.component';
+import { TestQuestionEditorComponent } from './components/content-related/testQuestions/test-question-editor/test-question-editor.component';
+import { LessonListComponent } from './components/content-related/lessons/lesson-list/lesson-list.component';
+import { TestListComponent } from './components/content-related/tests/test-list/test-list.component';
+import { UsersListComponent } from './components/account/users-list/users-list.component';
+import { MessageListComponent } from './components/account/messages/message-list/message-list.component';
+import { MessageFromUserListComponent } from './components/account/messages/message-from-user-list/message-from-user-list.component';
+import { SendMessageComponent } from './components/account/messages/send-message/send-message.component';
+import { MessageSentListComponent } from './components/account/messages/message-sent-list/message-sent-list.component';
+import { MessageSentToUserListComponent } from './components/account/messages/message-sent-to-user-list/message-sent-to-user-list.component';
 
 
 
@@ -91,7 +105,19 @@ export function provideConfig() {
     LessonCreatorComponent,
     LessonEditorComponent,
     TestCreatorComponent,
-    TestEditorComponent
+    TestEditorComponent,
+    TestQuestionListComponent,
+    TestQuestionHomeComponent,
+    TestQuestionCreatorComponent,
+    TestQuestionEditorComponent,
+    LessonListComponent,
+    TestListComponent,
+    UsersListComponent,
+    MessageListComponent,
+    MessageFromUserListComponent,
+    SendMessageComponent,
+    MessageSentListComponent,
+    MessageSentToUserListComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +125,8 @@ export function provideConfig() {
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     SocialLoginModule,
-    QuillModule
+    QuillModule,
+    InfiniteScrollModule
   ],
   providers: [
     {

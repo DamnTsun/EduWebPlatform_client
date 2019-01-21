@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 
 import { Post } from 'src/app/classes/Posts';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
+import { SignInService } from 'src/app/services/sign-in.service';
 
 @Component({
   selector: 'app-subject-post-list',
@@ -17,12 +18,15 @@ export class SubjectPostListComponent implements OnInit {
   @Input('count') input_count;
   @Input('title') title = 'News Posts';
   // Inputs after converting from string.
-  private showControls: boolean;
+  private doInfiniteScroll: boolean;
   private count: number;
   private offset: number = 0;
+  private endOfContent: boolean = false;
 
   // Posts current being viewed.
-  private posts$: Post[] = null;
+  private posts$: Post[] = [];
+
+  private isAdmin: boolean = false;
 
 
 
@@ -30,13 +34,24 @@ export class SubjectPostListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private subjectService: SubjectsService
+    private subjectService: SubjectsService,
+    private signIn: SignInService
   ) { }
 
   ngOnInit() {
     // Convert input values to correct type and store.
-    this.showControls = (this.input_showControls.toLowerCase() === 'true');
+    this.doInfiniteScroll = (this.input_showControls.toLowerCase() === 'true');
+    if (!this.doInfiniteScroll) { this.endOfContent = true; }
     this.count = parseInt(this.input_count);
+
+    
+    // Get user admin status.
+    this.signIn.userIsAdmin().subscribe((isAdmin) => {
+      this.isAdmin = isAdmin;
+    }, (err) => {
+      console.error('Subject posts list isAdmin error:', err);
+    })
+
 
     // Get initial posts for viewing.
     this.getPosts();
@@ -45,6 +60,11 @@ export class SubjectPostListComponent implements OnInit {
 
 
 
+  private onScroll() {
+    if (!this.endOfContent) {
+      this.getPosts();
+    }
+  }
 
   // Methods not used by HTML
   /**
@@ -56,53 +76,17 @@ export class SubjectPostListComponent implements OnInit {
     
     // Get subjects.
     this.subjectService.getPosts(subjectId, this.count, this.offset).subscribe((posts) => {
-      this.posts$ = posts;
+      if (posts.length > 0) {
+        this.posts$ = this.posts$.concat(posts);
+        this.offset += posts.length;
+        if (posts.length < this.count) { this.endOfContent = true; }
+      } else {
+        // Fetched empty list. Must be end.
+        this.endOfContent = true;
+      }
     }, (err) => {
       console.error(err);
     });
   }
 
-
-
-
-
-  // Methods used by HTML
-  /**
-   * Decrement offset by count and get posts based on new offset and count.
-   */
-  private getNewerPosts(): void {
-    this.offset -= this.count;
-    this.getPosts();
-  }
-  /**
-   * Increment offset by count and get posts based on new offset and count.
-   */
-  private getOlderPosts(): void {
-    this.offset += this.count;
-    this.getPosts();
-  }
-
-
-
-
-
-  // Conditions for displaying page.
-  /**
-   * Returns whether controls (newer/older posts buttons, etc) should be shown.
-   */
-  private shouldShowControls(): boolean {
-    return (this.showControls);
-  }
-  /**
-   * Returns where posts have been fetched. (API queried successfully)
-   */
-  private postsHaveBeenFetched(): boolean {
-    return (this.posts$ != null);
-  }
-  /**
-   * Returns whether API returned any posts. (subject may contain no posts)
-   */
-  private postsExist(): boolean {
-    return (this.posts$ !== null && this.posts$.length > 0);
-  }
 }

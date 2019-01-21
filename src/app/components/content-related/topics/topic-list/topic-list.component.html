@@ -1,28 +1,55 @@
 <section class="container page-content">
 
-  <!-- After topics have been fetched from api -->
-  <ng-container *ngIf="(this.topics$ !== null); else loadingTemplate">
+
+  <!-- List of topics -->
+  <ul class="content-list">
+    <!-- Create topic button -->
+    <div class="createButtonContainer">
+      <button class="btn btn-primary createButton" *ngIf="this.isAdmin" routerLink="create">Create a Topic</button>
+    </div>
+
     <h2>Select a Topic:</h2>
-    <ul class="content-list">
-      <button class="btn btn-primary" *ngIf="this.isAdmin" routerLink="create">Create a Topic</button>
-      <!-- Add item for each topic from api -->
-      <li *ngFor="let topic of topics$; let i = index">
-        <section class="card">
-          <section class="card-body">
-            <h5 class="card-title">{{ topic.name }}</h5>
-            <p class="card-text">{{ topic.description }}</p>
-            <button class="btn btn-primary enterTopicButton" routerLink="{{ topic.id }}">View Topic</button>
-            <button class="btn btn-danger adminButton" *ngIf="this.isAdmin" (click)="this.deleteTopic(i)">Delete</button>
-            <button class="btn btn-warning adminButton" *ngIf="this.isAdmin" routerLink="{{ topic.id }}/edit">Edit</button>
-          </section>
+    <li *ngFor="let topic of topics$; let i = index">
+      <section class="card">
+        <section class="card-body">
+          <h5 class="card-title">{{ topic.name }}</h5>
+          <p class="card-text">{{ topic.description }}</p>
+
+          <!-- buttons -->
+          <div class="viewButtonContainer">
+            <button class="btn btn-primary viewButton" routerLink="{{ topic.id }}">View Topic</button>
+          </div>
+
+          <!-- Admin buttons (dropdown) -->
+          <div class="dropdown show" *ngIf="this.isAdmin">
+            <a class="options-dropdown" id="topicOptionsDropdownLink" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="material-icons options-icon">settings</i>
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="topicOptionsDropdownLink">
+              <a class="dropdown-item" routerLink="{{ topic.id }}/edit">
+                <i class="material-icons">edit</i>
+                Edit
+              </a>
+              <a class="dropdown-item deleteButton" (click)="deleteTopic(i)">
+                <i class="material-icons">delete</i>
+                Delete
+              </a>
+            </div>
+          </div>
         </section>
-      </li>
-    </ul>
-  </ng-container>
+      </section>
+    </li>
+  </ul>
 
-  <!-- Whilst topics being fetched OR fetching topics failed -->
-  <ng-template #loadingTemplate>
-    <app-loader></app-loader>
+  <!-- Infinite scroll div -->
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+
+  <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
+  <ng-template #endOfContentTemplate>
+    <div class="alert alert-warning">
+      End of Topics
+    </div>
   </ng-template>
-
 </section>

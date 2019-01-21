@@ -35,7 +35,8 @@ export class TopicCreatorComponent implements OnInit {
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
       // Send back to topic select if not admin.
       if (!isAdmin) {
-        console.log('user is not an admin!!!');
+        // Redirect to topic list.
+        this.redirectToTopicList();
       }
     }, (err) => {
       console.error('Topic-Creator isAdmin Error:', err);
@@ -113,6 +114,9 @@ export class TopicCreatorComponent implements OnInit {
         this.errorMessage = err.error.message;
         this.submitted = false;
         break;
+      case 401: // User not admin.
+        this.redirectToTopicList();
+        break;
       case 500: // Something wrong with server.
         this.errorMessage = 'Sorry, something went wrong with the server. Please try again later.';
         break;
@@ -122,5 +126,13 @@ export class TopicCreatorComponent implements OnInit {
         console.error('Topic-Creator createTopic Error:', err);
         break;
     }
+  }
+
+
+
+  private redirectToTopicList() {
+    let route = environment.routes.topicSelect;
+    route = route.replace(`:${environment.routeParams.subjectid}`, this.subject$.id.toString());
+    this.router.navigate([ route ]);
   }
 }

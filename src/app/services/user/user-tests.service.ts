@@ -37,4 +37,15 @@ export class UserTestsService {
     data.set('content', JSON.stringify(user_test));
     return this.api.post(environment.apiUrl + `users/user_tests`, data) as Observable<UserTest[]>;
   }
+
+
+
+
+
+  /**
+   * Deletes all of the current users test results.
+   */
+  public deleteAllCurrentUserUserTests() {
+    return this.api.delete(environment.apiUrl + `users/user_tests`);
+  }
 }

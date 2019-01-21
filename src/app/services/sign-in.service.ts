@@ -3,16 +3,20 @@ import { AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider } f
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { AuthObject } from '../classes/AuthObject';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignInService {
 
-  // Store user. Make is an observable so that components may subscribe to it.
+  // Store social media account.
   private userRecord: BehaviorSubject<SocialUser> = new BehaviorSubject(null);
   private userRecordCurrent: SocialUser = null;
   public user(): Observable<SocialUser> { return this.userRecord.asObservable(); }
+  // Store internal user record.
+  private userInternalRecordRecord: BehaviorSubject<object> = new BehaviorSubject(null);
+  public userInternalRecord() { return this.userInternalRecordRecord.asObservable(); }
   // Store user admin status.
   private userIsAdminRecord: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public userIsAdmin(): Observable<boolean> { return this.userIsAdminRecord.asObservable(); }
@@ -26,7 +30,7 @@ export class SignInService {
     private api: ApiService
   ) {
 
-    // Subscribe to AuthService login event to get user.
+    // Subscribe to AuthService login event to get users social media account.
     this.auth.authState.subscribe((user) => {
 
       // Update observable and store current value.
@@ -80,8 +84,9 @@ export class SignInService {
   private authorizeWithAPIGoogle(): void {
     // Attempt to authorize using Google.
     this.api.authorizeWithBackendGoogle(this.userRecordCurrent.idToken).subscribe((res) => {
-      this.api.setAuthObject(res);
-      this.userIsAdminRecord.next(res.isAdmin);
+      this.api.setAuthObject(res);                      // Set auth object to enable API requests that need idToken header.
+      this.userIsAdminRecord.next(res.isAdmin);         // Set user admin status for components to use.
+      this.getUserInfo();                               // Get and store the users internal user record data, such as their displayname.
     }, (err) => {
       console.log('SignIn Service - Google - Auth Error:', err);
     })
@@ -93,19 +98,22 @@ export class SignInService {
   private authorizeWithAPIFacebook(): void {
     // Attempt to authorize using Google.
     this.api.authorizeWithBackendFacebook(this.userRecordCurrent.authToken).subscribe((res) => {
-      this.api.setAuthObject(res);
-      this.userIsAdminRecord.next(res.isAdmin);
+      this.api.setAuthObject(res);                      // Set auth object to enable API requests that need idToken header.
+      this.userIsAdminRecord.next(res.isAdmin);         // Set user admin status for components to use.
+      this.getUserInfo();                               // Get and store the users internal user record data, such as their displayname.
     }, (err) => {
       console.log('SignIn Service - Facebook - Auth Error:', err);
     });
   }
 
   /**
-   * Clears authorization will backend. Deleted JWT.
+   * Clears authorization will backend. Deletes JWT.
    */
   private clearAuthorization(): void {
+    // Clear auth object, mark user as not an admin, clear user record data.
     this.api.clearAuthObject();
     this.userIsAdminRecord.next(false);
+    this.userInternalRecordRecord.next(null);
   }
 
 
@@ -141,5 +149,40 @@ export class SignInService {
    */
   public signInWithFacebook(): void {
     this.auth.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
+
+
+  /**
+   * Gets information about the current users interal record.
+   */
+  public getUserInfo() {
+    this.api.get(environment.apiUrl + `users/me`).subscribe((user) => {
+      this.userInternalRecordRecord.next(user);
+    });
+  }
+
+
+
+  /**
+   * Updates user's display on api.
+   * @param newName - new name for user.
+   */
+  public updateUserDisplayname(newName) {
+    // Update users name.
+    let data = new FormData();
+    data.set('content', JSON.stringify({ name: newName }));
+    this.api.post(environment.apiUrl + `users/me/name`, data).subscribe((res) => {
+      // Successful. Update stored user details.
+      this.userInternalRecordRecord.next(res);
+    });
+  }
+
+
+  /**
+   * Deletes the internal user record of the user currently signed in.
+   */
+  public deleteCurrentUsersAccount() {
+    return this.api.delete(environment.apiUrl + `users/me`);
   }
 }

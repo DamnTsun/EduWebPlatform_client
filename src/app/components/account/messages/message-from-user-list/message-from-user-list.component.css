@@ -1,0 +1,23 @@
+div.message-content {
+    float: left;
+}
+
+div.message-options {
+    float: right;
+}
+
+i.options-icon {
+    font-size: 16pt;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+.options-dropdown {
+    cursor: pointer;
+}
+
+a.deleteButton {
+    color: red !important;
+}

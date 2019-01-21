@@ -2,8 +2,9 @@
 
   <!-- Shown after successfully fetching lesson from api -->
   <ng-container *ngIf="(lesson$ !== null); else loadingTemplate">
-    <h2>{{ lesson$.name }}</h2>
+
     <div class="card">
+      <h2 class="card-header">{{ lesson$.name }}</h2>
       <div class="card-body" [innerHTML]="lessonBody"></div>
     </div>
   </ng-container>

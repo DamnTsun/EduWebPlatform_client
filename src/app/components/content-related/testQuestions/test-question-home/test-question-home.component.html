@@ -1,0 +1,29 @@
+<section class="container page-content">
+
+  <!-- When question has been fetched. -->
+  <ng-container *ngIf="testQuestion$ !== null; else loadingTemplate">
+    <h2>{{ testQuestion$.question }}</h2>
+    <p>{{ testQuestion$.answer }}</p>
+    
+    <!-- Image (if set) -->
+    <div *ngIf="testQuestion$.imageUrl !== ''">
+      <img src="{{ testQuestion$.imageUrl }}" alt="Question Image">
+    </div>
+  </ng-container>
+
+
+
+  <!-- Whilst question being fetched, or has failed. -->
+  <ng-template #loadingTemplate>
+    
+    <ng-container *ngIf="!loadingFailed; else failedTemplate">
+      <app-loader></app-loader>
+    </ng-container>
+    <ng-template #failedTemplate>
+      Loading Failed.
+    </ng-template>
+    
+  </ng-template>
+  
+
+</section>

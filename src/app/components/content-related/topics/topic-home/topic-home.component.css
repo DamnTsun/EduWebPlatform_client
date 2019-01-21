@@ -7,3 +7,15 @@ button.adminButton {
     margin-left: 1em;
     width: 5em;
 }
+
+
+
+button.viewContentButton {
+    width: 20em;
+    max-width: 100%;
+}
+
+div.viewContentButtonContainer {
+    text-align: center;
+    margin-bottom: 1em;
+}
