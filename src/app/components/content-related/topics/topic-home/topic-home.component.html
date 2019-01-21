@@ -2,17 +2,25 @@
 
   <!-- Whilst fetching topic from api -->
   <ng-container *ngIf="(this.topic$ !== null); else loadingTemplate">
-    <h2>
-      {{ topic$.name }}
-    </h2>
-    <div class="page-sub-content">
-      <p>{{ topic$.description }}</p>
+
+    <div class="card">
+      <h2 class="card-header">{{ topic$.name }}</h2>
+      <div class="card-body">
+        <div class="page-sub-content">
+          <p>{{ topic$.description }}</p>
+        </div>
+
+        <div class="viewContentButtonContainer">
+          <button class="btn btn-primary viewContentButton" routerLink="lessons">View Lessons</button>
+        </div>
+        <div class="viewContentButtonContainer">
+          <button class="btn btn-primary viewContentButton" routerLink="tests">View Tests</button>
+        </div>
+      </div>
     </div>
 
 
 
-    <button class="btn btn-primary viewContentButton" routerLink="lessons">View Lessons</button>
-    <button class="btn btn-primary viewContentButton" routerLink="tests">View Tests</button>
   </ng-container>
 
 

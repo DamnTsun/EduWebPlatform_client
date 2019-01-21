@@ -16,10 +16,14 @@ export class UsersListComponent implements OnInit {
   private offset = 0;
 
   private userid = null;
+
+  // Users list.
   private users$ = [];
   private endOfContent: boolean = false;
 
   private isAdmin: boolean = false;
+
+  private message: string = null;
 
 
   constructor(
@@ -81,5 +85,59 @@ export class UsersListComponent implements OnInit {
         this.endOfContent = true;
       }
     })
+  }
+
+
+
+  /**
+   * Sets a users admin status.
+   * @param index - index of user in list.
+   * @param state - whether to set user to admin.
+   */
+  private setAdminStatus(index, state: boolean) {
+    // Check current user is admin.
+    if (!this.isAdmin) { return; }
+    // Check index is valid.
+    if (index < 0 || index >= this.users$.length) { return; }
+    // Check not the current user.
+    if (this.users$[index].id == this.userid) { return; }
+
+    this.userService.setUserAdminStatus(this.users$[index].id, state).subscribe((res) => {
+      // Update user record stored.
+      this.users$[index] = res[0];
+      // Show message that user has been made admin / not admin.
+      if (state) {
+        this.message = `User '${this.users$[index].displayname} (#${this.users$[index].id})' has been promoted to an admin.`;
+      } else {
+        this.message = `User '${this.users$[index].displayname} (#${this.users$[index].id})' has been demoted to a regular user.`;
+      }
+    }, (err) => {
+      console.error('UserList setAdmin error:', err);
+    })
+  }
+
+  /**
+   * Sets a users banned status.
+   * @param index - index of user in list.
+   * @param state - whether to set user to banned.
+   */
+  private setBannedStatus(index, state: boolean) {
+    // Check current user is admin.
+    if (!this.isAdmin) { return; }
+    // Check index is valid.
+    if (index < 0 || index >= this.users$.length) { return; }
+
+    this.userService.setUserBannedStatus(this.users$[index].id, state).subscribe((res) => {
+      // Update user record stored.
+      this.users$[index] = res[0];
+      // Show message that user has been made banned / not banned.
+      if (state) {
+        this.message = `User '${this.users$[index].displayname} (#${this.users$[index].id})' has been banned.`;
+      } else {
+        this.message = `User '${this.users$[index].displayname} (#${this.users$[index].id})' has been unbanned.`;
+      }
+    }, (err) => {
+      console.error('UserList setBanned error:', err);
+    });
   }
 }

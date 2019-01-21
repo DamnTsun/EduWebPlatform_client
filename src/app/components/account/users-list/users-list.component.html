@@ -1,16 +1,22 @@
 <section class="container page-content">
 
+  <div class="alert alert-success" *ngIf="this.message != null">
+    {{ message }}
+  </div>
 
   <!-- List of users -->
   <ul class="content-list">
 
     <h2>Users:</h2>
-    <li *ngFor="let user of users$">
+    <li *ngFor="let user of users$; let i = index">
 
       <!-- Show a card for each user. Skip if user is the current user. -->
-      <div class="card" *ngIf="user.id !== userid">
+      <!-- Do not show banned users unless current user is admin.-->
+      <div class="card" *ngIf="user.id !== userid && (!user.banned || isAdmin)">
         <div class="card-body">
           <div class="user-name">
+            <span class="badge badge-success" *ngIf="user.admin">Admin</span>
+            <span class="badge badge-danger" *ngIf="user.banned">Banned</span>
             <h5>{{ user.displayname }} (#{{ user.id }})</h5>
           </div>
 
@@ -31,7 +37,9 @@
 
               <!-- Give / Remove admin status (admin-only) -->
               <div class="dropdown-divider" *ngIf="isAdmin"></div>
-              <a class="dropdown-item" *ngIf="isAdmin">
+              <!-- Banned user cannot be set to admin before being unbanned. -->
+              <!-- On click, set the users admin status to opposite of current -->
+              <a class="dropdown-item" *ngIf="isAdmin && !user.banned" (click)="setAdminStatus(i, !user.admin)">
                 <ng-container *ngIf="user.admin; else notAdminTemplate">
                   <i class="material-icons options-icon">arrow_downward</i>
                   Demote to Regular User
@@ -43,7 +51,7 @@
               </a>
 
               <!-- Ban / unban user (admin-only) -->
-              <a class="dropdown-item" *ngIf="isAdmin">
+              <a class="dropdown-item" *ngIf="isAdmin" (click)="setBannedStatus(i, !user.banned)">
                 <ng-container *ngIf="user.banned; else notBannedTemplate">
                   <i class="material-icons options-icon">sentiment_satisfied_alt</i>
                   Unban user

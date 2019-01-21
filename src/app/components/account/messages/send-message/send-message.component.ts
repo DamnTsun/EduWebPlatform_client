@@ -31,7 +31,7 @@ export class SendMessageComponent implements OnInit {
     // Get user sign in status.
     this.signIn.userInternalRecord().subscribe((user) => {
       if (user == null) {
-        this.router.navigate([ environment.routes.account_signIn ]);
+        this.router.navigate([environment.routes.account_signIn]);
       }
     });
   }
@@ -55,14 +55,18 @@ export class SendMessageComponent implements OnInit {
 
     // Clear error message.
     this.errorMessage = null;
-    // Attempt to send message.
-    this.userService.sendMessage(this.receiverid, message.value.trim()).subscribe((res) => {
-      // Successful. Redirect to sent messages area.
-      let route = environment.routes.messageSentToList;
-      route = route.replace(`:${environment.routeParams.userid}`, this.receiverid);
-      this.router.navigate([ route ]);
-    }, (err) => {
-      console.error('Send Message error:', err);
-    })
+    // Attempt to send message if able.
+    if (!this.submitted) {
+      this.submitted = true;
+      this.userService.sendMessage(this.receiverid, message.value.trim()).subscribe((res) => {
+        // Successful. Redirect to sent messages area.
+        let route = environment.routes.messageSentToList;
+        route = route.replace(`:${environment.routeParams.userid}`, this.receiverid);
+        this.router.navigate([route]);
+      }, (err) => {
+        this.submitted = false;
+        console.error('Send Message error:', err);
+      })
+    }
   }
 }

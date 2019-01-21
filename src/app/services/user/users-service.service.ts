@@ -108,4 +108,29 @@ export class UsersServiceService {
   public deleteUserMessage(messageid) {
     return this.api.delete(environment.apiUrl + `users/messages/${messageid}`);
   }
+
+
+
+
+
+  /**
+   * Sets admin status of a user.
+   * @param $id - id of user.
+   * @param $state - boolean. Whether to set to admin.
+   */
+  public setUserAdminStatus(id, state: boolean) {
+    let method = (state) ? 'setAdmin' : 'removeAdmin';
+    return this.api.post(environment.apiUrl + `admin/${method}/${id}`, new FormData());
+  }
+
+  /**
+   * Sets banned status of a user.
+   * @param id - id of user.
+   * @param state - boolean. Whether to set to admin.
+   */
+  public setUserBannedStatus(id, state: boolean) {
+    let method = (state) ? 'banUser' : 'unbanUser';
+    return this.api.post(environment.apiUrl + `admin/${method}/${id}`, new FormData());
+  }
+
 }
