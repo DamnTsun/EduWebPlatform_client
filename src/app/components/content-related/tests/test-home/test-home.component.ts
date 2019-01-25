@@ -15,6 +15,7 @@ export class TestHomeComponent implements OnInit {
 
   private test$: Test = null;
   private loadingError: boolean = false;
+  private user = null;
   private isAdmin: boolean = false;
 
 
@@ -35,6 +36,14 @@ export class TestHomeComponent implements OnInit {
     // Set subject id in site service based on url parameter.
     this.subjectService.setSubject(subjectid);
 
+
+    // Get user signed in status.
+    this.signIn.userInternalRecord().subscribe((user) => {
+      console.log(user);
+      this.user = user;
+    }, (err) => {
+      console.error('Test-Home user error:', err);
+    })
 
     // Get user admin status.
     this.signIn.userIsAdmin().subscribe((isAdmin) => {

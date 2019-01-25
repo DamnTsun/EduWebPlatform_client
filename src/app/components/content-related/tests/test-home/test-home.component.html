@@ -3,30 +3,47 @@
   <!-- Shown after test has been successfully fetched from api -->
   <ng-container *ngIf="(test$ !== null); else loadingTemplate">
 
-    <button class="btn btn-primary" *ngIf="this.isAdmin" routerLink="questions">Test Questions</button>
+    <!-- View questions button -->
+    <div class="viewQuestionsButtonContainer">
+      <button class="btn btn-primary viewQuestionsButton" *ngIf="this.isAdmin" routerLink="questions">View Question
+        Pool</button>
+    </div>
 
-    <h2>{{ test$.name }}</h2>
-    <p>{{ test$.description }}</p>
+
+    <!-- Test name and description -->
+    <div class="card">
+      <h2 class="card-header">Test Home</h2>
+      <div class="card-body">
+        <h5>{{ test$.name }}</h5>
+        <p>{{ test$.description }}</p>
+      </div>
+    </div>
 
 
+    <!-- Creating a user test to complete -->
+    <!-- Only if user is signed in. -->
+    <div class="card" *ngIf="this.user !== null">
+      <h2 class="card-header">Generate a User Test:</h2>
+      <div class="card-body">
+        <section>
+          <p>Please select how many questions you would like the test to contain:</p>
+          <div class="questionCountButtonContainer">
+            <button class="btn btn-primary questionCountButton" (click)="this.generateTest5()">5 Questions</button>
+          </div>
+          <div class="questionCountButtonContainer">
+            <button class="btn btn-primary questionCountButton" (click)="this.generateTest10()">10 Questions</button>
+          </div>
+          <div class="questionCountButtonContainer">
+            <button class="btn btn-primary questionCountButton" (click)="this.generateTest25()">25 Questions</button>
+          </div>
+          <div class="questionCountButtonContainer">
+            <button class="btn btn-primary questionCountButton" data-toggle="modal" data-target="#customQuestionCountModal">Custom
+              Questions</button>
+          </div>
+        </section>
+      </div>
+    </div>
 
-    <!-- Form for creating user test with n number of questions-->
-    <section>
-      <h2>Attempt a User Test:</h2>
-      <p>Please choose a number of questions:</p>
-      <div class="questionCountButton">
-        <button class="btn btn-primary" (click)="this.generateTest5()">5 Questions</button>
-      </div>
-      <div class="questionCountButton">
-        <button class="btn btn-primary" (click)="this.generateTest10()">10 Questions</button>
-      </div>
-      <div class="questionCountButton">
-        <button class="btn btn-primary" (click)="this.generateTest25()">25 Questions</button>
-      </div>
-      <div class="questionCountButton">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#customQuestionCountModal">Custom Questions</button>
-      </div>
-    </section>
   </ng-container>
 
 
@@ -47,9 +64,10 @@
 
 
 
-  
+
   <!-- Modal for choosing custom number of questions -->
-  <div class="modal fade" id="customQuestionCountModal" tabindex="-1" role="dialog" aria-labelledby="customQuestionCountModalLabel" aria-hidden="true">
+  <div class="modal fade" id="customQuestionCountModal" tabindex="-1" role="dialog" aria-labelledby="customQuestionCountModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -61,14 +79,15 @@
         <div class="modal-body">
           <!-- number input field -->
           <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                  <button class="btn btn-outline-secondary" id="utq_count_decrement" type="button">-</button>
-              </div>
-              <input type="number" id="utq_numberinput" class="form-control" value="10" pattern="[0-9]" #questionCountInput>
-              <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" id="utq_count_increment" type="button">+</button>
-              </div>
+            <div class="input-group-prepend">
+              <button class="btn btn-outline-secondary" id="utq_count_decrement" type="button">-</button>
             </div>
+            <input type="number" id="utq_numberinput" class="form-control" value="10" pattern="[0-9]"
+              #questionCountInput>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" id="utq_count_increment" type="button">+</button>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
