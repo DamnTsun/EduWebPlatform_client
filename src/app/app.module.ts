@@ -36,7 +36,7 @@ import { TestHomeComponent } from './components/content-related/tests/test-home/
 // ACCOUNT RELATED
 import { SignInComponent } from './components/account/sign-in/sign-in.component';
 import { AccountComponent } from './components/account/account/account.component';
-import { UserTestAttemptComponent } from './components/content-related/tests/user-test-attempt/user-test-attempt.component';
+import { UserTestAttemptComponent } from './components/content-related/user_tests/user-test-attempt/user-test-attempt.component';
 import { SubjectCreatorComponent } from './components/content-related/subjects/subject-creator/subject-creator.component';
 import { SubjectEditorComponent } from './components/content-related/subjects/subject-editor/subject-editor.component';
 import { TopicCreatorComponent } from './components/content-related/topics/topic-creator/topic-creator.component';
@@ -57,6 +57,7 @@ import { MessageFromUserListComponent } from './components/account/messages/mess
 import { SendMessageComponent } from './components/account/messages/send-message/send-message.component';
 import { MessageSentListComponent } from './components/account/messages/message-sent-list/message-sent-list.component';
 import { MessageSentToUserListComponent } from './components/account/messages/message-sent-to-user-list/message-sent-to-user-list.component';
+import { UserTestListComponent } from './components/content-related/user_tests/user-test-list/user-test-list.component';
 
 
 
@@ -117,7 +118,8 @@ export function provideConfig() {
     MessageFromUserListComponent,
     SendMessageComponent,
     MessageSentListComponent,
-    MessageSentToUserListComponent
+    MessageSentToUserListComponent,
+    UserTestListComponent
   ],
   imports: [
     BrowserModule,

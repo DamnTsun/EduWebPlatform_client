@@ -28,6 +28,26 @@ export class UserTestsService {
   public getUserTestQuestions(subjectid, topicid, testid, count): Observable<TestQuestion[]> {
     return this.api.get(environment.apiUrl + `subjects/${subjectid}/topics/${topicid}/tests/${testid}/questions/random?count=${count}`) as Observable<TestQuestion[]>;
   }
+
+
+
+
+
+  /**
+   * Gets previous user test results from api for a specific test (by id).
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   */
+  public getUserTestResults(subjectid, topicid, testid): Observable<UserTest[]> {
+    return this.api.get(environment.apiUrl +
+        `subjects/${subjectid}/topics/${topicid}/tests/${testid}/user_tests`) as Observable<UserTest[]>;
+  }
+
+
+
+
+
   /**
    * Sends a user_test object to the API so that it can be saved.
    * @param user_test - user_test object.

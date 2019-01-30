@@ -1,0 +1,22 @@
+<section class="container page-content">
+
+
+  <!-- List of previous results -->
+  <ul class="content-list">
+    <h2>Previous Results for Test:</h2>
+    <!-- Display item for each result -->
+    <li *ngFor="let result of userTestResults$; let i = index">
+
+      <div class="card">
+        <h5 class="card-header">{{ result.title }}</h5>
+        <div class="card-body" style="font-size: 14pt;">
+          <div>Test Score: {{ result.score }} / {{ result.questionCount }}.</div>
+          <div>Date: {{ result.date }}.</div>
+          
+        </div>
+      </div>
+
+    </li>
+  </ul>
+
+</section>

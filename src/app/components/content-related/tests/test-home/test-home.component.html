@@ -43,6 +43,11 @@
         </section>
       </div>
     </div>
+    
+    <!-- View previous results button -->
+    <div *ngIf="this.user !== null">
+      <button class="btn btn-primary btn-block" routerLink="user_tests">View Previous User Test Results</button>
+    </div>
 
   </ng-container>
 
