@@ -1,16 +1,14 @@
 <section class="container page-content">
 
   <!-- Breadcrumb navigation -->
-  <nav aria-label="breadcrumb" *ngIf="subjectid !== null && topicid !== null && testid !== null">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a routerLink="{{ getSubjectListRoute() }}">Subjects</a></li>
-      <li class="breadcrumb-item"><a routerLink="{{ getSubjectHomeRoute() }}">{{ subjectid }}</a></li>
-      <li class="breadcrumb-item"><a routerLink="{{ getTopicListRoute() }}">Topics</a></li>
-      <li class="breadcrumb-item"><a routerLink="{{ getTopicHomeRoute() }}">{{ topicid }}</a></li>
-      <li class="breadcrumb-item"><a routerLink="{{ getTestListRoute() }}">Tests</a></li>
-      <li class="breadcrumb-item"><a routerLink="{{ getTestHomeRoute() }}">{{ testid }}</a></li>
-      <li class="breadcrumb-item active" aria-current="page">User Tests</li>
-    </ol>
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null && topicid !== null && testid !== null">
+      <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+      <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
+      <a class="breadcrumb-item" routerLink="{{ navService.getTopicListRoute(subjectid) }}">Topics</a>
+      <a class="breadcrumb-item" routerLink="{{ navService.getTopicHomeRoute(subjectid, topicid) }}">{{ topicid }}</a>
+      <a class="breadcrumb-item" routerLink="{{ navService.getTestListRoute(subjectid, topicid) }}">Tests</a>
+      <a class="breadcrumb-item" routerLink="{{ navService.getTestHomeRoute(subjectid, topicid, testid) }}">{{ testid }}</a>
+      <span class="breadcrumb-item active" aria-current="page">User Tests</span>
   </nav>
 
   <!-- List of previous results -->

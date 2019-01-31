@@ -5,6 +5,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { UserTest } from 'src/app/classes/UserTest';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-user-test-list',
@@ -31,7 +32,8 @@ export class UserTestListComponent implements OnInit {
     private userTestService: UserTestsService,        // For interactign with user_tests part of api.
     private signIn: SignInService,                    // For checking user signin/admin status.
     private route: ActivatedRoute,                    // For getting route params.
-    private router: Router                            // For redirecting user if needed.
+    private router: Router,                           // For redirecting user if needed.
+    private navService: NavigationServiceService      // For getting routes for breadcrumb nav.
   ) { }
 
   ngOnInit() {
@@ -109,46 +111,4 @@ export class UserTestListComponent implements OnInit {
     this.router.navigate([ route ]);
   }
 
-
-
-  // breadcrumb testing.
-  // Move to navigationService or something. Reuse the code on all components.
-  public getSubjectListRoute(): string {
-    return `/${environment.routes.subjectSelect}`;
-  }
-
-  public getSubjectHomeRoute(): string {
-    // Get route, begin with / for absolute path. Then replace param names with param values.
-    let route = `/${environment.routes.subjectHome}`;
-    route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid);
-    return route;
-  }
-
-  public getTopicListRoute(): string {
-    let route = `/${environment.routes.topicSelect}`;
-    route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid);
-    return route;
-  }
-
-  public getTopicHomeRoute(): string {
-    let route = `/${environment.routes.topicHome}`;
-    route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid);
-    route = route.replace(`:${environment.routeParams.topicid}`, this.topicid);
-    return route;
-  }
-
-  public getTestListRoute(): string {
-    let route = `/${environment.routes.testList}`;
-    route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid);
-    route = route.replace(`:${environment.routeParams.topicid}`, this.topicid);
-    return route;
-  }
-
-  public getTestHomeRoute(): string {
-    let route = `/${environment.routes.testHome}`;
-    route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid);
-    route = route.replace(`:${environment.routeParams.topicid}`, this.topicid);
-    route = route.replace(`:${environment.routeParams.testid}`, this.testid);
-    return route;
-  }
 }
