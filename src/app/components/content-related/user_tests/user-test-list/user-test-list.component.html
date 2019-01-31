@@ -1,5 +1,17 @@
 <section class="container page-content">
 
+  <!-- Breadcrumb navigation -->
+  <nav aria-label="breadcrumb" *ngIf="subjectid !== null && topicid !== null && testid !== null">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="{{ getSubjectListRoute() }}">Subjects</a></li>
+      <li class="breadcrumb-item"><a routerLink="{{ getSubjectHomeRoute() }}">{{ subjectid }}</a></li>
+      <li class="breadcrumb-item"><a routerLink="{{ getTopicListRoute() }}">Topics</a></li>
+      <li class="breadcrumb-item"><a routerLink="{{ getTopicHomeRoute() }}">{{ topicid }}</a></li>
+      <li class="breadcrumb-item"><a routerLink="{{ getTestListRoute() }}">Tests</a></li>
+      <li class="breadcrumb-item"><a routerLink="{{ getTestHomeRoute() }}">{{ testid }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">User Tests</li>
+    </ol>
+  </nav>
 
   <!-- List of previous results -->
   <ul class="content-list">
@@ -12,11 +24,21 @@
         <div class="card-body" style="font-size: 14pt;">
           <div>Test Score: {{ result.score }} / {{ result.questionCount }}.</div>
           <div>Date: {{ result.date }}.</div>
-          
+          <button class="btn btn-primary">View Details (Not Implemented)</button>
         </div>
       </div>
 
     </li>
   </ul>
 
+
+  <!-- Infinite scroll div -->
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+
+  <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
+  <ng-template #endOfContentTemplate>
+    <div class="alert alert-warning">
+      End of Previous Results
+    </div>
+  </ng-template>
 </section>
