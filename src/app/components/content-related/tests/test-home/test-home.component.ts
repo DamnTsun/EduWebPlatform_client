@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { TestsService } from 'src/app/services/contentServices/tests.service';
 import { SignInService } from 'src/app/services/sign-in.service';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-test-home',
@@ -12,6 +13,9 @@ import { SignInService } from 'src/app/services/sign-in.service';
   styleUrls: ['./test-home.component.css']
 })
 export class TestHomeComponent implements OnInit {
+
+  private subjectid = null;
+  private topicid = null;
 
   private test$: Test = null;
   private loadingError: boolean = false;
@@ -24,17 +28,18 @@ export class TestHomeComponent implements OnInit {
     private route: ActivatedRoute,
     private subjectService: SubjectsService,
     private testService: TestsService,
-    private signIn: SignInService
+    private signIn: SignInService,
+    private navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
     // Get ids from url.
-    let subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
-    let topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
+    this.subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
+    this.topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
     let testid = this.route.snapshot.paramMap.get(environment.routeParams.testid);
 
     // Set subject id in site service based on url parameter.
-    this.subjectService.setSubject(subjectid);
+    this.subjectService.setSubject(this.subjectid);
 
 
     // Get user signed in status.
@@ -54,7 +59,7 @@ export class TestHomeComponent implements OnInit {
 
 
     // Get test from api.
-    this.testService.getTest(subjectid, topicid, testid).subscribe((tests) => {
+    this.testService.getTest(this.subjectid, this.topicid, testid).subscribe((tests) => {
       this.test$ = tests[0];
     }, (err) => {
       this.loadingError = true;

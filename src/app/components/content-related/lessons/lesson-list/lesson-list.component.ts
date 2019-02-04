@@ -5,6 +5,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Lesson } from 'src/app/classes/Lesson';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-lesson-list',
@@ -28,7 +29,8 @@ export class LessonListComponent implements OnInit {
     private subjectService: SubjectsService,
     private lessonService: LessonsService,
     private signIn: SignInService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private navService: NavigationServiceService
   ) { }
 
   ngOnInit() {

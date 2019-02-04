@@ -9,6 +9,7 @@ import { SubjectsService } from 'src/app/services/contentServices/subjects.servi
 import { TopicsService } from 'src/app/services/contentServices/topics.service';
 import { LessonsService } from 'src/app/services/contentServices/lessons.service';
 import { TestsService } from 'src/app/services/contentServices/tests.service';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-topic-home',
@@ -17,6 +18,8 @@ import { TestsService } from 'src/app/services/contentServices/tests.service';
 })
 export class TopicHomeComponent implements OnInit {
 
+  private subjectid = null;
+  
   private topic$: Topic = null;
   private loadingError: boolean = false;
 
@@ -30,20 +33,21 @@ export class TopicHomeComponent implements OnInit {
     private route: ActivatedRoute,
     private subjectService: SubjectsService,
     private topicService: TopicsService,
-    private signIn: SignInService
+    private signIn: SignInService,
+    private navService: NavigationServiceService
   ) { }
 
 
   ngOnInit() {
     // Get ids from url.
-    let subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
+    this.subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
     let topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
 
     // Set subject id in subject service.
-    this.subjectService.setSubject(subjectid);
+    this.subjectService.setSubject(this.subjectid);
     
     // Get topic from api.
-    this.topicService.getTopic(subjectid, topicid).subscribe((topics) => {
+    this.topicService.getTopic(this.subjectid, topicid).subscribe((topics) => {
       this.topic$ = topics[0];
     }, (err) => {
       console.error('Topic-Home Error:', err);

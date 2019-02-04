@@ -1,5 +1,12 @@
 <section class="container page-content">
 
+
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subject$ !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+    <span class="breadcrumb-item active" aria-current="page">{{ subject$.id }}</span>
+  </nav>
+
   <ng-container *ngIf="(this.subject$ !== null); else loadingTemplate">
     <div class="card">
       <h2 class="card-header">{{ this.subject$.name }}</h2>
@@ -9,9 +16,9 @@
         </section>
       </div>
     </div>
-    
+
     <app-subject-post-list title="Latest News" showControls="false" count="3"></app-subject-post-list>
-    
+
   </ng-container>
 
 
@@ -22,7 +29,7 @@
     <ng-template #loadingErrorTemplate>
       Loading failed
     </ng-template>
-    
+
   </ng-template>
 
 </section>

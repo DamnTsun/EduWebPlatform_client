@@ -116,4 +116,10 @@ export class NavigationServiceService {
 
 
   
+
+
+  // USERS
+  public getUserListRoute(): string {
+    return `/${environment.routes.usersList}`;
+  }
 }

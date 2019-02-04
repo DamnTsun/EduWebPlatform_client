@@ -1,5 +1,17 @@
 <section class="container page-content">
 
+
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null && topicid !== null && test$ !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicListRoute(subjectid) }}">Topics</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicHomeRoute(subjectid, topicid) }}">{{ topicid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTestListRoute(subjectid, topicid) }}">Tests</a>
+    <span class="breadcrumb-item active" aria-current="page">{{ test$.id }}</span>
+  </nav>
+
+
   <!-- Shown after test has been successfully fetched from api -->
   <ng-container *ngIf="(test$ !== null); else loadingTemplate">
 
@@ -38,12 +50,12 @@
           </div>
           <div class="questionCountButtonContainer">
             <button class="btn btn-primary questionCountButton" data-toggle="modal" data-target="#customQuestionCountModal">Custom
-              Questions</button>
+              Questions (NI)</button>
           </div>
         </section>
       </div>
     </div>
-    
+
     <!-- View previous results button -->
     <div *ngIf="this.user !== null">
       <button class="btn btn-primary btn-block" routerLink="user_tests">View Previous User Test Results</button>

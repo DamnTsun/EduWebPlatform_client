@@ -1,5 +1,15 @@
 <section class="container page-content">
 
+
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null && topic$ !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicListRoute(subjectid) }}">Topics</a>
+    <span class="breadcrumb-item active" aria-current="page">{{ topic$.id }}</span>
+  </nav>
+
+
   <!-- Whilst fetching topic from api -->
   <ng-container *ngIf="(this.topic$ !== null); else loadingTemplate">
 
