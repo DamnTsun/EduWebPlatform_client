@@ -87,9 +87,10 @@ export class SignInService {
       this.api.setAuthObject(res);                      // Set auth object to enable API requests that need idToken header.
       this.userIsAdminRecord.next(res.isAdmin);         // Set user admin status for components to use.
       this.getUserInfo();                               // Get and store the users internal user record data, such as their displayname.
-    }, (err) => {
-      console.log('SignIn Service - Google - Auth Error:', err);
-    })
+    },
+    // On failure.
+    this.handleAuthFailure
+    )
   }
   /**
    * Attempts to authorize with backend API.
@@ -101,10 +102,30 @@ export class SignInService {
       this.api.setAuthObject(res);                      // Set auth object to enable API requests that need idToken header.
       this.userIsAdminRecord.next(res.isAdmin);         // Set user admin status for components to use.
       this.getUserInfo();                               // Get and store the users internal user record data, such as their displayname.
-    }, (err) => {
-      console.log('SignIn Service - Facebook - Auth Error:', err);
-    });
+    },
+    // On failure.
+    this.handleAuthFailure
+    );
   }
+
+
+  /**
+   * Error handler for when authorization methods fail.
+   */
+  private handleAuthFailure = (err) => {
+    // Check against expected error codes.
+    switch (err.status) {
+      case 401: // User is banned...
+        // Display message. Use a 1ms timeout so that it is asynchronous / non-blocking.
+        // Then sign user out.
+        setTimeout(() => {
+          alert('Sorry, this account is banned.\nYou will be automatically signed out.');
+        }, 1);
+        this.signOut();
+        break;
+    }
+  }
+
 
   /**
    * Clears authorization will backend. Deletes JWT.
