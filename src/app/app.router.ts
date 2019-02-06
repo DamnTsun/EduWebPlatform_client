@@ -6,7 +6,7 @@ import { TopicListComponent } from "./components/content-related/topics/topic-li
 import { TopicHomeComponent } from "./components/content-related/topics/topic-home/topic-home.component";
 import { LessonHomeComponent } from "./components/content-related/lessons/lesson-home/lesson-home.component";
 import { TestHomeComponent } from "./components/content-related/tests/test-home/test-home.component";
-import { UserTestAttemptComponent } from "./components/content-related/tests/user-test-attempt/user-test-attempt.component";
+import { UserTestAttemptComponent } from './components/content-related/user_tests/user-test-attempt/user-test-attempt.component';
 import { SignInComponent } from "./components/account/sign-in/sign-in.component";
 import { AccountComponent } from "./components/account/account/account.component";
 import { SubjectCreatorComponent } from "./components/content-related/subjects/subject-creator/subject-creator.component";
@@ -29,6 +29,8 @@ import { MessageFromUserListComponent } from "./components/account/messages/mess
 import { SendMessageComponent } from "./components/account/messages/send-message/send-message.component";
 import { MessageSentListComponent } from "./components/account/messages/message-sent-list/message-sent-list.component";
 import { MessageSentToUserListComponent } from "./components/account/messages/message-sent-to-user-list/message-sent-to-user-list.component";
+import { UserTestListComponent } from "./components/content-related/user_tests/user-test-list/user-test-list.component";
+import { UserTestDetailsComponent } from "./components/content-related/user_tests/user-test-details/user-test-details.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -142,10 +144,18 @@ export const appRoutes = [
 
 
 
-  // USER TEST ATTEMPT
-  {
+  // USER TESTS
+  { // Attempt user test.
     path: environment.routes.userTestAttempt,
     component: UserTestAttemptComponent
+  },
+  { // View previous test results (all)
+    path: environment.routes.userTestList,
+    component: UserTestListComponent
+  },
+  { // View individual test result details.
+    path: environment.routes.userTestDetails,
+    component: UserTestDetailsComponent
   },
   // *** END OF CONTENT RELATED ***
 

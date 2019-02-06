@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { LessonsService } from 'src/app/services/contentServices/lessons.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-lesson-home',
@@ -12,6 +13,9 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   styleUrls: ['./lesson-home.component.css']
 })
 export class LessonHomeComponent implements OnInit {
+
+  private subjectid = null;
+  private topicid = null;
 
   private lesson$: Lesson = null;
   private loadingError: boolean = false;
@@ -23,20 +27,21 @@ export class LessonHomeComponent implements OnInit {
     private route: ActivatedRoute,
     private subjectService: SubjectsService,
     private lessonService: LessonsService,
+    private navService: NavigationServiceService,
     private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
     // Get ids from url.
-    let subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
-    let topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
+    this.subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
+    this.topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
     let lessonid = this.route.snapshot.paramMap.get(environment.routeParams.lessonid);
 
     // Set subject id in site service based on url parameter.
-    this.subjectService.setSubject(subjectid);
+    this.subjectService.setSubject(this.subjectid);
 
     // Get lesson from api.
-    this.lessonService.getLesson(subjectid, topicid, lessonid).subscribe((lessons) => {
+    this.lessonService.getLesson(this.subjectid, this.topicid, lessonid).subscribe((lessons) => {
       this.lesson$ = lessons[0];
       // Update lesson body for display. Bypasses all HTML checks. Allows script tags. (bad).
       // Was only way to get img srcs to work.

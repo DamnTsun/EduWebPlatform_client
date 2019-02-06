@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 
 import { Subject } from 'src/app/classes/Subject';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-subject-home',
@@ -12,12 +13,13 @@ import { SubjectsService } from 'src/app/services/contentServices/subjects.servi
 })
 export class SubjectHomeComponent implements OnInit {
 
-  private subject$: Subject;
+  private subject$: Subject = null;
   private loadingError: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private subjectService: SubjectsService
+    private subjectService: SubjectsService,
+    private navService: NavigationServiceService
   ) { }
 
 

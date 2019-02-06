@@ -1,0 +1,16 @@
+<p>
+  user-test-details works!
+</p>
+
+<h5>Test...</h5>
+
+<div *ngIf="utestQuestions !== null && utestQuestions.length > 0">
+  Overall score: {{ getCorrectQuestionCount() }} / {{ utestQuestions.length }}
+</div>
+
+<ul *ngFor="let question of utestQuestions; let i = index">
+  <h5>Question {{ i + 1 }}:</h5>
+  <li>Question: {{ question.question }}</li>
+  <li>Correct Answer: {{ question.correctAnswer }}</li>
+  <li>Your Answer: {{ question.userAnswer }}</li>
+</ul>

@@ -5,6 +5,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { TestQuestion } from 'src/app/classes/TestQuestion';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-test-question-list',
@@ -31,7 +32,8 @@ export class TestQuestionListComponent implements OnInit {
     private testQuestionService: TestQuestionsService,      // For interacting with test questions.
     private signIn: SignInService,                          // For getting user admin status.
     private route: ActivatedRoute,                          // For getting route parameters.
-    private router: Router                                  // For redirecting user if not admin.
+    private router: Router,                                 // For redirecting user if not admin.
+    private navService: NavigationServiceService
   ) { }
 
   ngOnInit() {

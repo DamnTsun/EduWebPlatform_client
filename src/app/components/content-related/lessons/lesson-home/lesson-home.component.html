@@ -1,5 +1,17 @@
 <section class="container page-content">
 
+
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null && topicid !== null && lesson$ !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicListRoute(subjectid) }}">Topics</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicHomeRoute(subjectid, topicid) }}">{{ topicid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getLessonListRoute(subjectid, topicid) }}">Lessons</a>
+    <span class="breadcrumb-item active" aria-current="page">{{ lesson$.id }}</span>
+  </nav>
+
+
   <!-- Shown after successfully fetching lesson from api -->
   <ng-container *ngIf="(lesson$ !== null); else loadingTemplate">
 
@@ -19,8 +31,8 @@
     <ng-template #loadingErrorTemplate>
       Loading failed
     </ng-template>
-    
+
   </ng-template>
-  
+
 
 </section>

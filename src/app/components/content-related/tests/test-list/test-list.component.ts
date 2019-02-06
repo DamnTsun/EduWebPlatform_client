@@ -5,6 +5,7 @@ import { TestsService } from 'src/app/services/contentServices/tests.service';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-test-list',
@@ -28,7 +29,8 @@ export class TestListComponent implements OnInit {
     private subjectService: SubjectsService,
     private testService: TestsService,
     private signIn: SignInService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private navService: NavigationServiceService
   ) { }
 
   ngOnInit() {

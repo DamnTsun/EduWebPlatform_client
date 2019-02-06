@@ -3,6 +3,7 @@ import { UsersServiceService } from 'src/app/services/user/users-service.service
 import { SignInService } from 'src/app/services/sign-in.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-message-list',
@@ -22,7 +23,8 @@ export class MessageListComponent implements OnInit {
   constructor(
     private userService: UsersServiceService,
     private signIn: SignInService,
-    private router: Router
+    private router: Router,
+    private navService: NavigationServiceService
   ) { }
 
   ngOnInit() {

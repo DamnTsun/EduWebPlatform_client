@@ -6,6 +6,7 @@ import { TestQuestion } from 'src/app/classes/TestQuestion';
 import { UserTest } from 'src/app/classes/UserTest';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { UserTestsService } from 'src/app/services/user/user-tests.service';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-user-test-attempt',
@@ -15,6 +16,8 @@ import { UserTestsService } from 'src/app/services/user/user-tests.service';
 export class UserTestAttemptComponent implements OnInit {
 
   // Id of test that this user_test is based off.
+  private subjectid = null;
+  private topicid = null;
   private testid = null;
   // Test questions for user_test.
   private testQuestions$: TestQuestion[] = null;
@@ -35,17 +38,18 @@ export class UserTestAttemptComponent implements OnInit {
     private route: ActivatedRoute,
     private subjectService: SubjectsService,
     private userTestsService: UserTestsService,
-    private signIn: SignInService
+    private signIn: SignInService,
+    private navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
     // Get params from url.
-    let subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
-    let topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
+    this.subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
+    this.topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
     this.testid = this.route.snapshot.paramMap.get(environment.routeParams.testid);
 
     // Set subject.
-    this.subjectService.setSubject(subjectid);
+    this.subjectService.setSubject(this.subjectid);
 
 
     // Check user is signed in.
@@ -64,7 +68,7 @@ export class UserTestAttemptComponent implements OnInit {
 
 
     // Get questions for test from API.
-    this.userTestsService.getUserTestQuestions(subjectid, topicid, this.testid, count).subscribe((testQuestions) => {
+    this.userTestsService.getUserTestQuestions(this.subjectid, this.topicid, this.testid, count).subscribe((testQuestions) => {
       this.testQuestions$ = testQuestions;
     }, (err) => {
       this.loadingError = true;
@@ -153,7 +157,7 @@ export class UserTestAttemptComponent implements OnInit {
    * @param user_test - user_test object.
    */
   private sendUserTest(user_test): void {
-    this.userTestsService.addUserTest(user_test).subscribe((res) => {
+    this.userTestsService.addUserTest(this.subjectid, this.topicid, this.testid, user_test).subscribe((res) => {
       this.completedTest$ = res[0];
     }, (err) => {
       console.error('Add User_Test Error:', err);

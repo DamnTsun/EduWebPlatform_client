@@ -14,6 +14,9 @@ export const environment = {
     testid: 'testid',
     questionId: 'testquestionid',
 
+    // User_tests
+    usertestid: 'usertestid',
+
     // User / Messaging related.
     userid: 'userid'
   },
@@ -47,14 +50,17 @@ export const environment = {
     testQuestionEditor: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions/:testquestionid/edit',
     testQuestionList: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions',
     testQuestionHome: 'subjects/:subjectid/topics/:topicid/tests/:testid/questions/:testquestionid',
-    // USER TEST ATTEMPT
-    userTestAttempt: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_test',
     // *** END OF CONTENT RELATED ***
+    // *** USER TEST RELATED ***
+    userTestAttempt: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_test',
+    userTestList: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_tests',
+    userTestDetails: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_tests/:usertestid',
     
     // USERS
     account_signIn: 'users/signin',
     account: 'users/account',
     usersList: 'users',
+
 
     // MESSAGES
     // Messages received
