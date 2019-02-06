@@ -46,13 +46,13 @@ export class UserTestListComponent implements OnInit {
 
     
     // Get user admin status.
-    this.signIn.userIsAdmin().subscribe((isAdmin) => {
-      // If not admin, redirect to test home.
-      if (!isAdmin) {
+    this.signIn.user().subscribe((user) => {
+      // If not signed in, redirect to test home.
+      if (user == null) {
         this.redirectToTestHome();
       }
     }, (err) => {
-      console.error('UserTestList isAdmin error:', err);
+      console.error('UserTestList sign in error:', err);
     })
 
 

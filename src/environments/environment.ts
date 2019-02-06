@@ -54,7 +54,7 @@ export const environment = {
     // *** USER TEST RELATED ***
     userTestAttempt: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_test',
     userTestList: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_tests',
-    userTestHome: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_tests/:usertestid',
+    userTestDetails: 'subjects/:subjectid/topics/:topicid/tests/:testid/user_tests/:usertestid',
     
     // USERS
     account_signIn: 'users/signin',

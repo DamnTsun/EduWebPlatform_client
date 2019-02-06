@@ -157,7 +157,7 @@ export class UserTestAttemptComponent implements OnInit {
    * @param user_test - user_test object.
    */
   private sendUserTest(user_test): void {
-    this.userTestsService.addUserTest(user_test).subscribe((res) => {
+    this.userTestsService.addUserTest(this.subjectid, this.topicid, this.testid, user_test).subscribe((res) => {
       this.completedTest$ = res[0];
     }, (err) => {
       console.error('Add User_Test Error:', err);

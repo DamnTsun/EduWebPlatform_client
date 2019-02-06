@@ -58,6 +58,7 @@ import { SendMessageComponent } from './components/account/messages/send-message
 import { MessageSentListComponent } from './components/account/messages/message-sent-list/message-sent-list.component';
 import { MessageSentToUserListComponent } from './components/account/messages/message-sent-to-user-list/message-sent-to-user-list.component';
 import { UserTestListComponent } from './components/content-related/user_tests/user-test-list/user-test-list.component';
+import { UserTestDetailsComponent } from './components/content-related/user_tests/user-test-details/user-test-details.component';
 
 
 
@@ -119,7 +120,8 @@ export function provideConfig() {
     SendMessageComponent,
     MessageSentListComponent,
     MessageSentToUserListComponent,
-    UserTestListComponent
+    UserTestListComponent,
+    UserTestDetailsComponent
   ],
   imports: [
     BrowserModule,

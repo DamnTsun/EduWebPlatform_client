@@ -30,6 +30,7 @@ import { SendMessageComponent } from "./components/account/messages/send-message
 import { MessageSentListComponent } from "./components/account/messages/message-sent-list/message-sent-list.component";
 import { MessageSentToUserListComponent } from "./components/account/messages/message-sent-to-user-list/message-sent-to-user-list.component";
 import { UserTestListComponent } from "./components/content-related/user_tests/user-test-list/user-test-list.component";
+import { UserTestDetailsComponent } from "./components/content-related/user_tests/user-test-details/user-test-details.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -151,6 +152,10 @@ export const appRoutes = [
   { // View previous test results (all)
     path: environment.routes.userTestList,
     component: UserTestListComponent
+  },
+  { // View individual test result details.
+    path: environment.routes.userTestDetails,
+    component: UserTestDetailsComponent
   },
   // *** END OF CONTENT RELATED ***
 
