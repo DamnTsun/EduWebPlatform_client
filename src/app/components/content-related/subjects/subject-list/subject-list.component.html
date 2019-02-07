@@ -2,51 +2,48 @@
 
 
   <!-- Breadcrumb navigation -->
-  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb">
+  <nav class="breadcrumb" aria-label="breadcrumb">
     <span class="breadcrumb-item active" aria-current="page">Subjects</span>
   </nav>
 
+
+  <div class="create-button-container">
+    <button class="btn btn-success create-button" routerLink="create">
+      <i class="material-icons button-icon">add</i>Create a Subject
+    </button>
+  </div>
+
   <!-- List of subjects -->
-  <ul class="content-list">
-    <!-- Create subject button (admin-only) -->
-    <div class="createButtonContainer">
-      <button class="btn btn-primary createButton" *ngIf="this.isAdmin" routerLink="create">Create a Subject</button>
+  <div class="content-grid">
+    <div class="card" *ngFor="let subject of subjects$; let i = index">
+      <div class="card-body">
+        <h5 class="card-title">{{ subject.name }}</h5>
+        <div class="card-text content-description">{{ subject.description }}</div>
+      </div>
+      <div class="card-footer">
+        <!-- View button -->
+        <button class="btn btn-outline-primary view-button" routerLink="{{ subject.id }}">View</button>
+
+        <!-- Admin dropdown -->
+        <div class="btn-group" style="float: right">
+          <!-- Toggle button -->
+          <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <i class="material-icons button-icon">settings</i>
+          </button>
+          <!-- dropdown -->
+          <div class="dropdown-menu dropdown-menu-right">
+            <button class="dropdown-item" routerLink="{{ subject.id }}/edit">
+              Edit
+            </button>
+            <button class="dropdown-item delete-dropdown-option" (click)="deleteSubject(i);">
+              <i class="material-icons button-icon">delete</i>Delete
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <h2>Select a Subject:</h2>
-    <li *ngFor="let subject of subjects$; let i = index">
-      <section class="card">
-        <section class="card-body">
-          <h5 class="card-title">{{ subject.name }}</h5>
-          <p class="card-text">{{ subject.description }}</p>
-
-          <!-- Buttons -->
-          <div class="viewButtonContainer">
-            <button class="btn btn-primary viewButton" routerLink="{{ subject.id }}">View Subject</button>
-          </div>
-
-          <!-- Admin buttons (dropdown)-->
-          <div class="dropdown show" *ngIf="this.isAdmin">
-            <a class="options-dropdown" id="subjectOptionsDropdownLink" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              <i class="material-icons options-icon">settings</i>
-            </a>
-
-            <div class="dropdown-menu" aria-labelledby="subjectOptionsDropdownLink">
-              <a class="dropdown-item" routerLink="{{ subject.id }}/edit">
-                <i class="material-icons options-icon">edit</i>
-                Edit
-              </a>
-              <a class="dropdown-item deleteButton" (click)="deleteSubject(i)">
-                <i class="material-icons options-icon">delete</i>
-                Delete
-              </a>
-            </div>
-          </div>
-        </section>
-      </section>
-    </li>
-  </ul>
+  </div>
 
 
   <!-- Infinite scroll div -->
@@ -54,8 +51,8 @@
 
   <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
   <ng-template #endOfContentTemplate>
-    <div class="alert alert-warning">
-      End of Subjects
+    <div class="alert alert-dark">
+      No more subjects...
     </div>
   </ng-template>
 </section>

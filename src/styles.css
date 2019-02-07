@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
+html {
+  height: calc(100% + 1px);
+}
 body {
-    background-color: #ebebeb;
+    background-color: whitesmoke;
 }
 
 /* General CSS */
@@ -10,7 +13,35 @@ section.page-content {
 }
 
 
+
+
 /* Subject / topics / lesson / test list CSS */
+.content-grid {
+  display: grid;
+  grid-template-columns: auto;
+  grid-gap: 1em;
+  margin: 1em 0em;
+}
+
+@media (min-width: 992px) {
+  .content-grid {
+    grid-template-columns: auto auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  .content-grid {
+    grid-template-columns: auto auto auto;
+  }
+}
+
+.content-description {
+  line-height: 1.2em;
+  max-height: 5.8em;
+  overflow: hidden;
+}
+
+/* OLD */
 ul.content-list {
     list-style: none;
     padding: 0.5em;
@@ -24,6 +55,47 @@ ul.content-list li {
 ul.content-list li button {
     width: inherit;
 }
+/* END OF OLD */
+
+
+/* ICONS */
+/* Icons in buttons. Aligns to center. */
+i.button-icon {
+    text-align: center;
+    vertical-align: text-bottom;
+    position: relative;
+    top: 2px;
+}
+i.delete-icon {
+  color: red;
+}
+
+
+
+/* BUTTONS */
+button.view-button {
+  width: 10em;
+  max-width: 40%;
+}
+
+button.create-button {
+  
+  width: 20em;
+  max-width: 100%;
+}
+.create-button-container {
+  text-align: right;
+  
+}
+
+button.delete-dropdown-option {
+  color: red !important;
+}
+button.delete-dropdown-option:hover {
+color: white !important;
+  background-color: red;
+}
+
 
 
 
@@ -90,3 +162,149 @@ ul.content-list li button {
         transform: scale(0);
     }
 }
+
+
+
+/* Custom navbar styling */
+.navbar {
+    background-color: #00bcc5;
+  }
+  .navbar .navbar-brand {
+    color: #ffffff;
+  }
+  .navbar .navbar-brand:hover,
+  .navbar .navbar-brand:focus {
+    color: #525252;
+  }
+  .navbar .navbar-text {
+    color: #ffffff;
+  }
+  .navbar .navbar-text a {
+    color: #525252;
+  }
+  .navbar .navbar-text a:hover,
+  .navbar .navbar-text a:focus {
+    color: #525252; 
+  }
+  .navbar .navbar-nav .nav-link {
+    color: #ffffff;
+    border-radius: .25rem;
+    margin: 0 0.25em;
+  }
+  .navbar .navbar-nav .nav-link:not(.disabled):hover,
+  .navbar .navbar-nav .nav-link:not(.disabled):focus {
+    color: #525252;
+  }
+  .navbar .navbar-nav .dropdown-menu {
+    background-color: #00bcc5;
+    border-color: #00f3ff;
+  }
+  .navbar .navbar-nav .dropdown-menu .dropdown-item {
+    color: #ffffff;
+  }
+  .navbar .navbar-nav .dropdown-menu .dropdown-item:hover,
+  .navbar .navbar-nav .dropdown-menu .dropdown-item:focus,
+  .navbar .navbar-nav .dropdown-menu .dropdown-item.active {
+    color: #525252;
+    background-color: #00f3ff;
+  }
+  .navbar .navbar-nav .dropdown-menu .dropdown-divider {
+    border-top-color: #00f3ff;
+  }
+  .navbar .navbar-nav .nav-item.active .nav-link,
+  .navbar .navbar-nav .nav-item.active .nav-link:hover,
+  .navbar .navbar-nav .nav-item.active .nav-link:focus,
+  .navbar .navbar-nav .nav-item.show .nav-link,
+  .navbar .navbar-nav .nav-item.show .nav-link:hover,
+  .navbar .navbar-nav .nav-item.show .nav-link:focus {
+    color: #525252;
+    background-color: #00f3ff;
+  }
+  .navbar .navbar-toggle {
+    border-color: #00f3ff;
+  }
+  .navbar .navbar-toggle:hover,
+  .navbar .navbar-toggle:focus {
+    background-color: #00f3ff;
+  }
+  .navbar .navbar-toggle .navbar-toggler-icon {
+    color: #ffffff;
+  }
+  .navbar .navbar-collapse,
+  .navbar .navbar-form {
+    border-color: #ffffff;
+  }
+  .navbar .navbar-link {
+    color: #ffffff;
+  }
+  .navbar .navbar-link:hover {
+    color: #525252;
+  }
+  
+  @media (max-width: 575px) {
+    .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
+      color: #ffffff;
+    }
+    .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+    .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+      color: #525252;
+    }
+    .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
+      color: #525252;
+      background-color: #00f3ff;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item {
+      color: #ffffff;
+    }
+    .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+    .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+      color: #525252;
+    }
+    .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item.active {
+      color: #525252;
+      background-color: #00f3ff;
+    }
+  }
+  
+  @media (max-width: 991px) {
+    .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item {
+      color: #ffffff;
+    }
+    .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+    .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+      color: #525252;
+    }
+    .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item.active {
+      color: #525252;
+      background-color: #00f3ff;
+    }
+  }
+  
+  @media (max-width: 1199px) {
+    .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item {
+      color: #ffffff;
+    }
+    .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+    .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+      color: #525252;
+    }
+    .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item.active {
+      color: #525252;
+      background-color: #00f3ff;
+    }
+  }
+  
+  .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #ffffff;
+  }
+  .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #525252;
+  }
+  .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #525252;
+    background-color: #00f3ff;
+  }

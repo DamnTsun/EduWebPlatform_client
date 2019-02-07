@@ -12,7 +12,7 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class SubjectListComponent implements OnInit {
 
   // Constants
-  private count = 10;
+  private count = 18;
   private offset = 0;
 
   private subjects$: Subject[] = [];
@@ -47,7 +47,7 @@ export class SubjectListComponent implements OnInit {
   /**
    * Scroll event for infinite scroll.
    */
-  private onScroll() {
+  public onScroll() {
     if (!this.endOfContent) {
       this.getSubjects();
     }
@@ -61,6 +61,8 @@ export class SubjectListComponent implements OnInit {
       if (subjects.length > 0) {
         this.subjects$ = this.subjects$.concat(subjects);
         this.offset += subjects.length;
+        // Check if desired number of subjects fetched. If not, must be end of subject.
+        if (subjects.length < this.count) { this.endOfContent = true; }
       } else {
         // Empty list fetched. Must be end of subjects.
         this.endOfContent = true;
@@ -75,7 +77,7 @@ export class SubjectListComponent implements OnInit {
    * Deletes subject with given index.
    * @param index - index of subject in subjects$.
    */
-  private deleteSubject(index): void {
+  public deleteSubject(index): void {
     // Check user is an admin.
     if (!this.isAdmin) { return; }
     // Check index is valid.
