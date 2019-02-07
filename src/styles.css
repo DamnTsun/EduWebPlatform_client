@@ -1,11 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* Global stuff */
 html {
   height: calc(100% + 1px);
 }
 body {
     background-color: whitesmoke;
 }
+
+
+
 
 /* General CSS */
 section.page-content {
@@ -88,15 +92,13 @@ button.create-button {
   
 }
 
+.card-footer-dropdown {
+  float: right;
+}
+
 button.delete-dropdown-option {
   color: red !important;
 }
-button.delete-dropdown-option:hover {
-color: white !important;
-  background-color: red;
-}
-
-
 
 
 
@@ -163,6 +165,12 @@ color: white !important;
     }
 }
 
+
+/* Bootstrap overrides */
+/* Give cards colored outline. */
+.card {
+  border-color: blue;
+}
 
 
 /* Custom navbar styling */
