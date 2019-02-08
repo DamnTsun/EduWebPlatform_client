@@ -6,6 +6,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { TopicsService } from 'src/app/services/contentServices/topics.service';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-topic-list',
@@ -53,7 +54,7 @@ export class TopicListComponent implements OnInit {
     // Get initial topics.
     this.getTopics();
   }
-  
+
 
   /**
    * Scroll event for infinite scroll.
@@ -104,4 +105,6 @@ export class TopicListComponent implements OnInit {
       console.error('Topic-List delete topic Error:', err);
     });
   }
+
+
 }

@@ -31,19 +31,18 @@
         <button class="btn btn-outline-primary view-button" routerLink="{{ subject.id }}">View</button>
 
         <!-- Admin dropdown -->
-        <div class="btn-group card-footer-dropdown">
+        <div ngbDropdown placement="bottom-right" class="card-footer-dropdown">
           <!-- Toggle button -->
-          <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
+          <button ngbDropdownToggle class="btn btn-outline-dark">
             <i class="material-icons button-icon">settings</i>
           </button>
           <!-- dropdown (edit, delete) -->
-          <div class="dropdown-menu dropdown-menu-right">
+          <div ngbDropdownMenu>
             <button class="dropdown-item" routerLink="{{ subject.id }}/edit">
-              <i class="material-icons button-icon">edit</i>Edit
+              <i class="material-icons button-icon dropdown-icon dropdown-icon-edit">edit</i>Edit
             </button>
-            <button class="dropdown-item delete-dropdown-option" (click)="deleteSubject(i);">
-              <i class="material-icons button-icon">delete</i>Delete
+            <button class="dropdown-item" (click)="deleteSubject(i);">
+              <i class="material-icons button-icon dropdown-icon dropdown-icon-delete">delete</i>Delete
             </button>
           </div>
         </div>
