@@ -40,10 +40,10 @@
           <!-- dropdown (edit, delete) -->
           <div class="dropdown-menu dropdown-menu-right">
             <button class="dropdown-item" routerLink="{{ subject.id }}/edit">
-              <i class="material-icons button-icon">edit</i>Edit
+              <i class="material-icons button-icon dropdown-icon dropdown-icon-edit">edit</i>Edit
             </button>
-            <button class="dropdown-item delete-dropdown-option" (click)="deleteSubject(i);">
-              <i class="material-icons button-icon">delete</i>Delete
+            <button class="dropdown-item" data-toggle="modal" data-target="#exampleModal" data-id="aaa" (click)="deleteSubjectIndex = i">
+              <i class="material-icons button-icon dropdown-icon dropdown-icon-delete">delete</i>Delete
             </button>
           </div>
         </div>
@@ -64,3 +64,31 @@
     </div>
   </ng-template>
 </section>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Subject</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="subjects$ !== null && deleteSubjectIndex !== null">
+          Are you sure you want to delete subject '{{ subjects$[deleteSubjectIndex].name }}'?
+        </div>
+        This cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <!-- Delete subject at index, then clear index -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteSubject(deleteSubjectIndex); deleteSubjectIndex = null">Confirm
+          Delete</button>
+      </div>
+    </div>
+  </div>
+
+</div>

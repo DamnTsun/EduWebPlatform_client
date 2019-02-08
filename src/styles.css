@@ -41,6 +41,7 @@ section.page-content {
 
 .content-description {
   line-height: 1.2em;
+  height: 5.8em;
   max-height: 5.8em;
   overflow: hidden;
 }
@@ -70,7 +71,14 @@ i.button-icon {
     position: relative;
     top: 2px;
 }
-i.delete-icon {
+i.dropdown-icon {
+  margin-right: 0.5em;
+}
+
+i.dropdown-icon-edit {
+  color: blue;
+}
+i.dropdown-icon-delete {
   color: red;
 }
 

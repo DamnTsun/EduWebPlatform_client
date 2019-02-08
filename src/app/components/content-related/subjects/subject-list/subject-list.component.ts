@@ -3,6 +3,7 @@ import { Subject } from 'src/app/classes/Subject';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-subject-list',
@@ -73,6 +74,8 @@ export class SubjectListComponent implements OnInit {
   }
 
   
+  // Store index of subject to be deleted. Used by delete modal.
+  public deleteSubjectIndex = null;
   /**
    * Deletes subject with given index.
    * @param index - index of subject in subjects$.
@@ -82,8 +85,6 @@ export class SubjectListComponent implements OnInit {
     if (!this.isAdmin) { return; }
     // Check index is valid.
     if (index < 0 || index >= this.subjects$.length) { return; }
-    // Get confirmation from user.
-    if (!confirm(`Are you sure you want to delete subject '${this.subjects$[index].name}'?`)) { return; }
 
     // Delete the subject.
     this.subjectService.deleteSubject(this.subjects$[index].id).subscribe((a) => {
