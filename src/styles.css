@@ -2,7 +2,7 @@
 
 /* Global stuff */
 html {
-  height: calc(100% + 1px);   /* Make scroll bar always shown. (And make scroll event always possible to trigger) */
+  height: calc(100% + 1px);
 }
 body {
     background-color: whitesmoke;
@@ -27,13 +27,13 @@ section.page-content {
   margin: 1em 0em;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .content-grid {
     grid-template-columns: auto auto;
   }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   .content-grid {
     grid-template-columns: auto auto auto;
   }
@@ -42,7 +42,6 @@ section.page-content {
 .content-description {
   line-height: 1.2em;
   max-height: 5.8em;
-  height: 5.8em;
   overflow: hidden;
 }
 
@@ -71,13 +70,7 @@ i.button-icon {
     position: relative;
     top: 2px;
 }
-i.dropdown-icon {
-  margin-right: 0.5em;
-}
-i.dropdown-icon-edit {
-  color: blue;
-}
-i.dropdown-icon-delete {
+i.delete-icon {
   color: red;
 }
 
@@ -101,6 +94,10 @@ button.create-button {
 
 .card-footer-dropdown {
   float: right;
+}
+
+button.delete-dropdown-option {
+  color: red !important;
 }
 
 

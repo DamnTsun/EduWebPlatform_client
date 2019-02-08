@@ -1,8 +1,7 @@
 // Base modules / Environment variables.
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-// Bootstrap
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from '../environments/environment';
 
 // App routes.
 import { appRoutes } from './app.router';
@@ -131,8 +130,7 @@ export function provideConfig() {
     RouterModule.forRoot(appRoutes),
     SocialLoginModule,
     QuillModule,
-    InfiniteScrollModule,
-    NgbModule
+    InfiniteScrollModule
   ],
   providers: [
     {

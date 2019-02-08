@@ -20,7 +20,6 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
-    "@ng-bootstrap/ng-bootstrap": "^3.0.0",
     "angularx-social-login": "^1.2.5",
     "core-js": "^2.5.4",
     "ngx-infinite-scroll": "^6.0.0",
