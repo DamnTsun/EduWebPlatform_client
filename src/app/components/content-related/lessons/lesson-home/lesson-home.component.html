@@ -12,13 +12,22 @@
   </nav>
 
 
+  
+  <button class="btn btn-success back-button" routerLink="../">
+    <i class="material-icons button-icon">arrow_back</i>
+    Back to Lesson Select
+  </button>
+
   <!-- Shown after successfully fetching lesson from api -->
   <ng-container *ngIf="(lesson$ !== null); else loadingTemplate">
 
     <div class="card">
-      <h2 class="card-header">{{ lesson$.name }}</h2>
-      <div class="card-body" [innerHTML]="lessonBody"></div>
+      <div class="card-body">
+        <h2 class="card-title">{{ lesson$.name }}</h2>
+        <div class="card-body" [innerHTML]="lessonBody"></div>
+      </div>
     </div>
+
   </ng-container>
 
 

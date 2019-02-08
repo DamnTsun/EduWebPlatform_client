@@ -1,21 +1,10 @@
-button.enterContentButton {
-    width: 15em;
-}
-
-button.adminButton {
-    float: right;
-    margin-left: 1em;
-    width: 5em;
-}
-
-
-
-button.viewContentButton {
+button.footer-button {
     width: 20em;
-    max-width: 100%;
+    max-width: 48%;
 }
 
-div.viewContentButtonContainer {
-    text-align: center;
-    margin-bottom: 1em;
+.topic-description {
+    overflow-y: auto;
+    height: 10em;
+    max-height: 40em;
 }

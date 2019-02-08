@@ -13,19 +13,14 @@
   <!-- Whilst fetching topic from api -->
   <ng-container *ngIf="(this.topic$ !== null); else loadingTemplate">
 
-    <div class="card">
-      <h2 class="card-header">{{ topic$.name }}</h2>
+    <div class="card" style="width: 50em; max-width: 100%; margin-left: auto; margin-right: auto">
       <div class="card-body">
-        <div class="page-sub-content">
-          <p>{{ topic$.description }}</p>
-        </div>
-
-        <div class="viewContentButtonContainer">
-          <button class="btn btn-primary viewContentButton" routerLink="lessons">View Lessons</button>
-        </div>
-        <div class="viewContentButtonContainer">
-          <button class="btn btn-primary viewContentButton" routerLink="tests">View Tests</button>
-        </div>
+        <h2 class="card-title">{{ topic$.name }}</h2>
+        <div class="card-text topic-description">{{ topic$.description }}</div>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-outline-primary footer-button" routerLink="lessons">View Lessons</button>
+        <button class="btn btn-outline-primary footer-button card-footer-dropdown" routerLink="tests">View Tests</button>
       </div>
     </div>
 

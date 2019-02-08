@@ -46,3 +46,21 @@ button#utq_count_decrement {
 button#utq_count_increment {
     width: 4em;
 }
+
+
+.back-button {
+    margin: 1em 0em;
+    width: 25em;
+    max-width: 100%;
+}
+
+button.footer-button {
+    width: 20em;
+    max-width: 40%;
+}
+
+.test-description {
+    overflow-y: auto;
+    height: 10em;
+    max-height: 40em;
+}

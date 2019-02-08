@@ -12,6 +12,12 @@
   </nav>
 
 
+  <button class="btn btn-success back-button" routerLink="../">
+    <i class="material-icons button-icon">arrow_back</i>
+    Back to Test Select
+  </button>
+
+
   <!-- Shown after test has been successfully fetched from api -->
   <ng-container *ngIf="(test$ !== null); else loadingTemplate">
 
@@ -24,10 +30,13 @@
 
     <!-- Test name and description -->
     <div class="card">
-      <h2 class="card-header">Test Home</h2>
       <div class="card-body">
-        <h5>{{ test$.name }}</h5>
-        <p>{{ test$.description }}</p>
+        <h2>{{ test$.name }}</h2>
+        <div class="test-description">{{ test$.description }}</div>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-outline-primary footer-button">Previous Test Results</button>
+        <button class="btn btn-outline-primary footer-button card-footer-dropdown">View Question Pool</button>
       </div>
     </div>
 
