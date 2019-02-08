@@ -8,7 +8,7 @@
 
 
   <!-- Create button -->
-  <div class="create-button-container">
+  <div class="create-button-container" *ngIf="isAdmin">
     <button class="btn btn-success create-button" routerLink="create">
       <i class="material-icons button-icon">add</i>Create a Subject
     </button>
@@ -31,7 +31,7 @@
         <button class="btn btn-outline-primary view-button" routerLink="{{ subject.id }}">View</button>
 
         <!-- Admin dropdown -->
-        <div class="btn-group card-footer-dropdown">
+        <div class="btn-group card-footer-dropdown" *ngIf="isAdmin">
           <!-- Toggle button -->
           <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -42,7 +42,8 @@
             <button class="dropdown-item" routerLink="{{ subject.id }}/edit">
               <i class="material-icons button-icon dropdown-icon dropdown-icon-edit">edit</i>Edit
             </button>
-            <button class="dropdown-item" data-toggle="modal" data-target="#exampleModal" data-id="aaa" (click)="deleteSubjectIndex = i">
+            <!-- Set index of subject to be deleted. Used by modal. -->
+            <button class="dropdown-item" data-toggle="modal" data-target="#deleteModal" (click)="deleteSubjectIndex = i">
               <i class="material-icons button-icon dropdown-icon dropdown-icon-delete">delete</i>Delete
             </button>
           </div>
@@ -66,12 +67,14 @@
 </section>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
 
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Subject</h5>
+        <h5 class="modal-title" id="deleteModalLabel">Delete Subject</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

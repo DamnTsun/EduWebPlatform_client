@@ -15,13 +15,12 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class TopicListComponent implements OnInit {
 
   // Constants
-  private count = 10;
+  private count = 18;
   private offset = 0;
 
   private subjectid = null;
   private topics$: Topic[] = [];
   private endOfContent: boolean = false;
-  private loadingError: boolean = false;
   private isAdmin: boolean = false;
 
 
@@ -82,6 +81,8 @@ export class TopicListComponent implements OnInit {
   }
 
 
+  // Index of topic to be deleted. Stored whilst modal is open.
+  public deleteTopicIndex = null;
   /**
    * Deletes topic with given index in array.
    * @param index - index of topic in topics$.
@@ -91,8 +92,6 @@ export class TopicListComponent implements OnInit {
     if (!this.isAdmin) { return; }
     // Check index is valid.
     if (index < 0 || index >= this.topics$.length) { return; }
-    // Get confirmation from user.
-    if (!confirm(`Are you sure you want to delete topic '${this.topics$[index].name}'?`)) { return; }
 
     // Attempt to delete.
     this.topicService.deleteTopic(this.subjectid, this.topics$[index].id).subscribe((res) => {

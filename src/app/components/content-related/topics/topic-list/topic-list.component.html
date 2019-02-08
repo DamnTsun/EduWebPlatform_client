@@ -43,11 +43,8 @@
             <button class="dropdown-item" routerLink="{{ topic.id }}/edit">
               <i class="material-icons button-icon">edit</i>Edit
             </button>
-            <button class="dropdown-item delete-dropdown-option" (click)="deleteTopic(i)">
+            <button class="dropdown-item delete-dropdown-option" data-toggle="modal" data-target="#deleteModal" (click)="deleteTopicIndex = i">
               <i class="material-icons button-icon">delete</i>Delete
-            </button>
-            <button class="dropdown-item" data-toggle="modal" data-target="#exampleModal">
-              Modal test
             </button>
           </div>
         </div>
@@ -71,23 +68,30 @@
 
 
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Topic Confirmation</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete this topic?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger">DELETE</button>
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+  
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete Topic</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="topics$ !== null && deleteTopicIndex !== null">
+            Are you sure you want to delete topic '{{ topics$[deleteTopicIndex].name }}'?
+          </div>
+          This cannot be undone.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <!-- Delete topic at index, then clear index -->
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteTopic(deleteTopicIndex); deleteTopicIndex = null">Confirm
+            Delete</button>
+        </div>
       </div>
     </div>
+  
   </div>
-</div>
