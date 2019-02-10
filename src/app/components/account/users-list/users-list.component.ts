@@ -13,7 +13,7 @@ import { User } from 'src/app/classes/User';
 export class UsersListComponent implements OnInit {
 
   // Constants
-  private count = 20;
+  private count = 36;
   private offset = 0;
 
   private userid = null;
@@ -84,10 +84,18 @@ export class UsersListComponent implements OnInit {
    */
   private getUsers() {
     this.userService.getUsers(this.count, this.offset).subscribe((users: User[]) => {
-      if (users.length > 0) {
+      let length = users.length;
+      if (length > 0) {
+        // Filter out current user if included.
+        users = users.filter(u => u.id !== this.userid);
+        // Filter out banned users if user is not admin.
+        if (!this.isAdmin) {
+          users = users.filter(u => !u.banned);
+        }
+        
         this.users$ = this.users$.concat(users);
-        this.offset += users.length;
-        if (users.length < this.count) {
+        this.offset += length;
+        if (length < this.count) {
           // If we couldn't get the desired number, must have gotten last few records.
           this.endOfContent = true;
         }
@@ -115,6 +123,7 @@ export class UsersListComponent implements OnInit {
 
 
 
+
   // *** ADMIN CONTROLS ***
   /**
    * Sets a users admin status.
@@ -122,6 +131,12 @@ export class UsersListComponent implements OnInit {
    * @param state - whether to set user to admin.
    */
   private setAdminStatus(index, state: boolean) {
+    // If searching, get index of user from main list. (index is from search list)
+    let originalIndex = index;
+    if (this.isSearching) {
+      index = this.users$.indexOf(this.searchUsers[index]);
+    }
+
     // Check current user is admin.
     if (!this.isAdmin) { return; }
     // Check index is valid.
@@ -132,6 +147,8 @@ export class UsersListComponent implements OnInit {
     this.userService.setUserAdminStatus(this.users$[index].id, state).subscribe((res) => {
       // Update user record stored.
       this.users$[index] = res[0];
+      // If searching, update record from search list.
+      if (this.isSearching) { this.searchUsers[originalIndex] = res[0]; }
 
       // Show message that user has been made admin / not admin.
       if (state) {
@@ -144,36 +161,6 @@ export class UsersListComponent implements OnInit {
     })
   }
 
-  /**
-   * Sets a users admin status from the search list.
-   * @param index - index of user in search list.
-   * @param state - whether to set user to admin.
-   */
-  private search_setAdminStatus(index, state: boolean) {
-    // Check current user is admin.
-    if (!this.isAdmin) { return; }
-    // Check index is valid.
-    if (index < 0 || index >= this.searchUsers.length) { return; }
-    // Check not the current user.
-    if (this.searchUsers[index].id == this.userid) { return; }
-
-    // Get index in main list.
-    let mainIndex = this.users$.indexOf(this.searchUsers[index]);
-    this.userService.setUserAdminStatus(this.users$[mainIndex].id, state).subscribe((res) => {
-      // Update user record stored.
-      this.users$[mainIndex] = res[0];
-      this.searchUsers[index] = res[0];
-
-      // Show message that user has been made admin / not admin.
-      if (state) {
-        this.message = `User '${this.users$[mainIndex].displayname} (#${this.users$[mainIndex].id})' has been promoted to an admin.`;
-      } else {
-        this.message = `User '${this.users$[mainIndex].displayname} (#${this.users$[mainIndex].id})' has been demoted to a regular user.`;
-      }
-    }, (err) => {
-      console.error('UserList setAdmin error:', err);
-    })
-  }
 
 
 
@@ -183,6 +170,12 @@ export class UsersListComponent implements OnInit {
    * @param state - whether to set user to banned.
    */
   private setBannedStatus(index, state: boolean) {
+    // If searching, get index of user from main list. (index is from search list)
+    let originalIndex = index;
+    if (this.isSearching) {
+      index = this.users$.indexOf(this.searchUsers[index]);
+    }
+
     // Check current user is admin.
     if (!this.isAdmin) { return; }
     // Check index is valid.
@@ -193,6 +186,9 @@ export class UsersListComponent implements OnInit {
     this.userService.setUserBannedStatus(this.users$[index].id, state).subscribe((res) => {
       // Update user record stored.
       this.users$[index] = res[0];
+      // If searching, update record from search list.
+      if (this.isSearching) { this.searchUsers[originalIndex] = res[0]; }
+
       // Show message that user has been made banned / not banned.
       if (state) {
         this.message = `User '${this.users$[index].displayname} (#${this.users$[index].id})' has been banned.`;
@@ -203,44 +199,24 @@ export class UsersListComponent implements OnInit {
       console.error('UserList setBanned error:', err);
     });
   }
+  // END OF ADMIN CONTROLS
 
-  /**
-   * Sets a users banned status from the search list.
-   * @param index - index of user in search list.
-   * @param state - whether to set user to banned.
-   */
-  private search_setBannedStatus(index, state: boolean) {
-    // Check current user is admin.
-    if (!this.isAdmin) { return; }
-    // Check index is valid.
-    if (index < 0 || index >= this.searchUsers.length) { return; }
-    // Check not the current user.
-    if (this.searchUsers[index].id == this.userid) { return; }
-
-    // Get index from main list.
-    let mainIndex = this.users$.indexOf(this.searchUsers[index]);
-    this.userService.setUserBannedStatus(this.users$[mainIndex].id, state).subscribe((res) => {
-      // Update user record stored.
-      this.users$[mainIndex] = res[0];
-      this.searchUsers[index] = res[0];
-
-      // Show message that user has been made admin / not admin.
-      if (state) {
-        this.message = `User '${this.users$[mainIndex].displayname} (#${this.users$[mainIndex].id})' has been promoted to an admin.`;
-      } else {
-        this.message = `User '${this.users$[mainIndex].displayname} (#${this.users$[mainIndex].id})' has been demoted to a regular user.`;
-      }
-    }, (err) => {
-      console.error('UserList setAdmin error:', err);
-    })
-  }
-  // *** END OF ADMIN CONTROLS ***
 
 
 
 
 
   // User search methods.
+  /**
+   * Gets user list to use for showing users. If searching, use search list.
+   */
+  public getUserList(): User[] {
+    if (this.isSearching) { return this.searchUsers; }
+    return this.users$;
+  }
+
+  
+
   // Handle for timeout, so that it can be cancelled and reset to 'extend' it.
   private userSearchInputTimeoutHandle = null;
   // Event listener for input for search.
