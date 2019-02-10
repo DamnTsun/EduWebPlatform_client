@@ -21,53 +21,55 @@
   <!-- Shown after test has been successfully fetched from api -->
   <ng-container *ngIf="(test$ !== null); else loadingTemplate">
 
-    <!-- View questions button -->
-    <div class="viewQuestionsButtonContainer">
-      <button class="btn btn-primary viewQuestionsButton" *ngIf="this.isAdmin" routerLink="questions">View Question
-        Pool</button>
-    </div>
-
-
     <!-- Test name and description -->
-    <div class="card">
+    <div class="card page-body">
       <div class="card-body">
         <h2>{{ test$.name }}</h2>
         <div class="test-description">{{ test$.description }}</div>
       </div>
+
       <div class="card-footer">
-        <button class="btn btn-outline-primary footer-button">Previous Test Results</button>
-        <button class="btn btn-outline-primary footer-button card-footer-dropdown">View Question Pool</button>
+        <div class="footer-button-container">
+          <button class="btn btn-outline-primary footer-button" routerLink="user_tests">Previous Test Results</button>
+        </div>
+        <div class="footer-button-container" *ngIf="isAdmin">
+          <button class="btn btn-outline-primary footer-button" routerLink="questions">View Question Pool</button>
+        </div>
       </div>
     </div>
 
 
     <!-- Creating a user test to complete -->
     <!-- Only if user is signed in. -->
-    <div class="card" *ngIf="this.user !== null">
-      <h2 class="card-header">Generate a User Test:</h2>
+    <div class="card page-body" *ngIf="this.user !== null">
       <div class="card-body">
+        <h2>Generate a User Test based on {{ test$.name }}</h2>
         <section>
-          <p>Please select how many questions you would like the test to contain:</p>
-          <div class="questionCountButtonContainer">
-            <button class="btn btn-primary questionCountButton" (click)="this.generateTest5()">5 Questions</button>
+          <p>You may generate a user test based on {{ test$.name }}. This will consist of questions chosen randomly
+            from the question pool of {{ test$.name }}.</p>
+          <p>What size test whould you like to take? (Test question pool currently contains {{ test$.testQuestionCount
+            }}
+            questions)</p>
+          <!-- Buttons for choose question count (5, 10, 25, custom) -->
+          <div class="user-test-button-container">
+            <button class="btn btn-outline-primary user-test-button" (click)="generateTest(5)" [disabled]="test$.testQuestionCount < 5">Short
+              (5 Questions)</button>
           </div>
-          <div class="questionCountButtonContainer">
-            <button class="btn btn-primary questionCountButton" (click)="this.generateTest10()">10 Questions</button>
+          <div class="user-test-button-container">
+            <button class="btn btn-outline-primary user-test-button" (click)="generateTest(10)" [disabled]="test$.testQuestionCount < 10">Normal
+              (10 Questions)</button>
           </div>
-          <div class="questionCountButtonContainer">
-            <button class="btn btn-primary questionCountButton" (click)="this.generateTest25()">25 Questions</button>
+          <div class="user-test-button-container">
+            <button class="btn btn-outline-primary user-test-button" (click)="generateTest(25)" [disabled]="test$.testQuestionCount < 25">Long
+              (25 Questions)</button>
           </div>
-          <div class="questionCountButtonContainer">
-            <button class="btn btn-primary questionCountButton" data-toggle="modal" data-target="#customQuestionCountModal">Custom
-              Questions (NI)</button>
+          <div class="user-test-button-container">
+            <button class="btn btn-outline-primary user-test-button" data-toggle="modal" data-target="#customQuestionCountModal"
+              [disabled]="test$.testQuestionCount < 1">Custom
+              (You Choose Question Count)</button>
           </div>
         </section>
       </div>
-    </div>
-
-    <!-- View previous results button -->
-    <div *ngIf="this.user !== null">
-      <button class="btn btn-primary btn-block" routerLink="user_tests">View Previous User Test Results</button>
     </div>
 
   </ng-container>
@@ -106,18 +108,22 @@
           <!-- number input field -->
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <button class="btn btn-outline-secondary" id="utq_count_decrement" type="button">-</button>
+              <button class="btn btn-outline-secondary" id="utq_count_decrement" type="button" (click)="incrementCustomQuestionCount(-1)"
+                [disabled]="test$ == null || questionCountInput.value <= 1">-</button>
             </div>
             <input type="number" id="utq_numberinput" class="form-control" value="10" pattern="[0-9]"
-              #questionCountInput>
+              #questionCountInput min="1" max="10">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" id="utq_count_increment" type="button">+</button>
+              <button class="btn btn-outline-secondary" id="utq_count_increment" type="button" (click)="incrementCustomQuestionCount(1)"
+                [disabled]="test$ == null || questionCountInput.value >= test$.testQuestionCount">+</button>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="this.generateTestCustom(questionCountInput.value)">Submit</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="this.generateTestCustom(questionCountInput.value)"
+            [disabled]="test$ == null || questionCountInput.value < 1 || questionCountInput.value > test$.testQuestionCount">Generate
+            Test</button>
         </div>
       </div>
     </div>

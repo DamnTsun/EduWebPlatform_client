@@ -1,32 +1,3 @@
-div.card {
-    margin-bottom: 1em;
-}
-
-
-button.viewQuestionsButton {
-    width: 30em;
-    max-width: 100%;
-    height: 3em;
-    margin-bottom: 1em;
-}
-
-div.viewQuestionsButtonContainer {
-    text-align: center;
-}
-
-
-button.questionCountButton {
-    width: 20em;
-    max-width: 100%;
-    margin-bottom: 0.5em;
-}
-
-div.questionCountButtonContainer {
-    text-align: center;
-}
-
-
-
 /* Modal number input and scroller buttons */
 input#utq_numberinput {
     -moz-appearance: textfield;
@@ -48,19 +19,49 @@ button#utq_count_increment {
 }
 
 
+div.card {
+    margin-bottom: 1em;
+}
+
+.page-body {
+    width: 50em;
+    max-width: 100%;
+    margin: 1em auto;
+}
+
 .back-button {
     margin: 1em 0em;
     width: 25em;
     max-width: 100%;
 }
 
+
 button.footer-button {
     width: 20em;
-    max-width: 40%;
+    max-width: 100%;
+}
+
+.footer-button-container {
+    text-align: center;
+    margin: 0.5em;
 }
 
 .test-description {
     overflow-y: auto;
     height: 10em;
     max-height: 40em;
+}
+
+
+
+
+.user-test-button-container {
+    text-align: center;
+    margin: 0.5em auto;
+}
+
+.user-test-button {
+    width: 20em;
+    min-width: fit-content;
+    max-width: 100%;
 }
