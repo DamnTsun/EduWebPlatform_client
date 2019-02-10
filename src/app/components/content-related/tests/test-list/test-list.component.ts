@@ -15,7 +15,7 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class TestListComponent implements OnInit {
 
   // Constants
-  private count = 10;           // Number of test to get at a time.
+  private count = 18;           // Number of test to get at a time.
   private offset = 0;           // How many tests have already been fetched.
 
   private subjectid = null;
@@ -72,6 +72,10 @@ export class TestListComponent implements OnInit {
         if (tests.length > 0) {
           this.tests$ = this.tests$.concat(tests);
           this.offset += tests.length;
+          // If less tests received than asked for, must be end of content.
+          if (tests.length < this.count) {
+            this.endOfContent = true;
+          }
         } else {
           // Empty list. Must be end of tests.
           this.endOfContent = true;
@@ -81,6 +85,10 @@ export class TestListComponent implements OnInit {
 
 
 
+
+
+  // Stores index of test to be deleted. Used by delete modal.
+  public deleteTestIndex = null;
   /**
    * Deletes test with given index in array.
    * @param index - index of test.
@@ -90,8 +98,6 @@ export class TestListComponent implements OnInit {
     if (!this.isAdmin) { return; }
     // Check index is valid.
     if (index < 0 || index >= this.tests$.length) { return; }
-    // Get confirmation from user.
-    if (!confirm(`Are you sure you want to delete test '${this.tests$[index].name}'?`)) { return; }
 
     // Attempt to delete.
     this.testService.deleteTest(this.subjectid, this.topicid, this.tests$[index].id).subscribe((res) => {

@@ -60,7 +60,7 @@
 
   <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
   <ng-template #endOfContentTemplate>
-    <div class="alert alert-dark">
+    <div class="alert alert-dark no-more-content-message">
       No more subjects...
     </div>
   </ng-template>

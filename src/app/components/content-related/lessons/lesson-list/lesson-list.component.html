@@ -11,58 +11,93 @@
   </nav>
 
 
-  <!-- List of lessons -->
-  <ul class="content-list">
-    <!-- Create lesson button -->
-    <div class="viewButtonContainer">
-      <button class="btn btn-primary createButton" *ngIf="this.isAdmin" routerLink="create">Create a Lesson</button>
-    </div>
+  <!-- Create button -->
+  <div class="create-button-container" *ngIf="isAdmin">
+    <button class="btn btn-success create-button" routerLink="create">
+      <i class="material-icons button-icon">add</i>Create a Lesson
+    </button>
+  </div>
 
-    <h2>Select a Lesson:</h2>
-    <li *ngFor="let lesson of lessons$; let i = index">
 
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title lessonName">{{ lesson.name }}</h5>
+  <!-- Grid of lessons -->
+  <div class="content-grid">
 
-          <!-- buttons -->
-          <div class="viewButtonContainer">
-            <button class="btn btn-primary viewButton" routerLink="{{ lesson.id }}">View Lesson</button>
-          </div>
-
-          <!-- Admin buttons (dropdown) -->
-          <div class="dropdown show" *ngIf="this.isAdmin">
-            <a class="options-dropdown" id="lessonOptionsDropdownLink" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              <i class="material-icons options-icon">settings</i>
-            </a>
-
-            <div class="dropdown-menu" aria-labelledby="lessonOptionsDropdownLink">
-              <a class="dropdown-item" routerLink="{{ lesson.id }}/edit">
-                <i class="material-icons options-icon">edit</i>
-                Edit
-              </a>
-              <a class="dropdown-item deleteButton" (click)="deleteLesson(i)">
-                <i class="material-icons options-icon">delete</i>
-                Delete
-              </a>
-            </div>
-          </div>
-
-        </div>
+    <!-- 1 card per lesson -->
+    <div class="card" *ngFor="let lesson of lessons$; let i = index">
+      <div class="card-body">
+        <!-- Body (name) -->
+        <h5>{{ lesson.name }}</h5>
       </div>
 
-    </li>
-  </ul>
+      <!-- Card footer (options) -->
+      <div class="card-footer">
+        <button class="btn btn-outline-primary view-button" routerLink="{{ lesson.id }}">View</button>
+
+        <!-- Admin dropdown -->
+        <div class="btn-group card-footer-dropdown" *ngIf="isAdmin">
+          <!-- Toggle -->
+          <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <i class="material-icons button-icon">settings</i>
+          </button>
+
+          <!-- Dropdown body -->
+          <div class="dropdown-menu dropdown-menu-right">
+            <button class="dropdown-item" routerLink="{{ lesson.id }}/edit">
+              <i class="material-icons button-icon dropdown-icon dropdown-icon-edit">edit</i>Edit
+            </button>
+            <!-- Set index of subject to be deleted. Used by modal. -->
+            <button class="dropdown-item" data-toggle="modal" data-target="#deleteModal" (click)="deleteLessonIndex = i">
+              <i class="material-icons button-icon dropdown-icon dropdown-icon-delete">delete</i>Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
 
   <!-- Infinite scroll div -->
   <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
 
   <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
   <ng-template #endOfContentTemplate>
-    <div class="alert alert-warning">
-      End of Lessons
+    <div class="alert alert-dark no-more-content-message">
+      No more lessons...
     </div>
   </ng-template>
 
 </section>
+
+
+
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Lesson</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="lessons$ !== null && deleteLessonIndex !== null">
+          Are you sure you want to delete lesson '{{ lessons$[deleteLessonIndex].name }}'?
+        </div>
+        This cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <!-- Delete subject at index, then clear index -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteLesson(deleteLessonIndex); deleteLessonIndex = null">Confirm
+          Delete</button>
+      </div>
+    </div>
+  </div>
+
+</div>

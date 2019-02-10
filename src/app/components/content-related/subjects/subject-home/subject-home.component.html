@@ -8,16 +8,20 @@
   </nav>
 
   <ng-container *ngIf="(this.subject$ !== null); else loadingTemplate">
-    <div class="card">
-      <h2 class="card-header">{{ this.subject$.name }}</h2>
+    <div class="card page-body">
       <div class="card-body">
+        <h2>{{ this.subject$.name }}</h2>
         <section class="page-sub-content">
           <p>{{ subject$.description }}</p>
         </section>
       </div>
+      <div class="card-footer">
+        <button class="btn btn-outline-primary footer-button" routerLink="topics">Topics</button>
+        <button class="btn btn-outline-primary footer-button footer-right" routerLink="news">News</button>
+      </div>
     </div>
 
-    <app-subject-post-list title="Latest News" showControls="false" count="3"></app-subject-post-list>
+    <app-subject-post-list title="Recent News" showControls="false" count="3"></app-subject-post-list>
 
   </ng-container>
 

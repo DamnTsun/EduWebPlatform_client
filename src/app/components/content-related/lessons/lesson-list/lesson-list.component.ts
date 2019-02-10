@@ -15,7 +15,7 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class LessonListComponent implements OnInit {
 
   // Constants
-  private count = 10;                       // Number of lesson to get at a time.
+  private count = 18;                       // Number of lesson to get at a time.
   private offset = 0;                       // How many lessons have already been fetched.
 
   private subjectid = null;
@@ -72,6 +72,10 @@ export class LessonListComponent implements OnInit {
         if (lessons.length > 0) {
           this.lessons$ = this.lessons$.concat(lessons);
           this.offset += lessons.length;
+          // If less lesson received than asked for, must be end of content.
+          if (lessons.length < this.count) {
+            this.endOfContent = true;
+          }
         } else {
           // Empty list. Must be end of lessons.
           this.endOfContent = true;
@@ -81,6 +85,8 @@ export class LessonListComponent implements OnInit {
 
 
 
+  // Store index for lesson to be deleted. Used by delete modal.
+  public deleteLessonIndex = null;
   /**
    * Deletes lesson with given index in array.
    * @param index - index of lesson.
@@ -90,8 +96,6 @@ export class LessonListComponent implements OnInit {
     if (!this.isAdmin) { return; }
     // Check index is valid.
     if (index < 0 || index >= this.lessons$.length) { return; }
-    // Get confirmation from user.
-    if (!confirm(`Are you sure you want to delete lesson '${this.lessons$[index].name}'?`)) { return; }
 
     // Attempt to delete.
     this.lessonService.deleteLesson(this.subjectid, this.topicid, this.lessons$[index].id).subscribe((res) => {

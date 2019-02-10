@@ -19,7 +19,7 @@ body {
 
 
 
-/* Subject / topics / lesson / test list CSS */
+/* Subject / topics / lesson / test list CSS (shared) */
 .content-grid {
   display: grid;
   grid-template-columns: auto;
@@ -45,6 +45,15 @@ body {
   max-height: 5.8em;
   overflow: hidden;
 }
+
+
+.no-more-content-message {
+  text-align: center;
+  width: 30em;
+  max-width: 100%;
+  margin: 1em auto;
+}
+
 
 /* OLD */
 ul.content-list {

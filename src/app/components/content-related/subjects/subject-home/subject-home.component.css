@@ -1,3 +1,18 @@
 section.page-sub-content {
     margin: 0 1em;
 }
+
+.footer-button {
+    width: 10em;
+    max-width: 40%;
+}
+
+.footer-right {
+    float: right;
+}
+
+.page-body {
+    margin: 1em auto;
+    width: 50em;
+    max-width: 100%;
+}
