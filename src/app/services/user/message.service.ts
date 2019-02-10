@@ -49,4 +49,13 @@ export class MessageService {
       data
     );
   }
+  
+
+  /**
+   * Deletes a message. (Must be sender or receiver)
+   * @param messageid - id of message.
+   */
+  public deleteUserMessage(messageid) {
+    return this.api.delete(environment.apiUrl + `users/messages/${messageid}`);
+  }
 }

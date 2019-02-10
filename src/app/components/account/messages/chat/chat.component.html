@@ -34,6 +34,11 @@
           <div class="message message-current-user">
             <span>{{ message.message }}</span>
           </div>
+
+          <!-- Delete button -->
+          <div class="delete-button-container delete-button-container-current-user">
+            <button class="btn btn-outline-danger delete-button" (click)="deleteMessage(i)"><i class="material-icons button-icon">delete</i></button>
+          </div>
         </ng-container>
         <!-- If message sent by other user. -->
         <ng-template #otherUserTemplate>
@@ -44,6 +49,11 @@
           <div class="message message-other-user">
             <span>{{ message.message }}</span>
           </div>
+
+          <!-- Delete button-->
+          <div class="delete-button-container delete-button-container-other-user">
+              <button class="btn btn-outline-danger delete-button" (click)="deleteMessage(i)"><i class="material-icons button-icon">delete</i></button>
+            </div>
         </ng-template>
 
       </div>

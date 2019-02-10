@@ -165,6 +165,22 @@ export class ChatComponent implements OnInit, OnDestroy {
 
 
 
+  /**
+   * Deletes a message the current user has sent.
+   * @param index - index of message in list.
+   */
+  public deleteMessage(index) {
+    // Check index valid.
+    if (index < 0 || index >= this.messages$.length) { return; }
+    // Attempt delete.
+    this.messageService.deleteUserMessage(this.messages$[index].id).subscribe((res) => {
+      // Successful. Remove from list.
+      this.messages$ = this.messages$.filter((ele, i) => { return i !== index; });
+    })
+  }
+
+
+
 
 
 

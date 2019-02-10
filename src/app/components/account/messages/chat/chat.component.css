@@ -37,3 +37,21 @@
     width: 25em;
     max-width: 100%;
 }
+
+
+.delete-button-container {
+    width: fit-content;
+    height: fit-content
+}
+.delete-button-container-current-user {
+    margin-left: auto;
+}
+.delete-button-container-other-user {
+    margin-right: auto;
+}
+.delete-button {
+    width: 2em;
+    height: 2em;
+    padding: 1px;
+    margin-bottom: 0.5em;
+}
