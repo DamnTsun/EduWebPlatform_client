@@ -70,7 +70,8 @@ export const environment = {
     messageSentList: 'users/messages/sent',
     messageSentToList: 'users/messages/sent/:userid',
 
-    sendMessage: 'users/messages/send/:userid'
+    sendMessage: 'users/messages/send/:userid',
+    chat: 'users/chat/:userid'
 
     // sentList -> sentTolist -> sendMessage -> messageFromlist ->  messagelist
   }

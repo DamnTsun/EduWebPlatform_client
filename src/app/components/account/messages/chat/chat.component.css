@@ -1,0 +1,39 @@
+.message {
+    width: fit-content;
+    max-width: 80%;
+    padding: 0.5em 1em;
+    border-radius: 1em;
+    margin: 0.5em 0em;
+}
+
+.message-current-user {
+    margin-left: auto;
+    background-color: #1b65f9;
+    color: white;
+    border-bottom-right-radius: -1em;
+}
+
+
+.message-other-user {
+    margin-right: auto;
+    background-color: #e0e0e0;
+    border-bottom-left-radius: -1em;
+}
+
+.message-current-user-displayname {
+    margin-left: auto;
+    width: fit-content;
+    max-width: 80%;
+    text-align: right;
+}
+
+.message-other-user-displayname {
+    width: fit-content;
+    max-width: 80%;
+}
+
+.back-button {
+    margin: 1em 0em;
+    width: 25em;
+    max-width: 100%;
+}
