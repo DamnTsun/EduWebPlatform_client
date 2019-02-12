@@ -14,7 +14,7 @@
         <section id="navbarCollapse" class="collapse navbar-collapse">
           <!-- Main navigation -->
           <div>
-            <ul class="navbar-nav" onclick="$('#navbarCollapse').collapse('hide');">
+            <ul class="navbar-nav">
               <li class="nav-item" (click)="this.clearSubject();">
                 <a class="nav-link" routerLink="">Subjects</a>
               </li>
@@ -37,7 +37,7 @@
 
       <!-- Navbar if on subject select / account area, etc -->
       <ng-template #elseTemplate>
-        <a class="navbar-brand" routerLink="/" onclick="$('#navbarCollapse').collapse('hide');">
+        <a class="navbar-brand" routerLink="/">
           Edu Web Platform
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
@@ -47,7 +47,7 @@
         <section id="navbarCollapse" class="collapse navbar-collapse">
           <!-- Main navigation -->
           <div>
-            <ul class="navbar-nav" onclick="$('#navbarCollapse').collapse('hide');">
+            <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" routerLink="/">Subjects</a>
               </li>
@@ -66,7 +66,7 @@
       <!-- Template for account section of header. (So it can be shared) -->
       <ng-template #headerAccountSection>
         <div class="flex-grow-1">
-          <ul class="navbar-nav justify-content-end" onclick="$('#navbarCollapse').collapse('hide');">
+          <ul class="navbar-nav justify-content-end">
 
             <!-- User signed in -->
             <ng-container *ngIf="this.user$ != null; else accountHeaderNotSignedIn">

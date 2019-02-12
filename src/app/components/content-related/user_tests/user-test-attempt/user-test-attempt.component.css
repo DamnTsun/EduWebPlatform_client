@@ -1,7 +1,9 @@
-section.questions {
-    padding: 1em;
+.submit-button-container {
+    margin: 1em auto;
+    width: fit-content;
+    max-width: 100%;
 }
-
-div.question {
-    padding: 1em;
+.submit-button {
+    width: 20em;
+    max-width: 100%;
 }

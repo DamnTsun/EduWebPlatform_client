@@ -7,6 +7,7 @@ import { UserTest } from 'src/app/classes/UserTest';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { UserTestsService } from 'src/app/services/user/user-tests.service';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-user-test-attempt',
@@ -26,8 +27,7 @@ export class UserTestAttemptComponent implements OnInit {
   // Whether the user_test has been submitted successfully.
   private hasSubmitted: boolean = false;
 
-  // Completed user test, after it has been marked. (Retreived from API)
-  private completedTest$: UserTest = null;
+  public errorMessage: string = null;
 
 
 
@@ -39,6 +39,7 @@ export class UserTestAttemptComponent implements OnInit {
     private subjectService: SubjectsService,
     private userTestsService: UserTestsService,
     private signIn: SignInService,
+    private utilService: UtilService,
     private navService: NavigationServiceService
   ) { }
 
@@ -70,6 +71,7 @@ export class UserTestAttemptComponent implements OnInit {
     // Get questions for test from API.
     this.userTestsService.getUserTestQuestions(this.subjectid, this.topicid, this.testid, count).subscribe((testQuestions) => {
       this.testQuestions$ = testQuestions;
+      this.testQuestions$.forEach(e => e.imageUrl = 'https://placehold.it/128x128');
     }, (err) => {
       this.loadingError = true;
       console.error('User_test Questions Error:', err);
@@ -127,8 +129,10 @@ export class UserTestAttemptComponent implements OnInit {
     // Get and validate user_test name.
     let name = <HTMLInputElement>document.getElementById('ut_name');
     if (name == null) { return null; }
-    if (name.value == null || name.value == '') { return null; }
+    if (name.value == null) { return null; }
     user_test.title = name.value;
+    // If name is '', replace with current time.
+    user_test.title = this.utilService.getIsoTimeFormatted(new Date(new Date().getTime()));
 
     // Get testid as number.
     let testidNumber = Number(this.testid);
@@ -139,7 +143,7 @@ export class UserTestAttemptComponent implements OnInit {
     this.testQuestions$.forEach(tq => {
       // Get the input field for question. Check value given.
       let input = <HTMLInputElement>document.getElementById(`question${tq.id}`);
-      if (input.value == null || input.value.trim() == '') { return null; }
+      if (input.value == null) { return null; }
       // Add the id and user answer.
       user_test.questions.push({
         id: tq.id,
@@ -158,7 +162,10 @@ export class UserTestAttemptComponent implements OnInit {
    */
   private sendUserTest(user_test): void {
     this.userTestsService.addUserTest(this.subjectid, this.topicid, this.testid, user_test).subscribe((res) => {
-      this.completedTest$ = res[0];
+      // Submitted successfully. Redirect to user_test page for this test.
+      this.router.navigate([
+        this.navService.getUserTestDetailsRoute(this.subjectid, this.topicid, this.testid, res[0].id)
+      ]);
     }, (err) => {
       console.error('Add User_Test Error:', err);
     })
