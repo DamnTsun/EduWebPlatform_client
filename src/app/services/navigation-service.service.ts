@@ -140,4 +140,17 @@ export class NavigationServiceService {
   public getUserListRoute(): string {
     return `/${environment.routes.usersList}`;
   }
+
+
+
+  // CHAT
+  /**
+   * Gets user chat route.
+   * @param userid - id of user.
+   */
+  public getUserChatRoute(userid): string {
+    let route = `/${environment.routes.chat}`;
+    route = route.replace(`:${environment.routeParams.userid}`, userid);
+    return route;
+  }
 }

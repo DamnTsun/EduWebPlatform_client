@@ -1,0 +1,182 @@
+<section class="container page-content">
+
+  <!-- Display group details once loaded. -->
+  <div class="card page-content-card" *ngIf="group$ !== null; else groupLoadingTemplate">
+    <!-- Group image -->
+    <img class="card-img-top" src="{{ getGroupImageUrl(group$) }}" alt="{{ group$.name }} (#{{ group$.id }}) image">
+    <!-- Body (name, full description) -->
+    <div class="card-body">
+      <h2 class="card-title">{{ group$.name }}</h2>
+      <div style="min-height: 5.8em">{{ group$.description }}</div>
+    </div>
+    <!-- Footer (edit, leave group) -->
+    <div class="card-footer">
+      <button class="btn btn-outline-warning">
+        <i class="material-icons button-icon">edit</i>Edit
+      </button>
+      <button class="btn btn-outline-danger card-footer-dropdown" data-toggle="modal" data-target="#removeSelfModal">
+        <i class="material-icons button-icon">remove</i>Leave
+      </button>
+    </div>
+  </div>
+  <!-- Delete group button (admin-only) -->
+  <div class="delete-button-container">
+    <button class="btn btn-danger delete-button" *ngIf="isAdmin" data-toggle="modal" data-target="#deleteGroupModal">
+      <i class="material-icons button-icon">delete</i>Delete Group
+    </button>
+  </div>
+
+
+
+  <!-- Whilst group loading in -->
+  <ng-template #groupLoadingTemplate>
+    <app-loader *ngIf="!groupLoadingError"></app-loader>
+    <div class="alert alert-dark no-more-content-message" *ngIf="groupLoadingError">
+      An error occured. Unable to show group.
+    </div>
+  </ng-template>
+
+
+
+
+
+
+
+
+
+
+  <!-- List users inside group -->
+  <h2>Group Members:</h2>
+  <!-- Add members button -->
+  <div class="create-button-container">
+    <button class="btn btn-success create-button">
+      <i class="material-icons button-icon">add</i>Add Members
+    </button>
+  </div>
+
+  <div class="content-grid">
+
+    <!-- 1 card per user -->
+    <div class="card" *ngFor="let member of groupMembers$; let i = index">
+      <div class="card-body">
+        <h5 class="card-title">{{ member.displayname }} (#{{member.id}})</h5>
+      </div>
+
+      <!-- Footer (chat, remove) -->
+      <div class="card-footer">
+        <button class="btn btn-outline-primary view-button" routerLink="{{ getUserChatRoute(member.id) }}">
+          <i class="material-icons button-icon">chat</i>Chat
+        </button>
+        <button class="btn btn-outline-danger card-footer-dropdown" data-toggle="modal" data-target="#removeUserModal"
+          (click)="removeUserIndex = i">
+          <i class="material-icons button-icon">remove</i>Remove
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+<!-- Remove user confirmation modal -->
+<div class="modal fade" id="removeUserModal" tabindex="-1" role="dialog" aria-labelledby="removeUserModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="removeUserModalLabel">Remove User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="groupMembers$ !== null && removeUserIndex !== null">
+          Are you sure you want to remove user '{{ groupMembers$[removeUserIndex].displayname }} (#{{
+          groupMembers$[removeUserIndex].id }})' from the group?
+        </div>
+        This cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <!-- Delete subject at index, then clear index -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="removeUserFromGroup(removeUserIndex); removeUserIndex = null">Confirm
+          Remove</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+<!-- Remove self confirmation modal -->
+<div class="modal fade" id="removeSelfModal" tabindex="-1" role="dialog" aria-labelledby="removeSelfLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="removeSelfLabel">Remove Yourself</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          Are you sure you want to remove yourself from this group?
+        </div>
+        You won't be able to re-join unless an existing member re-adds you.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <!-- Delete subject at index, then clear index -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="removeCurrentUserFromGroup()">Confirm
+          Remove</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+<!-- Admin delete group confirmation modal -->
+<div class="modal fade" id="deleteGroupModal" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+  
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteGroupLabel">Delete Group</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            Are you sure you want to delete this group?
+          </div>
+          This cannot be undone.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <!-- Delete subject at index, then clear index -->
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteGroup()">Confirm
+            Delete</button>
+        </div>
+      </div>
+    </div>
+  
+  </div>

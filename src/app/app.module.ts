@@ -1,7 +1,6 @@
 // Base modules / Environment variables.
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { environment } from '../environments/environment';
 
 // App routes.
 import { appRoutes } from './app.router';
@@ -61,6 +60,7 @@ import { UserTestListComponent } from './components/content-related/user_tests/u
 import { UserTestDetailsComponent } from './components/content-related/user_tests/user-test-details/user-test-details.component';
 import { ChatComponent } from './components/account/messages/chat/chat.component';
 import { GroupListComponent } from './components/account/groups/group-list/group-list.component';
+import { GroupHomeComponent } from './components/account/groups/group-home/group-home.component';
 
 
 
@@ -125,7 +125,8 @@ export function provideConfig() {
     UserTestListComponent,
     UserTestDetailsComponent,
     ChatComponent,
-    GroupListComponent
+    GroupListComponent,
+    GroupHomeComponent
   ],
   imports: [
     BrowserModule,

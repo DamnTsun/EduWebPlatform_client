@@ -148,7 +148,8 @@ export class ChatComponent implements OnInit, OnDestroy {
    * Automatically adds new message to front of chat if successful.
    */
   public sendMessage() {
-    let msg = (<HTMLInputElement>document.getElementById('messageInput')).value;
+    let input = <HTMLInputElement>document.getElementById('messageInput');
+    let msg = input.value;
     // Ensure valid.
     if (msg == null || msg.length < 1 || msg.length > 1024) {
       return;
@@ -158,6 +159,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.messageService.sendMessage(this.otherUserId, msg).subscribe((res) => {
       // Add newly create message to front of chat.
       this.messages$.unshift(res[0]);
+      // Reset input.
+      input.value = '';
+      (<HTMLButtonElement>document.getElementById('messageSubmit')).disabled = true;
     }, (err) => {
       console.error('Chat send message error:', err);
     });

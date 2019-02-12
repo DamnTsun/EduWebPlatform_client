@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { Group } from 'src/app/classes/Group';
+import { notImplemented } from '@angular/core/src/render3/util';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +19,9 @@ export class GroupService {
   /**
    * Gets groups from api. Only gets groups that the current user is a member of.
    */
-  public getGroups(count, offset) {
+  public getGroups(count, offset): Observable<Group[]> {
     return this.api.get(environment.apiUrl
-      + `groups?count=${count}&offset=${offset}`);
+      + `groups?count=${count}&offset=${offset}`) as Observable<Group[]>;
   }
 
 
@@ -29,5 +32,80 @@ export class GroupService {
    */
   public getAllGroups(count, offset) {
     
+  }
+
+
+
+  /**
+   * Gets group by id.
+   * API-side: Current user must be in group, or admin, to successfully get group.
+   * @param groupid - id of group.
+   */
+  public getGroup(groupid): Observable<Group[]> {
+    return this.api.get(environment.apiUrl
+      + `groups/${groupid}`) as Observable<Group[]>;
+  }
+
+
+
+
+
+
+
+
+  /**
+   * Gets users who are a member of the specified group.
+   * @param groupid - id of group.
+   * @param count - number of users to get.
+   * @param offset - number of users to skip.
+   */
+  public getGroupMembers(groupid, count, offset) {
+    return this.api.get(environment.apiUrl
+      + `groups/${groupid}/members?count=${count}&offset=${offset}`);
+  }
+
+  /**
+   * Gets users who are not a member of the specified group.
+   * @param groupid - id of group.
+   * @param count - number of users to get.
+   * @param offset - number of users to skip.
+   */
+  public getGroupNonMembers(groupid, count, offset) {
+
+  }
+
+
+  /**
+   * Adds specified user to specified group.
+   * @param groupid - id of group.
+   * @param userid - id of user.
+   */
+  public addMemberToGroup(groupid, userid) {
+    return this.api.post(environment.apiUrl
+      + `groups/${groupid}/members/${userid}`,
+      new FormData()
+    );
+  }
+
+  /**
+   * Removes specified user from specified group.
+   * @param groupid - id of group.
+   * @param userid - id of user.
+   */
+  public removeMemberFromGroup(groupid, userid) {
+    return this.api.delete(environment.apiUrl
+      + `groups/${groupid}/members/${userid}`);
+  }
+
+
+
+
+
+  /**
+   * Deletes specified group.
+   * @param groupid - id of group.
+   */
+  public deleteGroup(groupid) {
+    // not implemented...
   }
 }

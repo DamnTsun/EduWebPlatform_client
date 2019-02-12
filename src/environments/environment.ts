@@ -18,7 +18,10 @@ export const environment = {
     usertestid: 'usertestid',
 
     // User / Messaging related.
-    userid: 'userid'
+    userid: 'userid',
+
+    // Group related.
+    groupid: 'groupid'
   },
   routes: {
     // *** CONTENT RELATED ***
@@ -77,12 +80,12 @@ export const environment = {
 
     // GROUPS
     // Group list.
-    groupList: 'groups'
+    groupList: 'groups',
 
     // All groups (admin).
 
     // Group home (including current users/remove users list).
-
+    groupHome: 'groups/:groupid'
     // Add users to group.
 
     // Group chat.

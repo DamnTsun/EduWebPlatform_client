@@ -33,6 +33,7 @@ import { UserTestListComponent } from "./components/content-related/user_tests/u
 import { UserTestDetailsComponent } from "./components/content-related/user_tests/user-test-details/user-test-details.component";
 import { ChatComponent } from "./components/account/messages/chat/chat.component";
 import { GroupListComponent } from "./components/account/groups/group-list/group-list.component";
+import { GroupHomeComponent } from "./components/account/groups/group-home/group-home.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -210,5 +211,9 @@ export const appRoutes = [
   { // View groups that user is in.
     path: environment.routes.groupList,
     component: GroupListComponent
+  },
+  { // Group home.
+    path: environment.routes.groupHome,
+    component: GroupHomeComponent
   }
 ];

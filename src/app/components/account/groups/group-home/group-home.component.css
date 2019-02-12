@@ -1,0 +1,15 @@
+.page-content-card {
+    margin: 1em auto;
+    width: 40em;
+    max-width: 100%;
+}
+
+.delete-button-container {
+    width: fit-content;
+    max-width: 100%;
+    margin: 1em auto;
+}
+.delete-button {
+    width: 20em;
+    max-width: 100%;
+}

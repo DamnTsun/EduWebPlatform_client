@@ -184,10 +184,10 @@ button.delete-dropdown-option {
 }
 
 
+
 /* Bootstrap overrides */
-/* Give cards colored outline. */
 .card {
-  border-color: blue;
+  border-color: blue;         /* Give colored outline. */
 }
 
 
