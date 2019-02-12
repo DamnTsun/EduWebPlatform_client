@@ -1,0 +1,55 @@
+<section class="container page-content">
+
+
+  <!-- Create button -->
+  <div class="create-button-container">
+    <button class="btn btn-success create-button">
+      <i class="material-icons button-icon">add</i>Create a Group
+    </button>
+  </div>
+
+
+
+  <!-- Grid of groups -->
+  <div class="content-grid">
+
+    <!-- 1 card per group -->
+    <div class="card" *ngFor="let group of groups$; let i = index;">
+      <!-- Show group image. (Or placeholder if not set) -->
+      <img class="card-img-top" src="{{ getGroupImageUrl(group) }}" alt="{{ group.name }} (#{{ group.id }}) image.">
+
+      <!-- body (name, description) -->
+      <div class="card-body">
+        <h5 class="card-title">{{ group.name }} (#{{ group.id }})</h5>
+        <div class="card-text content-description">{{ group.description }}</div>
+      </div>
+
+      <!-- Footer (options) -->
+      <div class="card-footer">
+        <!-- View group button -->
+        <button class="btn btn-outline-primary view-button">View</button>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- Infinite scroll div -->
+  <div id="infiniteScrollDiv" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+
+
+
+  <!-- Display loader if not end of content. -->
+  <app-loader *ngIf="!endOfContent"></app-loader>
+  <!-- If no more groups left show, show message (no more messages, or user not in any groups) -->
+  <div class="alert alert-dark no-more-content-message" *ngIf="endOfContent && groups$.length > 0">
+    No more groups...
+  </div>
+  <div class="alert alert-dark no-more-content-message" *ngIf="endOfContent && groups$.length == 0">
+    You are not yet a member of any groups.
+  </div>
+
+</section>

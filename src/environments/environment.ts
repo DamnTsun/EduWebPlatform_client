@@ -71,9 +71,21 @@ export const environment = {
     messageSentToList: 'users/messages/sent/:userid',
 
     sendMessage: 'users/messages/send/:userid',
-    chat: 'users/chat/:userid'
+    chat: 'users/chat/:userid',
 
     // sentList -> sentTolist -> sendMessage -> messageFromlist ->  messagelist
+
+    // GROUPS
+    // Group list.
+    groupList: 'groups'
+
+    // All groups (admin).
+
+    // Group home (including current users/remove users list).
+
+    // Add users to group.
+
+    // Group chat.
   }
 };
 

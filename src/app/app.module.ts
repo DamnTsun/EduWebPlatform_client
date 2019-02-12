@@ -60,6 +60,7 @@ import { MessageSentToUserListComponent } from './components/account/messages/me
 import { UserTestListComponent } from './components/content-related/user_tests/user-test-list/user-test-list.component';
 import { UserTestDetailsComponent } from './components/content-related/user_tests/user-test-details/user-test-details.component';
 import { ChatComponent } from './components/account/messages/chat/chat.component';
+import { GroupListComponent } from './components/account/groups/group-list/group-list.component';
 
 
 
@@ -123,7 +124,8 @@ export function provideConfig() {
     MessageSentToUserListComponent,
     UserTestListComponent,
     UserTestDetailsComponent,
-    ChatComponent
+    ChatComponent,
+    GroupListComponent
   ],
   imports: [
     BrowserModule,
