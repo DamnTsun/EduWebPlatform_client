@@ -11,18 +11,23 @@
     </div>
     <!-- Footer (edit, leave group) -->
     <div class="card-footer">
-      <button class="btn btn-outline-warning">
-        <i class="material-icons button-icon">edit</i>Edit
+      <button class="btn btn-outline-primary">
+        <i class="material-icons button-icon">chat</i>Chat (NI)
       </button>
       <button class="btn btn-outline-danger card-footer-dropdown" data-toggle="modal" data-target="#removeSelfModal">
         <i class="material-icons button-icon">remove</i>Leave
       </button>
     </div>
   </div>
-  <!-- Delete group button (admin-only) -->
+  <!-- Edit and delete (admin only) buttons-->
+  <div class="delete-button-container">
+    <button class="btn btn-warning delete-button">
+      <i class="material-icons button-icon">edit</i>Edit (NI)
+    </button>
+  </div>
   <div class="delete-button-container">
     <button class="btn btn-danger delete-button" *ngIf="isAdmin" data-toggle="modal" data-target="#deleteGroupModal">
-      <i class="material-icons button-icon">delete</i>Delete Group
+      <i class="material-icons button-icon">delete</i>Delete Group (NI)
     </button>
   </div>
 
@@ -46,35 +51,104 @@
 
 
   <!-- List users inside group -->
-  <h2>Group Members:</h2>
-  <!-- Add members button -->
-  <div class="create-button-container">
-    <button class="btn btn-success create-button">
-      <i class="material-icons button-icon">add</i>Add Members
-    </button>
-  </div>
+  <h2>Manage Members:</h2>
 
-  <div class="content-grid">
+  <!-- Card with 2 tabs (members, non-members) -->
+  <div class="card group-members-card">
 
-    <!-- 1 card per user -->
-    <div class="card" *ngFor="let member of groupMembers$; let i = index">
-      <div class="card-body">
-        <h5 class="card-title">{{ member.displayname }} (#{{member.id}})</h5>
-      </div>
-
-      <!-- Footer (chat, remove) -->
-      <div class="card-footer">
-        <button class="btn btn-outline-primary view-button" routerLink="{{ getUserChatRoute(member.id) }}">
-          <i class="material-icons button-icon">chat</i>Chat
-        </button>
-        <button class="btn btn-outline-danger card-footer-dropdown" data-toggle="modal" data-target="#removeUserModal"
-          (click)="removeUserIndex = i">
-          <i class="material-icons button-icon">remove</i>Remove
-        </button>
-      </div>
+    <!-- Header with tabs -->
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs nav-justified">
+        <li class="nav-item"><a class="nav-link active" id="membersTab" data-toggle="tab" href="#members" role="tab"
+            aria-controls="members" aria-selected="true">Current Members</a></li>
+        <li class="nav-item"><a class="nav-link" id="nonMembersTab" data-toggle="tab" href="#nonMembers" role="tab"
+            aria-controls="nonMembers" aria-selected="false">Non Members</a></li>
+      </ul>
     </div>
 
+    <!-- Tabs -->
+    <div class="tab-content">
+      <!-- Members tab -->
+      <div class="tab-pane fade show active" id="members" role="tabpanel" aria-labelledby="membersTab">
+        <!-- Display grid of current members -->
+        <div class="card-body">
+          <div class="content-grid user-grid">
+
+            <!-- 1 card per user -->
+            <div class="card" *ngFor="let member of groupMembers$; let i = index">
+              <div class="card-body">
+                <h5 class="card-title">{{ member.displayname }} (#{{ member.id }})</h5>
+              </div>
+
+              <!-- Footer (chat, remove) -->
+              <div class="card-footer">
+                <button class="btn btn-outline-primary view-button" routerLink="{{ getUserChatRoute(member.id) }}">
+                  <i class="material-icons button-icon">chat</i>Chat
+                </button>
+                <button class="btn btn-outline-danger card-footer-dropdown" data-toggle="modal"
+                  data-target="#removeUserModal" (click)="removeUserIndex = i">
+                  <i class="material-icons button-icon">remove</i>Remove
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Infinite scroll div -->
+          <div id="infiniteScrollDiv" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000"
+            (scrolled)="groupMembers_onScroll()"></div>
+          <!-- Loading animation or end of users message -->
+          <app-loader *ngIf="!groupMembers_endOfContent"></app-loader>
+          <div class="alert alert-dark no-more-content-message" *ngIf="groupMembers_endOfContent">
+            End of Members...
+          </div>
+        </div>
+      </div>
+
+      <!-- Non-members tab -->
+      <div class="tab-pane fade" id="nonMembers" rolte="tabpanel" aria-labelledby="nonMembersTab">
+        <!-- Display grid of non-members -->
+        <div class="card-body">
+          <div class="content-grid user-grid">
+
+            <!-- 1 card per non-member -->
+            <div class="card" *ngFor="let nonmember of groupNonMembers$; let i = index">
+              <div class="card-body">
+                <h5 class="card-title">{{ nonmember.displayname }} (#{{ nonmember.id }})</h5>
+              </div>
+
+              <!-- Footer (chat, add) -->
+              <div class="card-footer">
+                <button class="btn btn-outline-primary view-button" routerLink="{{ getUserChatRoute(nonmember.id) }}">
+                  <i class="material-icons button-icon">chat</i>Chat
+                </button>
+                <button class="btn btn-outline-success card-footer-dropdown" data-toggle="modal"
+                  data-target="#addUserModal" (click)="addUserIndex = i">
+                  <i class="material-icons button-icon">add</i>Add
+                </button>
+              </div>
+            </div>
+
+
+          </div>
+
+          <!-- Infinite scroll div -->
+          <div id="infiniteScrollDiv" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000"
+            (scrolled)="groupNonMembers_onScroll()"></div>
+
+          <!-- Loading animation or end of users message -->
+          <app-loader *ngIf="!groupNonMembers_endOfContent"></app-loader>
+          <div class="alert alert-dark no-more-content-message" *ngIf="groupNonMembers_endOfContent">
+            End of Non-Members...
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
   </div>
+
 
 </section>
 
@@ -109,7 +183,8 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <!-- Delete subject at index, then clear index -->
-        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="removeUserFromGroup(removeUserIndex); removeUserIndex = null">Confirm
+        <button type="button" class="btn btn-danger" data-dismiss="modal"
+          (click)="removeUserFromGroup(removeUserIndex); removeUserIndex = null">Confirm
           Remove</button>
       </div>
     </div>
@@ -121,8 +196,43 @@
 
 
 
+<!-- Add user confirmation modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="removeUserModalLabel">Add User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="groupNonMembers$ !== null && addUserIndex !== null">
+          Are you sure you want to add user '{{ groupNonMembers$[addUserIndex].displayname }} (#{{
+          groupNonMembers$[addUserIndex].id }})' to the group?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <!-- Delete subject at index, then clear index -->
+        <button type="button" class="btn btn-success" data-dismiss="modal"
+          (click)="addUserToGroup(addUserIndex); addUserIndex = null">Confirm
+          Add</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
 <!-- Remove self confirmation modal -->
-<div class="modal fade" id="removeSelfModal" tabindex="-1" role="dialog" aria-labelledby="removeSelfLabel" aria-hidden="true">
+<div class="modal fade" id="removeSelfModal" tabindex="-1" role="dialog" aria-labelledby="removeSelfLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
 
     <div class="modal-content">
@@ -154,29 +264,30 @@
 
 
 <!-- Admin delete group confirmation modal -->
-<div class="modal fade" id="deleteGroupModal" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-  
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteGroupLabel">Delete Group</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+<div class="modal fade" id="deleteGroupModal" tabindex="-1" role="dialog" aria-labelledby="deleteGroupLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteGroupLabel">Delete Group</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          Are you sure you want to delete this group?
         </div>
-        <div class="modal-body">
-          <div>
-            Are you sure you want to delete this group?
-          </div>
-          This cannot be undone.
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <!-- Delete subject at index, then clear index -->
-          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteGroup()">Confirm
-            Delete</button>
-        </div>
+        This cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <!-- Delete subject at index, then clear index -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteGroup()">Confirm
+          Delete</button>
       </div>
     </div>
-  
   </div>
+
+</div>

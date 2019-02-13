@@ -71,7 +71,8 @@ export class GroupService {
    * @param offset - number of users to skip.
    */
   public getGroupNonMembers(groupid, count, offset) {
-
+    return this.api.get(environment.apiUrl
+      + `groups/${groupid}/nonmembers?count=${count}&offset=${offset}`);
   }
 
 
