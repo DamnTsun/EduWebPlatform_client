@@ -18,3 +18,36 @@
 .group-members-card {
     margin: 1em 0em;
 }
+
+
+
+.card-table-container {
+    border-color: black;
+}
+
+
+.table {
+    margin-bottom: 0px; /* Remove margin-bottom. */
+    max-width: 100%;
+}
+
+.table-options-cell {
+    text-align: right;
+}
+
+.table-id-header {
+    width: 5em;
+    max-width: 10%
+}
+
+.table-displayname-header {
+    width: 30em;
+    max-width: 30%;
+}
+
+.table-cell-button {
+    position: relative;
+    max-width: 100%;
+    width: 7em;
+    margin: 0.25em;
+}

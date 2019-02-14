@@ -190,6 +190,10 @@ button.delete-dropdown-option {
   border-color: blue;         /* Give colored outline. */
 }
 
+.container-no-margin {
+  padding: 0px;
+}
+
 
 /* Custom navbar styling */
 .navbar {
