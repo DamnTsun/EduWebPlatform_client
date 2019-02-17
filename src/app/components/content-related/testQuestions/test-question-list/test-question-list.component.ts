@@ -106,12 +106,18 @@ export class TestQuestionListComponent implements OnInit {
 
 
 
+
+
+  // Index of question to be deleted. Used by delete modal.
+  public deleteQuestionIndex = null;
+  /**
+   * Deletes test question at given index.
+   * @param index - index of test question in array.
+   */
   private deleteTestQuestion(index) {
     // User should be admin to be on the component. Request will fail if they're not.
     // Check index valid.
     if (index < 0 || index >= this.testQuestions$.length) { return; }
-    // Get confirmation from user.
-    if (!confirm(`Are you sure you want to delete test question '${this.testQuestions$[index].question}'?`)) { return; }
 
     // Attempt to delete.
     this.testQuestionService.deleteTestQuestion(this.subjectid, this.topicid, this.testid, this.testQuestions$[index].id).subscribe((res) => {
@@ -123,4 +129,7 @@ export class TestQuestionListComponent implements OnInit {
       console.error('TestQuestion-List delete question Error:', err);
     })
   }
+
+
+
 }

@@ -13,65 +13,110 @@
   </nav>
 
 
-  <!-- List of test questions-->
-  <ul class="content-list">
-    <!-- Create question button -->
-    <button class="btn btn-primary addButton" routerLink="create">Create a Question</button>
-    <h5>Test Questions:</h5>
-    <li *ngFor="let question of testQuestions$; let i = index">
-      <div class="card">
-        <div class="card-body">
-          <div class="questionTextContainer">
-            <!-- Left section (text) -->
-            <div class="questionTopSection50">
-              <h5>{{ question.question }}</h5>
-              <p>{{ question.answer }}</p>
-            </div>
-            <!-- Right section (image) -->
-            <div class="questionTopSection50 questionTopSectionImage">
-              <img src="https://placehold.it/128x128" alt="Question Image" height="100%">
-            </div>
+  <!-- Create button -->
+  <div class="create-button-container">
+    <button class="btn btn-success create-button" routerLink="create">
+      <i class="material-icons button-icon">add</i>Create a Test Question
+    </button>
+  </div>
+
+
+  <h2>Question Pool:</h2>
+  <!-- Grid of content -->
+  <div class="content-grid">
+
+    <!-- 1 card per question -->
+    <div class="card" *ngFor="let tq of testQuestions$; let i = index">
+      <!-- Image at top -->
+      <div class="question-image-container">
+        <!-- Show image if set. -->
+        <ng-container *ngIf="tq.imageUrl !== null && tq.imageUrl !== ''; else noImageTemplate">
+          <img class="card-img-top" src="{{ tq.imageUrl }}" alt="Question Image" style="position: relative; max-height: 100%; max-width: 100%;">
+        </ng-container>
+        <!-- Show message if not set. -->
+        <ng-template #noImageTemplate>
+          <div class="no-image-message">An image has not been set for this question.</div>
+        </ng-template>
+      </div>
+
+      <!-- Body (question, answer) -->
+      <div class="card-body">
+        <h5 class="card-title">{{ tq.question }}</h5>
+        <div class="card-text content-description">{{ tq.answer }}</div>
+      </div>
+
+      <!-- Footer (options) -->
+      <div class="card-footer">
+        <button class="btn btn-outline-primary view-button" routerLink="{{ tq.id }}">View</button>
+
+        <!-- dropdown -->
+        <div class="btn-group card-footer-dropdown">
+          <!-- toggle button -->
+          <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <i class="material-icons button-icon">settings</i>
+          </button>
+
+          <!-- dropdown menu -->
+          <div class="dropdown-menu dropdown-menu-right">
+            <button class="dropdown-item" routerLink="{{ tq.id }}/edit">
+              <i class="material-icons button-icon dropdown-icon">edit</i>Edit
+            </button>
+            <button class="dropdown-item" data-toggle="modal" data-target="#deleteModal" (click)="deleteQuestionIndex = i">
+              <i class="material-icons button-icon dropdown-icon dropdown-icon-delete">delete</i>Delete
+            </button>
           </div>
-
-          <!-- Admin buttons (dropdown)-->
-          <div class="dropdown show">
-            <a class="options-dropdown" id="questionOptionsDropdownLink" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              <i class="material-icons options-icon">settings</i>
-            </a>
-
-            <div class="dropdown-menu" aria-labelledby="questionOptionsDropdownLink">
-              <a class="dropdown-item" routerLink="{{ question.id }}/edit">
-                <i class="material-icons options-icon">edit</i>
-                Edit
-              </a>
-              <a class="dropdown-item deleteButton" (click)="deleteTestQuestion(i)">
-                <i class="material-icons options-icon">delete</i>
-                Delete
-              </a>
-            </div>
-          </div>
-
         </div>
       </div>
-    </li>
-  </ul>
 
+    </div>
+
+  </div>
 
 
   <!-- Inifinite scroll div. Loads more questions unless all loaded. -->
-  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
-  </div>
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
 
 
 
   <!-- Shows loading icon unless all questions loaded, in which case message is shown -->
   <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
   <ng-template #endOfContentTemplate>
-    <div class="alert alert-warning">
-      End of Test Questions
+    <div class="alert alert-dark no-more-content-message">
+      No more Test Questions...
     </div>
   </ng-template>
 
 
 </section>
+
+
+
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Question</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="testQuestions$ !== null && deleteQuestionIndex !== null">
+          Are you sure you want to delete question '{{ testQuestions$[deleteQuestionIndex].question }}'?
+        </div>
+        This cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <!-- Delete subject at index, then clear index -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteTestQuestion(deleteQuestionIndex); deleteQuestionIndex = null">Confirm
+          Delete</button>
+      </div>
+    </div>
+  </div>
+
+</div>
