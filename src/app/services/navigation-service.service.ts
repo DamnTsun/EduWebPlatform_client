@@ -114,6 +114,23 @@ export class NavigationServiceService {
   }
 
 
+  // TEST QUESTIONS
+  /**
+   * Gets test question list route.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   */
+  public getTestQuestionListRoute(subjectid, topicid, testid): string {
+    let route = `/${environment.routes.testQuestionList}`;
+    route = route.replace(`:${environment.routeParams.subjectid}`, subjectid);
+    route = route.replace(`:${environment.routeParams.topicid}`, topicid);
+    route = route.replace(`:${environment.routeParams.testid}`, testid);
+    return route;
+  }
+
+
+
   // USER TESTS
   /**
    * Gets user test details route.

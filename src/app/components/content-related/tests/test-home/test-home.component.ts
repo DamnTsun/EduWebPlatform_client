@@ -44,7 +44,6 @@ export class TestHomeComponent implements OnInit {
 
     // Get user signed in status.
     this.signIn.userInternalRecord().subscribe((user) => {
-      console.log(user);
       this.user = user;
     }, (err) => {
       console.error('Test-Home user error:', err);
