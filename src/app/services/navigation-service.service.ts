@@ -129,6 +129,22 @@ export class NavigationServiceService {
     return route;
   }
 
+  /**
+   * Gets test question home route.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   * @param questionid id of test question.
+   */
+  public getTestQuestionHomeRoute(subjectid, topicid, testid, questionid): string {
+    let route = `/${environment.routes.testQuestionHome}`;
+    route = route.replace(`:${environment.routeParams.subjectid}`, subjectid);
+    route = route.replace(`:${environment.routeParams.topicid}`, topicid);
+    route = route.replace(`:${environment.routeParams.testid}`, testid);
+    route = route.replace(`:${environment.routeParams.questionId}`, questionid);
+    return route;
+  }
+
 
 
   // USER TESTS

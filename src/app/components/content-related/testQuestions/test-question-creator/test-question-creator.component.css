@@ -1,0 +1,34 @@
+/* Container for question image */
+.question-image-container {
+    border-top: 1px solid black;
+    background-color: lightgray;
+    /* Inherit card border radius. */
+    border-radius: inherit;
+    /* Set 0 bottom radius to act as separator. */
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    overflow: hidden;
+}
+
+.no-image-message {
+    text-align: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+
+.submit-button-container {
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.submit-button {
+    width: 20em;
+    max-width: 100%;
+}
+
+.card {
+    margin-bottom: 1em;
+}

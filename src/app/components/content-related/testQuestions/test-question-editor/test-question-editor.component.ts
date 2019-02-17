@@ -5,6 +5,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { TestQuestion } from 'src/app/classes/TestQuestion';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-test-question-editor',
@@ -22,13 +23,22 @@ export class TestQuestionEditorComponent implements OnInit {
   private submitted: boolean = false;           // Whether page has been submitted.
   private errorMessage: string = null;          // Error message if something goes wrong.
 
+  // Value of question / answer / imageUrl inputs.
+  public questionValue: string = '';
+  public answerValue: string = '';
+  public imageUrlValue: string = '';
+
+
+
+
 
   constructor(
     private subjectService: SubjectsService,
     private testQuestionService: TestQuestionsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -45,7 +55,7 @@ export class TestQuestionEditorComponent implements OnInit {
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
       // Redirect to test home if not admin.
       if (!isAdmin) {
-        this.redirectToTopicHome();
+        this.redirectToTestHome();
       }
     }, (err) => {
       console.error('TestQuestion-Editor isAdmin Error:', err);
@@ -62,22 +72,45 @@ export class TestQuestionEditorComponent implements OnInit {
     }, (err) => {
       console.error('TestQuestion-Editor question$ Error:', err);
     });
+
+
+    // Watch values for question / answer / imageUrl.
+    document.getElementById('questionText').addEventListener('input', (e) => {
+      this.questionValue = (<HTMLInputElement>e.target).value;
+    });
+    document.getElementById('questionAnswer').addEventListener('input', (e) => {
+      this.answerValue = (<HTMLInputElement>e.target).value;
+    });
+    document.getElementById('questionImageUrl').addEventListener('input', (e) => {
+      this.imageUrlValue = (<HTMLInputElement>e.target).value;
+    });
   }
 
 
 
+  /**
+   * Sets values of input fields based on given object.
+   * @param question - object containing current values.
+   */
   private setPageValues(question): void {
     // Text
     let text = <HTMLInputElement>document.getElementById('questionText');
     if (text !== null) { text.value = question.question; }
+    this.questionValue = question.question;
+
     // Answer
     let answer = <HTMLInputElement>document.getElementById('questionAnswer');
     if (answer !== null) { answer.value = question.answer; }
+    this.answerValue = question.answer;
     // Image url.
     let imageUrl = <HTMLInputElement>document.getElementById('questionImageUrl');
     if (imageUrl !== null) { imageUrl.value = question.imageUrl; }
+    this.imageUrlValue = question.imageUrl;
   }
 
+  /**
+   * Resets inputs to their initial values.
+   */
   private resetValues(): void {
     if (this.question$ !== null) {
       this.setPageValues(this.question$);
@@ -170,7 +203,7 @@ export class TestQuestionEditorComponent implements OnInit {
         this.submitted = false;
         break;
       case 401: // User not admin.
-        this.redirectToTopicHome();
+        this.redirectToTestHome();
         break;
       case 500: // Something went wrong with server.
         this.errorMessage = 'Sorry, something went wrong with the server. Please try again later.';
@@ -186,10 +219,9 @@ export class TestQuestionEditorComponent implements OnInit {
   /**
    * Redirects user to topic home.
    */
-  private redirectToTopicHome() {
-    let route = environment.routes.topicHome;
-    route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid);
-    route = route.replace(`:${environment.routeParams.topicid}`, this.topicid);
-    this.router.navigate([ route ]);
+  private redirectToTestHome() {
+    this.router.navigate([
+      this.navService.getTestHomeRoute(this.subjectid, this.topicid, this.testid)
+    ]);
   }
 }
