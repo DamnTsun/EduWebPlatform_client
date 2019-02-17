@@ -16,6 +16,9 @@ export class SubjectEditorComponent implements OnInit {
   private submitted: boolean = false;
   private errorMessage: string = null;
 
+  public nameValue: string = '';
+  public descriptionValue: string = '';
+
 
 
 
@@ -53,6 +56,15 @@ export class SubjectEditorComponent implements OnInit {
     }, (err) => {
       console.error('Subject-Editor subject Error:', err);
     });
+
+    // Get updates to name.
+    document.getElementById('subjectName').addEventListener('input', (e) => {
+      this.nameValue = (<HTMLInputElement>e.target).value;
+    });
+    // Get updates to description.
+    document.getElementById('subjectDescription').addEventListener('input', (e) => {
+      this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
+    });
   }
 
   /**
@@ -63,9 +75,11 @@ export class SubjectEditorComponent implements OnInit {
     // Name field.
     let name = <HTMLInputElement>document.getElementById('subjectName');
     if (name !== null) { name.value = subject.name; }
+    this.nameValue = subject.name;
     // Description field.
     let description = <HTMLTextAreaElement>document.getElementById('subjectDescription');
     if (description !== null) { description.value = subject.description; }
+    this.descriptionValue = subject.description;
   }
 
   /**

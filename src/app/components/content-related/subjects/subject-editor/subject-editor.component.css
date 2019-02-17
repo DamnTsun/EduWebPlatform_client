@@ -1,0 +1,15 @@
+.submit-button-container {
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.submit-button {
+    width: 20em;
+    max-width: 100%;
+}
+
+.card {
+    margin-bottom: 1em;
+}

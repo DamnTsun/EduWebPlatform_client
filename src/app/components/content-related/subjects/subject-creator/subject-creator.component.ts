@@ -14,6 +14,13 @@ export class SubjectCreatorComponent implements OnInit {
   private submitted: boolean = false;     // Whether user has submitted subject.
   private errorMessage: string = null;    // Error message to display if something goes wrong.
 
+  // Holds current values. Used by preview.
+  public nameValue: string = '';
+  public descriptionValue: string = '';
+
+
+
+
 
   constructor(
     private subjectService: SubjectsService,
@@ -30,6 +37,16 @@ export class SubjectCreatorComponent implements OnInit {
       }
     }, (err) => {
       console.error('Subject-Creator isAdmin Error:', err);
+    });
+
+
+    // Subscribe to updates to name / description input.
+    document.getElementById('subjectName').addEventListener('input', (e) => {
+      this.nameValue = (<HTMLInputElement>e.target).value;
+      console.log(this.nameValue);
+    });
+    document.getElementById('subjectDescription').addEventListener('input', (e) => {
+      this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
     });
   }
 

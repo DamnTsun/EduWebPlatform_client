@@ -24,9 +24,12 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/quill/dist/quill.snow.css"
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/prismjs/themes/prism-coy.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/marked/lib/marked.js"
+            ]
           },
           "configurations": {
             "production": {

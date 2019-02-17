@@ -24,7 +24,7 @@
     <div class="card" *ngFor="let topic of topics$; let i = index">
       <div class="card-body">
         <h5 class="card-title">{{ topic.name }}</h5>
-        <div class="card-text content-description">{{ topic.description }}</div>
+        <div markdown class="card-text content-description">{{ topic.description }}</div>
       </div>
 
       <!-- Card footer (options) -->

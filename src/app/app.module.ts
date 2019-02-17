@@ -1,6 +1,7 @@
 // Base modules / Environment variables.
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { MarkdownModule } from 'ngx-markdown';
 
 // App routes.
 import { appRoutes } from './app.router';
@@ -135,7 +136,8 @@ export function provideConfig() {
     RouterModule.forRoot(appRoutes),
     SocialLoginModule,
     QuillModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MarkdownModule.forRoot()
   ],
   providers: [
     {

@@ -17,6 +17,13 @@ export class TopicEditorComponent implements OnInit {
   private submitted: boolean = false;         // Whether form has been submitted successfully or in process of.
   private errorMessage: string = null;        // Error message displayed if something goes wrong.
 
+  // Values of name / description. Used by preview.
+  public nameValue: string = '';
+  public descriptionValue: string = '';
+
+
+
+
 
   constructor(
     private subjectService: SubjectsService,
@@ -54,6 +61,15 @@ export class TopicEditorComponent implements OnInit {
     }, (err) => {
       console.error('Topic-Editor topic Error:', err);
     });
+
+
+    // Get values of name / description.
+    document.getElementById('topicName').addEventListener('input', (e) => {
+      this.nameValue = (<HTMLInputElement>e.target).value;
+    });
+    document.getElementById('topicDescription').addEventListener('input', (e) => {
+      this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
+    });
   }
 
 
@@ -66,10 +82,12 @@ export class TopicEditorComponent implements OnInit {
     // Name
     let name = <HTMLInputElement>document.getElementById('topicName');
     if (name !== null) { name.value = topic.name; }
+    this.nameValue = topic.name;
 
     // Description
     let description = <HTMLTextAreaElement>document.getElementById('topicDescription');
     if (description !== null) { description.value = topic.description; }
+    this.descriptionValue = topic.description;
   }
 
   /**

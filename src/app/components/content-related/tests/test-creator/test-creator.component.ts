@@ -20,6 +20,13 @@ export class TestCreatorComponent implements OnInit {
   private submitted: boolean = false;       // Whether page has been submitted.
   private errorMessage: string = null;      // Error message to display if something goes wrong.
 
+  // Value of name / description. Used by preview.
+  public nameValue: string = '';
+  public descriptionValue: string = '';
+
+
+
+
 
   constructor(
     private subjectService: SubjectsService,
@@ -47,6 +54,15 @@ export class TestCreatorComponent implements OnInit {
     }, (err) => {
       console.error('TestCreator isAdmin Error:', err);
     })
+
+
+    // Watch values of name / description.
+    document.getElementById('testName').addEventListener('input', (e) => {
+      this.nameValue = (<HTMLInputElement>e.target).value;
+    });
+    document.getElementById('testDescription').addEventListener('input', (e) => {
+      this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
+    });
   }
 
 

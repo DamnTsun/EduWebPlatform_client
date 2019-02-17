@@ -1,39 +1,68 @@
 <section class="container page-content">
-  <!-- Error message if something goes wrong. -->
-  <div class="alert alert-danger" role="alert" *ngIf="this.errorMessage !== null">
-    <div>Unable to edit topic:</div>
-    {{ this.errorMessage }}
+
+  <div class="card">
+    <div class="card-body">
+
+      <!-- Error message if something goes wrong. -->
+      <div class="alert alert-danger" role="alert" *ngIf="this.errorMessage !== null">
+        <div>Unable to edit topic:</div>
+        {{ this.errorMessage }}
+      </div>
+
+      <h2>Edit a Topic:</h2>
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Topic Name</label>
+        <input name="name" class="form-control form-control-lg" id="topicName" type="text" placeholder="Enter Topic Name"
+          maxlength="50">
+        <small class="form-text text-muted">
+          Topic Name Must Not:
+          <ul>
+            <li>Be blank.</li>
+            <li>Be the same as an existing topics name, in this subject.</li>
+            <li>Contain more than 50 characters.</li>
+            <ul>
+              <li>Current name length: {{ nameValue.length }}</li>
+            </ul>
+          </ul>
+        </small>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Topic Description (Optional)</label>
+        <textarea name="description" class="form-control" id="topicDescription" placeholder="Enter Topic Desciption (Optional)"
+          rows="10" maxlength="1024"></textarea>
+        <small class="form-text text-muted">
+          Description may be styled using Markdown.
+          <div>
+            Topic Description Must Not:
+            <ul>
+              <li>Contain more than 1024 characters.</li>
+              <ul>
+                <li>Current description length: {{ descriptionValue.length }}</li>
+              </ul>
+            </ul>
+          </div>
+        </small>
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <div class="submit-button-container">
+        <button class="btn btn-primary submit-button" (click)="editTopic()" *ngIf="!this.submitted">Submit</button>
+      </div>
+    </div>
   </div>
 
-  <h2>Edit a Topic:</h2>
-  <!-- Name -->
-  <div class="form-group">
-    <label for="name">Topic Name</label>
-    <input name="name" class="form-control form-control-lg" id="topicName" type="text" placeholder="Enter Topic Name"
-      maxlength="50">
-    <small class="form-text text-muted">
-      Topic Name Must Not:
-      <ul>
-        <li>Be blank.</li>
-        <li>Contain more than 50 characters.</li>
-        <li>Be the same as an existing topics name, in this subject.</li>
-      </ul>
-    </small>
+  <!-- Preview -->
+  <h2>Preview:</h2>
+  <div class="card">
+    <div class="card-body">
+      <h2>{{ nameValue }}</h2>
+      <markdown [data]="descriptionValue" ngPreserveWhitespaces></markdown>
+    </div>
   </div>
-
-  <!-- Description -->
-  <div class="form-group">
-    <label for="description">Topic Description (Optional)</label>
-    <textarea name="description" class="form-control" id="topicDescription" placeholder="Enter Topic Desciption (Optional)"
-      rows="10" maxlength="1024"></textarea>
-    <small class="form-text text-muted">
-      Topic Description Must Not:
-      <ul>
-        <li>Contain more than 1024 characters.</li>
-      </ul>
-    </small>
-  </div>
-
-  <button class="btn btn-primary" (click)="editTopic()" *ngIf="!this.submitted">Submit</button>
 
 </section>

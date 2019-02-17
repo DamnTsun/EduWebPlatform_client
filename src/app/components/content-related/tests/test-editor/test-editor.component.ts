@@ -20,6 +20,13 @@ export class TestEditorComponent implements OnInit {
   private submitted: boolean = false;       // Whether form has been submitted.
   private errorMessage: string = null;      // Error message to display if something goes wrong.
 
+  // Values of name / description. Used by preview.
+  public nameValue: string = '';
+  public descriptionValue: string = '';
+
+
+
+
 
   constructor(
     private subjectService: SubjectsService,
@@ -59,6 +66,15 @@ export class TestEditorComponent implements OnInit {
     }, (err) => {
       console.error('Test-Editor test Error:', err);
     });
+
+
+    // Watch values of name / description.
+    document.getElementById('testName').addEventListener('input', (e) => {
+      this.nameValue = (<HTMLInputElement>e.target).value;
+    });
+    document.getElementById('testDescription').addEventListener('input', (e) => {
+      this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
+    });
   }
 
 
@@ -71,10 +87,12 @@ export class TestEditorComponent implements OnInit {
     // Name.
     let name = <HTMLInputElement>document.getElementById('testName');
     if (name !== null) { name.value = test.name; }
+    this.nameValue = test.name;
 
     // Description.
     let description = <HTMLTextAreaElement>document.getElementById('testDescription');
     if (description !== null) { description.value = test.description; }
+    this.descriptionValue = test.description;
   }
 
   /**

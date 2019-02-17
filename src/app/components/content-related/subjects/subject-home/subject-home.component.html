@@ -11,9 +11,7 @@
     <div class="card page-body">
       <div class="card-body">
         <h2>{{ this.subject$.name }}</h2>
-        <section class="page-sub-content">
-          <p>{{ subject$.description }}</p>
-        </section>
+        <markdown ngPreserveWhitespaces [data]="subject$.description"></markdown>
       </div>
       <div class="card-footer">
         <button class="btn btn-outline-primary footer-button" routerLink="topics">Topics</button>
