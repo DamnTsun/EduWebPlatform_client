@@ -96,7 +96,7 @@ export class UserTestsService {
    */
   public deleteUserTest(subjectid, topicid, testid, utestid) {
     return this.api.delete(environment.apiUrl +
-      `subjects/${subjectid}/topics/${topicid}/tests/${testid}/user_test/${utestid}`);
+      `subjects/${subjectid}/topics/${topicid}/tests/${testid}/user_tests/${utestid}`);
   }
 
 
