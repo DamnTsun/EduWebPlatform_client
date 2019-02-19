@@ -101,4 +101,31 @@ export class SubjectsService {
   public getPosts(subjectId, count, offset): Observable<Post[]> {
     return this.api.get(environment.apiUrl + `subjects/${subjectId}/posts?count=${count}&offset=${offset}`) as Observable<Post[]>;
   }
+
+
+  /**
+   * Creates a new post, associated with the specified subject, on the api.
+   * @param subjectid - id of subject.
+   * @param post - data for post.
+   */
+  public createPost(subjectid, post: Post) {
+    // CURRENTLY UNTESTS / NOT USED ANYWHERE
+    let data = new FormData();
+    data.set('content', JSON.stringify(post));
+    return this.api.post(
+      environment.apiUrl + `subjects/${subjectid}/posts`,
+      data
+    );
+  }
+
+
+  /**
+   * Deletes specified post from api.
+   * @param subjectid - id of subject.
+   * @param postid - id of post.
+   */
+  public deletePost(subjectid, postid) {
+    return this.api.delete(environment.apiUrl +
+        `subjects/${subjectid}/posts/${postid}`);
+  }
 }

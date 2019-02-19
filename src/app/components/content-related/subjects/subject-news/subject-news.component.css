@@ -1,0 +1,25 @@
+/* For styling news posts */
+.news-post-container {
+    width: 50em;
+    max-width: 100%;
+    margin: 1em auto;
+}
+
+.post {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.last-modified-badge {
+    margin-left: 0.2em;
+}
+
+.white-footer {
+    background-color: white;
+}
+
+
+.footer-button {
+    width: 10em;
+    max-width: 40%;
+}

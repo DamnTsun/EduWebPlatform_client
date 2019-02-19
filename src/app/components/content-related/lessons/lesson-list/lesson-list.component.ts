@@ -102,7 +102,8 @@ export class LessonListComponent implements OnInit {
       // Successful, remove from list.
       this.lessons$ = this.lessons$.filter((l, i, a) => {
         return i !== index;
-      })
+      });
+      this.offset--;
     }, (err) => {
       console.error('Lesson-List delete lesson error:', err);
     })

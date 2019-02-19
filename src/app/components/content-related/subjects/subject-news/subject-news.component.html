@@ -1,3 +1,82 @@
 <section class="container page-content">
-  <app-subject-post-list showControls="true" count="10"></app-subject-post-list>
+
+  <div class="news-post-container">
+
+    <!-- Create button -->
+    <div class="create-button-container" *ngIf="isAdmin">
+      <button class="btn btn-success create-button" routerLink="create">
+        <i class="material-icons button-icon">add</i>Create a News Post
+      </button>
+    </div>
+
+
+    <h2>News:</h2>
+
+    <!-- 1 card per post. -->
+    <div class="card post" *ngFor="let post of posts$; let i = index">
+      <!-- Last modified timestamp as badge. -->
+      <div class="last-modified-badge">
+        <span class="badge badge-secondary">Last modified: {{ post.modificationDate }}</span>
+      </div>
+
+      <div class="card-body">
+        <h5 class="card-title">{{ post.title }}</h5>
+        <div markdown class="card-text">{{ post.body }}</div>
+      </div>
+
+
+      <!-- Footer (Admin-only) -->
+      <div class="card-footer white-footer" *ngIf="isAdmin">
+        <button class="btn btn-outline-warning footer-button" routerLink="{{ post.id }}/edit">
+          <i class="material-icons button-icon">edit</i>Edit
+        </button>
+        <button class="btn btn-outline-danger footer-button card-footer-dropdown" data-toggle="modal" data-target="#deleteModal"
+          (click)="deletePostIndex = i">
+          <i class="material-icons button-icon">delete</i>Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Infinite scroll div -->
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+
+  <!-- Loader / end of content message -->
+  <app-loader *ngIf="!endOfContent"></app-loader>
+  <div class="alert alert-dark no-more-content-message" *ngIf="endOfContent">
+    No more subjects...
+  </div>
 </section>
+
+
+
+
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="posts$ !== null && deletePostIndex !== null">
+          Are you sure you want to delete post '{{ posts$[deletePostIndex].title }}'?
+        </div>
+        This cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <!-- Delete subject at index, then clear index -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deletePost(deletePostIndex); deletePostIndex = null">Confirm
+          Delete</button>
+      </div>
+    </div>
+  </div>
+
+</div>

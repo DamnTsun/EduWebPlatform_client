@@ -6,15 +6,21 @@
 
 
   <!-- User search input -->
-  <div class="form-group">
-    <h5>Search Users by DisplayName:</h5>
-    <input class="form-control form-control-lg" id="userSearchInput" type="text" placeholder="Enter DisplayName..."
-      maxlength="50">
-    <small class="form-text text-muted">
-      <div>To view all users again after previously search, please clear the searchbox.</div>
-      <div>Note that the unique user identifier suffix, e.g. '(#42)', is <strong>not</strong> included in the
-        search.</div>
-    </small>
+  <div class="card">
+    <div class="card-body">
+
+      <div class="form-group">
+        <h5>Search Users by DisplayName:</h5>
+        <input class="form-control form-control-lg" id="userSearchInput" type="text" placeholder="Enter DisplayName..."
+          maxlength="50">
+        <small class="form-text text-muted">
+          <div>To view all users again after previously search, please clear the searchbox.</div>
+          <div>Note that the unique user identifier suffix, e.g. '(#42)', is <strong>not</strong> included in the
+            search.</div>
+        </small>
+      </div>
+
+    </div>
   </div>
 
 
@@ -32,19 +38,29 @@
 
     <!-- 1 card per user. Either get full user list or search list depending on if searching. -->
     <div class="card" *ngFor="let user of getUserList(); let i = index">
+
       <!-- Card body (user displayname)-->
       <div class="card-body">
         <h5>{{ user.displayname }} (#{{ user.id }})</h5>
       </div>
 
-      <!-- Card footer (user privilege level (if not regular), options dropdown) -->
-      <div class="card-footer" style="vertical-align: middle">
-        <!-- Badges (admin, banned, etc) -->
+
+      <!-- Badges (admin, banned) -->
+      <div class="badge-container">
         <span class="badge badge-success" *ngIf="user.admin">Admin</span>
         <span class="badge badge-danger" *ngIf="user.banned">Banned</span>
+      </div>
 
-        <!-- options dropdown Do not show if user is banned and current user is not an admin -->
-        <div class="btn-group card-footer-dropdown" *ngIf="isAdmin || !user.banned">
+
+      <!-- Card footer (chat button, admin dropdown) -->
+      <div class="card-footer" style="vertical-align: middle">
+        <!-- Chat button (if user not banned) -->
+        <button class="btn btn-outline-primary" routerLink="chat/{{ user.id }}" *ngIf="!user.banned">
+          <i class="material-icons button-icon">chat</i>Chat
+        </button>
+
+        <!-- Admin options (set admin/banned status) -->
+        <div class="btn-group card-footer-dropdown" *ngIf="isAdmin">
           <!-- Toggle button -->
           <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -53,16 +69,7 @@
 
           <!-- Dropdown menu. -->
           <div class="dropdown-menu dropdown-menu-right">
-            <!-- Chat button (if user not banned) -->
-            <div *ngIf="!user.banned">
-              <button class="dropdown-item" routerLink="chat/{{ user.id }}">
-                <i class="material-icons button-icon dropdown-icon">chat</i>Chat
-              </button>
-              <!-- Show divider if current user is admin (has additional options) -->
-              <div class="dropdown-divider" *ngIf="isAdmin"></div>
-            </div>
-
-            <!-- Change admin stuff (admin-only. Don't show if user is banned) -->
+            <!-- Set/Remove admin. Changes based on current user admin status. Never shown if user is banned. -->
             <button class="dropdown-item" *ngIf="isAdmin && !user.banned" (click)="setAdminStatus(i, !user.admin)">
               <ng-container *ngIf="user.admin; else userNotAdminTemplate">
                 <i class="material-icons button-icon dropdown-icon">arrow_downward</i>Demote to Regular User
@@ -72,7 +79,7 @@
               </ng-template>
             </button>
 
-            <!-- Change banned stuff (admin-only) -->
+            <!-- Set/Remove ban. Changed based on current user banned status. -->
             <button class="dropdown-item" *ngIf="isAdmin" (click)="setBannedStatus(i, !user.banned)">
               <ng-container *ngIf="user.banned; else userNotBannedTemplate">
                 <i class="material-icons button-icon dropdown-icon">sentiment_satisfied_alt</i>Unban User

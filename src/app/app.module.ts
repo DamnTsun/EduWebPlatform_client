@@ -29,7 +29,6 @@ import { SubjectListComponent } from './components/content-related/subjects/subj
 import { SubjectHomeComponent } from './components/content-related/subjects/subject-home/subject-home.component';
 import { SubjectNewsComponent } from './components/content-related/subjects/subject-news/subject-news.component';
 import { TopicListComponent } from './components/content-related/topics/topic-list/topic-list.component';
-import { SubjectPostListComponent } from './components/content-related/subjects/subject-post-list/subject-post-list.component';
 import { TopicHomeComponent } from './components/content-related/topics/topic-home/topic-home.component';
 import { LessonHomeComponent } from './components/content-related/lessons/lesson-home/lesson-home.component';
 import { TestHomeComponent } from './components/content-related/tests/test-home/test-home.component';
@@ -98,7 +97,6 @@ export function provideConfig() {
     SignInComponent,
     AccountComponent,
     SubjectNewsComponent,
-    SubjectPostListComponent,
     TopicHomeComponent,
     LessonHomeComponent,
     TestHomeComponent,

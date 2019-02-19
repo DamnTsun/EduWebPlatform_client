@@ -8,6 +8,7 @@
   </nav>
 
   <ng-container *ngIf="(this.subject$ !== null); else loadingTemplate">
+    <!-- Show subject details. -->
     <div class="card page-body">
       <div class="card-body">
         <h2>{{ this.subject$.name }}</h2>
@@ -19,7 +20,24 @@
       </div>
     </div>
 
-    <app-subject-post-list title="Recent News" showControls="false" count="3"></app-subject-post-list>
+    <!-- Show latest news posts (with no way to display more, and no admin controls) -->
+    <div class="news-post-container">
+
+      <h2>Latest News:</h2>
+      <small>Showing {{ newsCount }} latest news posts. To see all news posts, go to the dedicated news area.</small>
+      <!-- 1 card per post. -->
+      <div class="card post" *ngFor="let post of news">
+        <!-- Last modified timestamp as badge. -->
+        <div class="last-modified-badge">
+          <span class="badge badge-secondary">Last modified: {{ post.modificationDate }}</span>
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <div markdown class="card-text">{{ post.body }}</div>
+        </div>
+      </div>
+    </div>
 
   </ng-container>
 
