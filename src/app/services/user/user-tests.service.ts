@@ -45,6 +45,18 @@ export class UserTestsService {
         `subjects/${subjectid}/topics/${topicid}/tests/${testid}/user_tests`) as Observable<UserTest[]>;
   }
 
+  /**
+   * Gets an individual user test result by id.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   * @param utestid - id of user_test.
+   */
+  public getUserTestResult(subjectid, topicid, testid, utestid): Observable<UserTest[]> {
+    return this.api.get(environment.apiUrl +
+        `subjects/${subjectid}/topics/${topicid}/tests/${testid}/user_tests/${utestid}`) as Observable<UserTest[]>;
+  }
+
 
 
   /**
