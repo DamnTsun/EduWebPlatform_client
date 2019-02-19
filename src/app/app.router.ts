@@ -34,6 +34,7 @@ import { UserTestDetailsComponent } from "./components/content-related/user_test
 import { ChatComponent } from "./components/account/messages/chat/chat.component";
 import { GroupListComponent } from "./components/account/groups/group-list/group-list.component";
 import { GroupHomeComponent } from "./components/account/groups/group-home/group-home.component";
+import { GroupChatComponent } from "./components/account/groups/group-chat/group-chat.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -215,5 +216,9 @@ export const appRoutes = [
   { // Group home.
     path: environment.routes.groupHome,
     component: GroupHomeComponent
+  },
+  { // Group chat
+    path: environment.routes.groupChat,
+    component: GroupChatComponent
   }
 ];

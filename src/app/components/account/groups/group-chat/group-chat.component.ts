@@ -1,30 +1,35 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SignInService } from 'src/app/services/sign-in.service';
-import { MessageService } from 'src/app/services/user/message.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { Message } from 'src/app/classes/Message';
+import { SignInService } from 'src/app/services/sign-in.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UtilService } from 'src/app/services/util.service';
+import { environment } from 'src/environments/environment';
+import { MessageService } from 'src/app/services/user/message.service';
 
 @Component({
-  selector: 'app-chat',
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  selector: 'app-group-chat',
+  templateUrl: './group-chat.component.html',
+  styleUrls: ['./group-chat.component.css']
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class GroupChatComponent implements OnInit, OnDestroy {
 
+  // ID of current user / the group.
   private userid = null;
-  private otherUserId = null;
-  private submitDisabled = true;
-  private errorMessage: string = null;
+  private groupid = null;
 
+  // Message list and related values.
   private messages$: Message[] = [];
-
-  private endOfContent: boolean = false;
   private count = 25;
   private offset = 0;
+  private endOfContent: boolean = false;
   private newMessageCheckInterval = 10; // Number of seconds between checking for new messages.
-  private newMessageCheckHandle = null; // Hold reference to interval so that it can be stopped when leaving.
+  private newMessageCheckHandle = null; // Reference to interval so that it may be cancelled.
+
+  // Error message for display if something goes wrong.
+  private errorMessage: string = null;
+
+
+
 
 
   constructor(
@@ -37,27 +42,27 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Get route params.
-    this.otherUserId = this.route.snapshot.paramMap.get(environment.routeParams.userid);
+    this.groupid = this.route.snapshot.paramMap.get(environment.routeParams.groupid);
 
 
     // Check user is signed in.
     this.signIn.userInternalRecord().subscribe((user) => {
       // Redirect to sign in if not signed in.
       if (user == null) {
-        this.router.navigate([ environment.routes.account_signIn ]);
+        this.router.navigate([environment.routes.account_signIn]);
         return;
       }
       this.userid = user[0].id;
     }, (err) => {
-      console.error('Chat user record error:', err);
-    })
+      console.error('Group chat user record error:', err);
+    });
 
 
     // Get initial messages.
     this.getMessages();
 
 
-    // Set interval to check for new messages. (to be added to TOP of message list)
+    // Set interval to check for new messages.
     this.newMessageCheckHandle = setInterval(this.getNewerMessages, this.newMessageCheckInterval * 1000);
 
 
@@ -68,7 +73,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       if (len < 1) {
         (<HTMLButtonElement>document.getElementById('messageSubmit')).disabled = true;
         return;
-      } 
+      }
       if (len > 1024) {
         (<HTMLButtonElement>document.getElementById('messageSubmit')).disabled = true;
         return;
@@ -95,7 +100,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     clearInterval(this.newMessageCheckHandle);
   }
 
-  
+
+
   /**
    * Scroll event for infinite scroll.
    */
@@ -110,8 +116,8 @@ export class ChatComponent implements OnInit, OnDestroy {
    * Attempts to get more messages from api.
    */
   private getMessages(): void {
-    this.messageService.getMessagesWithUser(this.otherUserId, this.count, this.offset).subscribe((messages: Message[]) => {
-      // Check if any messages fetched.
+    this.messageService.getGroupMessages(this.groupid, this.count, this.offset).subscribe((messages: Message[]) => {
+      // Check if any messages received.
       if (messages.length > 0) {
         this.messages$ = this.messages$.concat(messages);
         this.offset += messages.length;
@@ -120,42 +126,42 @@ export class ChatComponent implements OnInit, OnDestroy {
           this.endOfContent = true;
         }
       } else {
-        // Empty list. End of messages.
+        // No messages received. Must be end of messages.
         this.endOfContent = true;
       }
     }, (err) => {
-      console.error('Chat get current messages Error:', err);
+      console.error('Group Chat get current messages Error:', err);
     });
   }
 
 
+
   /**
-   * Gets newer messages. (Messages sent AFTER current timestamp - interval time)
+   * Gets newer messages. (Messages sent AFTER current time - interval).
    */
   private getNewerMessages = () => {
     // Get formatted timestamp for current time - interval time.
     let timestamp = this.util.getIsoTimeFormatted(new Date(new Date().getTime() - this.newMessageCheckInterval * 1000));
 
     // Get any new messages.
-    this.messageService.getMessagesWithUserAfterTimestamp(this.otherUserId, timestamp).subscribe((messages: Message[]) => {
+    this.messageService.getMessagesWithUserAfterTimestamp(this.groupid, timestamp).subscribe((messages: Message[]) => {
       // If any new messages received.
       if (messages.length > 0) {
-        /* Remove any messages from current list that were added after timestamp.
-            (When current user sends a message it is added automatically, however getting new messages will also return them.) */
+        // Remove messages in current list that were sent after timestamp.
+        // Messages sent by current user are shown immediately.
         this.messages$ = this.messages$.filter(msg => new Date(timestamp) > new Date(msg.date));
-        // Add new messages to start of message list.
+        // Add new messages to start.
         this.messages$.unshift.apply(this.messages$, messages);
       }
     }, (err) => {
-      console.error('Chat get new messages Error:', err);
+      console.error('Group Chat get new messages Error:', err);
     });
   }
 
 
 
   /**
-   * Validates input and sends message to other user if valid.
-   * Automatically adds new message to front of chat if successful.
+   * Sends a new message from the current user to the group.
    */
   public sendMessage() {
     let input = <HTMLInputElement>document.getElementById('messageInput');
@@ -166,43 +172,42 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     // Send the message.
-    this.messageService.sendMessage(this.otherUserId, msg).subscribe((res) => {
-      // Add newly create message to front of chat.
+    this.messageService.sendGroupMessage(this.groupid, msg).subscribe((res) => {
+      // Add message to front of messages list.
       this.messages$.unshift(res[0]);
-      // Reset input.
+      // Clear message input.
       input.value = '';
       (<HTMLButtonElement>document.getElementById('messageSubmit')).disabled = true;
     }, (err) => {
-      console.error('Chat send message error:', err);
+      console.error('Group Chat send message Error:', err);
     });
   }
 
 
 
   /**
-   * Deletes a message the current user has sent.
+   * Deletes message the current user has sent.
    * @param index - index of message in list.
    */
   public deleteMessage(index) {
     // Check index valid.
-    if (index < 0 || index >= this.messages$.length) { return; }
+    if (index < 0 || index>= this.messages$.length) { return; }
     // Attempt delete.
-    this.messageService.deleteUserMessage(this.messages$[index].id).subscribe((res) => {
-      // Successful. Remove from list.
+    this.messageService.deleteGroupMessage(this.groupid, this.messages$[index].id).subscribe(res => {
+      // Success. Remove from list.
       this.messages$ = this.messages$.filter((ele, i) => { return i !== index; });
-    })
+    });
   }
 
 
 
 
 
-
-  // Methods for HTML
+  // HTML Methods
   /**
-   * Whether the user displaynmae of a message should be shown.
-   * Makes it so that the displayname is only shown at the top of a group of messages by a user.
-   * @param index - index of message in array.
+   * Whether the user displayname of a message should be shown.
+   * Makes it so that the name is only shown at the top of a group of messages from a particular user.
+   * @param index 
    */
   public shouldShowNameOnMessage(index) {
     // If invalid index, don't show name.
@@ -213,4 +218,3 @@ export class ChatComponent implements OnInit, OnDestroy {
     return (this.messages$[index].sender_id !== this.messages$[index - 1].sender_id);
   }
 }
-

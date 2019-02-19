@@ -84,11 +84,11 @@ export const environment = {
 
     // All groups (admin).
 
-    // Group home (including current users/remove users list).
-    groupHome: 'groups/:groupid'
-    // Add users to group.
+    // Group home (including add/remove users).
+    groupHome: 'groups/:groupid',
 
     // Group chat.
+    groupChat: 'groups/:groupid/chat'
   }
 };
 
