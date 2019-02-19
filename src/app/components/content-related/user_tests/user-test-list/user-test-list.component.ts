@@ -15,7 +15,7 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class UserTestListComponent implements OnInit {
 
   // Constants.
-  private count: number = 10;
+  private count: number = 18;
   private offset: number = 0;
 
   // Ids of parent objects.
@@ -67,7 +67,7 @@ export class UserTestListComponent implements OnInit {
    */
   public onScroll(): void {
     if (!this.endOfContent) {
-
+      this.getUserTestResults();
     }
   }
 
@@ -77,7 +77,7 @@ export class UserTestListComponent implements OnInit {
    * If successful, will append them to end of userTestResults$ array.
    */
   private getUserTestResults(): void {
-    this.userTestService.getUserTestResults(this.subjectid, this.topicid, this.testid).subscribe((results: UserTest[]) => {
+    this.userTestService.getUserTestResults(this.subjectid, this.topicid, this.testid, this.count, this.offset).subscribe((results: UserTest[]) => {
       if (results.length > 0) {
         this.userTestResults$ = this.userTestResults$.concat(results);
         this.offset += results.length;
@@ -89,11 +89,37 @@ export class UserTestListComponent implements OnInit {
         // Empty list returned, must be end of results.
         this.endOfContent = true;
       }
-      console.log(this.userTestResults$);
     }, (err) => {
       console.error('UserTestList getResults error:', err);
     });
   }
+
+
+
+
+
+  // Holds index of user test to be deleted. Used by delete modal.
+  public deleteUserTestIndex = null;
+  /**
+   * Deletes user test at given index from userTestResults$ array.
+   * @param index - index of user test in userTestResults$ array.
+   */
+  public deleteUserTest(index) {
+    // Check index valid.
+    if (index < 0 || index >= this.userTestResults$.length) {
+      return;
+    }
+
+    // Attempt to delete.
+    this.userTestService.deleteUserTest(this.subjectid, this.topicid, this.testid,
+      this.userTestResults$[index].id).subscribe((res) => {
+        // Successful. Remove from array.
+        this.userTestResults$ = this.userTestResults$.filter((ele, i) => { return i !== index; });
+    }, (err) => {
+      console.error('UserTestList delete result Error:', err);
+    })
+  }
+
 
 
 
@@ -111,4 +137,16 @@ export class UserTestListComponent implements OnInit {
     this.router.navigate([ route ]);
   }
 
+
+
+
+  
+  // HTML methods.
+  /**
+   * Gets user test score as a percentage.
+   * @param { score, questionCount } - score/questionCount attributes of given UserTest object.
+   */
+  public getScorePercentage({ score, questionCount }: UserTest): number {
+    return Math.floor((score / questionCount) * 100);
+  }
 }

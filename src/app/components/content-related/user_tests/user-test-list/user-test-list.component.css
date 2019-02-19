@@ -1,0 +1,30 @@
+.card-table-container {
+    border-color: black;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+
+.table {
+    margin-bottom: 0px; /* Remove margin-bottom. */
+    max-width: 100%;
+}
+
+.table-options-cell {
+    text-align: right;
+}
+
+.table-cell-button {
+    position: relative;
+    max-width: 100%;
+    width: 7em;
+    margin: 0.25em;
+}
+
+
+
+.back-button {
+    margin: 1em 0em;
+    width: 25em;
+    max-width: 100%;
+}

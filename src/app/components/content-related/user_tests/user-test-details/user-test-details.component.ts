@@ -67,7 +67,6 @@ export class UserTestDetailsComponent implements OnInit {
       this.subjectid, this.topicid, this.testid, this.utestid)
       .subscribe((utest: UserTest[]) => {
         this.usertest$ = utest[0];
-        console.log(this.usertest$);
       }, (err) => {
         console.error('UserTestDetails getUserTest Error:', err);
       });
@@ -78,7 +77,6 @@ export class UserTestDetailsComponent implements OnInit {
       this.subjectid, this.topicid, this.testid, this.utestid)
       .subscribe((questions: UserTestQuestion[]) => {
         this.utestQuestions = questions;
-        console.log(questions);
       }, (err) => {
         console.error('UserTestDetails getQuestions Error:', err);
       })
