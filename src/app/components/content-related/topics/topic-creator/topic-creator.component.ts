@@ -5,6 +5,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Subject } from 'src/app/classes/Subject';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-topic-creator',
@@ -13,6 +14,7 @@ import { Subject } from 'src/app/classes/Subject';
 })
 export class TopicCreatorComponent implements OnInit {
 
+  private subjectid = null;
   private subject$: Subject = null;
   private submitted: boolean = false;     // Whether page has been submitted.
   private errorMessage: string = null;    // Error message to display if something goes wrong.
@@ -30,13 +32,14 @@ export class TopicCreatorComponent implements OnInit {
     private topicService: TopicsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
     // Set subject.
-    let subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
-    this.subjectService.setSubject(subjectid);
+    this.subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
+    this.subjectService.setSubject(this.subjectid);
 
     // Get user admin status.
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
@@ -148,7 +151,7 @@ export class TopicCreatorComponent implements OnInit {
 
   private redirectToTopicList() {
     let route = environment.routes.topicSelect;
-    route = route.replace(`:${environment.routeParams.subjectid}`, this.subject$.id.toString());
+    route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid.toString());
     this.router.navigate([ route ]);
   }
 }

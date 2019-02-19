@@ -9,6 +9,7 @@ export const environment = {
   routeParams: {
     // Content related.
     subjectid: 'subjectid',
+    postid: 'postid',
     topicid: 'topicid',
     lessonid: 'lessonid',
     testid: 'testid',
@@ -28,9 +29,12 @@ export const environment = {
     // SUBJECTS
     subjectSelect: 'subjects',
     subjectHome: 'subjects/:subjectid',
-    subjectNews: 'subjects/:subjectid/news',
     subjectCreator: 'subjects/create',
     subjectEditor: 'subjects/:subjectid/edit',
+    // SUBJECT POSTS
+    subjectNews: 'subjects/:subjectid/news',
+    subjectPostCreator: 'subjects/:subjectid/news/create',
+    subjectPostEditor: 'subjects/:subjectid/news/:postid/edit',
 
     // TOPICS
     topicHome: 'subjects/:subjectid/topics/:topicid',

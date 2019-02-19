@@ -35,6 +35,8 @@ import { ChatComponent } from "./components/account/messages/chat/chat.component
 import { GroupListComponent } from "./components/account/groups/group-list/group-list.component";
 import { GroupHomeComponent } from "./components/account/groups/group-home/group-home.component";
 import { GroupChatComponent } from "./components/account/groups/group-chat/group-chat.component";
+import { SubjectNewsCreatorComponent } from "./components/content-related/subjects/subject-news-creator/subject-news-creator.component";
+import { SubjectNewsEditorComponent } from "./components/content-related/subjects/subject-news-editor/subject-news-editor.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -64,9 +66,18 @@ export const appRoutes = [
     path: environment.routes.subjectHome,
     component: SubjectHomeComponent
   },
+  // SUBJECT POSTS
   { // Subject news page.
     path: environment.routes.subjectNews,
     component: SubjectNewsComponent
+  },
+  { // Subject post creator.
+    path: environment.routes.subjectPostCreator,
+    component: SubjectNewsCreatorComponent
+  },
+  { // Subject post editor.
+    path: environment.routes.subjectPostEditor,
+    component: SubjectNewsEditorComponent
   },
 
 

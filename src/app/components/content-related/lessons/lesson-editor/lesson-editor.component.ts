@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { QuillEditorComponent } from 'ngx-quill';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-lesson-editor',
@@ -18,6 +19,7 @@ export class LessonEditorComponent implements OnInit {
   // Stores ids of parent objects, and the lesson itself (for id and original values)
   private subjectid = null;
   private topicid = null;
+  private lessonid = null;
   private lesson$: Lesson = null;
 
   private submitted: boolean = false;           // Whether page has been submitted.
@@ -33,14 +35,15 @@ export class LessonEditorComponent implements OnInit {
     private signIn: SignInService,
     private route: ActivatedRoute,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
     // Get route params.
     this.subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
     this.topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
-    let lessonid = this.route.snapshot.paramMap.get(environment.routeParams.lessonid);
+    this.lessonid = this.route.snapshot.paramMap.get(environment.routeParams.lessonid);
     // Set current subject.
     this.subjectService.setSubject(this.subjectid);
 
@@ -48,7 +51,7 @@ export class LessonEditorComponent implements OnInit {
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
       // Send to topic home if not admin.
       if (!isAdmin) {
-        //this.redirectToTopicHome();
+        this.redirectToTopicHome();
       }
     }, (err) => {
       console.error('Lesson-Editor isAdmin Error:', err);
@@ -62,7 +65,7 @@ export class LessonEditorComponent implements OnInit {
 
 
     // Get lesson being editted.
-    this.lessonService.getLesson(this.subjectid, this.topicid, lessonid).subscribe((lessons) => {
+    this.lessonService.getLesson(this.subjectid, this.topicid, this.lessonid).subscribe((lessons) => {
       this.lesson$ = lessons[0];
       this.setPageValues(this.lesson$);
     }, (err) => {
@@ -198,7 +201,7 @@ export class LessonEditorComponent implements OnInit {
     let route = environment.routes.topicHome;
     route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid);
     route = route.replace(`:${environment.routeParams.topicid}`, this.topicid);
-    route = route.replace(`:${environment.routeParams.lessonid}`, this.lesson$.id.toString());
+    route = route.replace(`:${environment.routeParams.lessonid}`, this.lessonid.toString());
     this.router.navigate([ route ]);
   }
 

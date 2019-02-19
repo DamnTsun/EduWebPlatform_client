@@ -1,5 +1,16 @@
 <section class="container page-content">
 
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null && topicid !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicListRoute(subjectid) }}">Topics</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicHomeRoute(subjectid, topicid) }}">{{ topicid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTestListRoute(subjectid, topicid) }}">Tests</a>
+    <span class="breadcrumb-item active" aria-current="page">Create</span>
+  </nav>
+
+
   <div class="card">
     <div class="card-body">
 

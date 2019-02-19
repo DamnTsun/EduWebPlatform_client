@@ -99,7 +99,18 @@ export class SubjectsService {
    * @param offset - number of posts to skip.
    */
   public getPosts(subjectId, count, offset): Observable<Post[]> {
-    return this.api.get(environment.apiUrl + `subjects/${subjectId}/posts?count=${count}&offset=${offset}`) as Observable<Post[]>;
+    return this.api.get(environment.apiUrl +
+      `subjects/${subjectId}/posts?count=${count}&offset=${offset}`) as Observable<Post[]>;
+  }
+
+  /**
+   * Gets a specified news post inside a subject.
+   * @param subjectid - id of subject.
+   * @param postid - id of post.
+   */
+  public getPost(subjectid, postid): Observable<Post[]> {
+    return this.api.get(environment.apiUrl
+        + `subjects/${subjectid}/posts/${postid}`) as Observable<Post[]>;
   }
 
 
@@ -108,12 +119,27 @@ export class SubjectsService {
    * @param subjectid - id of subject.
    * @param post - data for post.
    */
-  public createPost(subjectid, post: Post) {
+  public createPost(subjectid, post) {
     // CURRENTLY UNTESTS / NOT USED ANYWHERE
     let data = new FormData();
     data.set('content', JSON.stringify(post));
     return this.api.post(
       environment.apiUrl + `subjects/${subjectid}/posts`,
+      data
+    );
+  }
+
+  /**
+   * Updates values of existing subject post based on given object.
+   * @param subjectid - id of subject.
+   * @param postid - id of post.
+   * @param post - new values for post.
+   */
+  public editPost(subjectid, postid, post) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(post));
+    return this.api.post(
+      environment.apiUrl + `subjects/${subjectid}/posts/${postid}`,
       data
     );
   }

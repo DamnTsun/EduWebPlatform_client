@@ -1,4 +1,13 @@
 <section class="container page-content">
+  
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subject$ !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subject$.id) }}">{{ subject$.id }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicListRoute(subject$.id) }}">Topics</a>
+    <span class="breadcrumb-item active" aria-current="page">Create</span>
+  </nav>
+
 
   <div class="card">
     <div class="card-body">
@@ -45,7 +54,7 @@
       </div>
 
     </div>
-    
+
     <div class="card-footer">
       <div class="submit-button-container">
         <button class="btn btn-primary submit-button" (click)="createTopic()" *ngIf="!this.submitted">Submit</button>

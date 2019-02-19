@@ -3,6 +3,7 @@ import { SubjectsService } from 'src/app/services/contentServices/subjects.servi
 import { SignInService } from 'src/app/services/sign-in.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-subject-creator',
@@ -25,7 +26,8 @@ export class SubjectCreatorComponent implements OnInit {
   constructor(
     private subjectService: SubjectsService,
     private signIn: SignInService,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -43,7 +45,6 @@ export class SubjectCreatorComponent implements OnInit {
     // Subscribe to updates to name / description input.
     document.getElementById('subjectName').addEventListener('input', (e) => {
       this.nameValue = (<HTMLInputElement>e.target).value;
-      console.log(this.nameValue);
     });
     document.getElementById('subjectDescription').addEventListener('input', (e) => {
       this.descriptionValue = (<HTMLTextAreaElement>e.target).value;

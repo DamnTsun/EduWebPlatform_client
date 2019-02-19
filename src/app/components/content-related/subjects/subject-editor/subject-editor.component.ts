@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { environment } from 'src/environments/environment';
 import { Subject } from 'src/app/classes/Subject';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-subject-editor',
@@ -27,7 +28,8 @@ export class SubjectEditorComponent implements OnInit {
     private subjectService: SubjectsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {

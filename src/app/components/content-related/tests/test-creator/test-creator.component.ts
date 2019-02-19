@@ -5,6 +5,7 @@ import { TestsService } from 'src/app/services/contentServices/tests.service';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-test-creator',
@@ -33,7 +34,8 @@ export class TestCreatorComponent implements OnInit {
     private testService: TestsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {

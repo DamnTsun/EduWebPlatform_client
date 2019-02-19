@@ -5,6 +5,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Topic } from 'src/app/classes/Topic';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-topic-editor',
@@ -13,6 +14,7 @@ import { Topic } from 'src/app/classes/Topic';
 })
 export class TopicEditorComponent implements OnInit {
 
+  private subjectid = null;
   private topic$: Topic = null;               // Topic being editted. Used when setting / resetting to init vals.
   private submitted: boolean = false;         // Whether form has been submitted successfully or in process of.
   private errorMessage: string = null;        // Error message displayed if something goes wrong.
@@ -30,15 +32,16 @@ export class TopicEditorComponent implements OnInit {
     private topicService: TopicsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
     // Get route params.
-    let subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
+    this.subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
     let topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
     // Set current subject.
-    this.subjectService.setSubject(subjectid);
+    this.subjectService.setSubject(this.subjectid);
 
     // Get user admin status.
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
@@ -52,7 +55,7 @@ export class TopicEditorComponent implements OnInit {
 
 
     // Get topic being editted.
-    this.topicService.getTopic(subjectid, topicid).subscribe((topics) => {
+    this.topicService.getTopic(this.subjectid, topicid).subscribe((topics) => {
       // If topic returned, set initial values for inputs. Also store to allow for resets.
       if (topics !== null && topics.length > 0) {
         this.topic$ = topics[0];

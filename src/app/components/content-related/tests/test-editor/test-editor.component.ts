@@ -4,6 +4,7 @@ import { TestsService } from 'src/app/services/contentServices/tests.service';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-test-editor',
@@ -15,6 +16,7 @@ export class TestEditorComponent implements OnInit {
   // Ids of parents / test being editted.
   private subjectid = null;
   private topicid = null;
+  private testid = null;
   private test$ = null;
 
   private submitted: boolean = false;       // Whether form has been submitted.
@@ -33,14 +35,15 @@ export class TestEditorComponent implements OnInit {
     private testService: TestsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
     // Get route params.
     this.subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
     this.topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
-    let testid = this.route.snapshot.paramMap.get(environment.routeParams.testid);
+    this.testid = this.route.snapshot.paramMap.get(environment.routeParams.testid);
 
     // Set subject.
     this.subjectService.setSubject(this.subjectid);
@@ -58,7 +61,7 @@ export class TestEditorComponent implements OnInit {
 
 
     // Get test being editted.
-    this.testService.getTest(this.subjectid, this.topicid, testid).subscribe((tests) => {
+    this.testService.getTest(this.subjectid, this.topicid, this.testid).subscribe((tests) => {
       if (tests !== null && tests.length > 0) {
         this.test$ = tests[0];
         this.setPageValues(this.test$);

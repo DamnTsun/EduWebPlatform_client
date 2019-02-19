@@ -1,4 +1,15 @@
 <section class="container page-content">
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null && topicid !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicListRoute(subjectid) }}">Topics</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicHomeRoute(subjectid, topicid) }}">{{ topicid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getLessonListRoute(subjectid, topicid) }}">Lessons</a>
+    <span class="breadcrumb-item active" aria-current="page">Create</span>
+  </nav>
+
+
   <!-- Message if something goes wrong with api request. -->
   <div class="alert alert-danger" route="alert" *ngIf="errorMessage !== null">
     <div>Unable to add lesson:</div>

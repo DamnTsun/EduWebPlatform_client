@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Body } from '@angular/http/src/body';
 import { QuillEditorComponent } from 'ngx-quill';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-lesson-creator',
@@ -29,7 +30,8 @@ export class LessonCreatorComponent implements OnInit {
     private lessonService: LessonsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {

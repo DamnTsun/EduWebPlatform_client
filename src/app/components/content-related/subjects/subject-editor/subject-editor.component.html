@@ -1,4 +1,13 @@
 <section class="container page-content">
+
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subject$ !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subject$.id) }}">{{ subject$.id }}</a>
+    <span class="breadcrumb-item active" aria-current="page">Edit</span>
+  </nav>
+
+
   <h2>Edit a Subject</h2>
   <div class="card">
     <div class="card-body">

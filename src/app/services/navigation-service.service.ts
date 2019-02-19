@@ -30,6 +30,17 @@ export class NavigationServiceService {
     return route;
   }
 
+  // NEWS POSTS
+  /**
+   * Gets subject news route.
+   * @param subjectid - id of subject.
+   */
+  public getSubjectNewsRoute(subjectid): string {
+    let route = `/${environment.routes.subjectNews}`;
+    route = route.replace(`:${environment.routeParams.subjectid}`, subjectid);
+    return route;
+  }
+
 
 
   // TOPICS
@@ -80,7 +91,7 @@ export class NavigationServiceService {
     let route = `/${environment.routes.lessonHome}`;
     route = route.replace(`:${environment.routeParams.subjectid}`, subjectid);
     route = route.replace(`:${environment.routeParams.topicid}`, topicid);
-    route = route.replace(`:${environment.routeParams.testid}`, lessonid);
+    route = route.replace(`:${environment.routeParams.lessonid}`, lessonid);
     return route;
   }
 
