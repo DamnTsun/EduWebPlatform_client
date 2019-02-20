@@ -192,7 +192,7 @@ export class NavigationServiceService {
 
 
 
-  
+
 
 
   // USERS
@@ -211,5 +211,15 @@ export class NavigationServiceService {
     let route = `/${environment.routes.chat}`;
     route = route.replace(`:${environment.routeParams.userid}`, userid);
     return route;
+  }
+
+
+
+  // GROUPS
+  /**
+   * Gets route of group list.
+   */
+  public getGroupListRoute(): string {
+    return `/${environment.routes.groupList}`;
   }
 }

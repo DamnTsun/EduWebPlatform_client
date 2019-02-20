@@ -1,5 +1,12 @@
 <section class="container page-content">
 
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="groupid !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getGroupListRoute() }}">Groups</a>
+    <span class="breadcrumb-item active" aria-current="page">{{ groupid }}</span>
+  </nav>
+
+
   <!-- Display group details once loaded. -->
   <div class="card page-content-card" *ngIf="group$ !== null; else groupLoadingTemplate">
 
@@ -19,7 +26,7 @@
       <h2 class="card-title">{{ group$.name }}</h2>
       <div style="min-height: 5.8em">{{ group$.description }}</div>
     </div>
-    
+
     <!-- Footer (edit, leave group) -->
     <div class="card-footer">
       <button class="btn btn-outline-primary" routerLink="chat">

@@ -19,6 +19,7 @@ export class GroupHomeComponent implements OnInit {
   public isAdmin: boolean = false;
 
   // Group being viewed.
+  public groupid = null;
   public group$: Group = null;
   public groupLoadingError: boolean = false;
 
@@ -46,7 +47,7 @@ export class GroupHomeComponent implements OnInit {
 
   ngOnInit() {
     // Get route params.
-    let groupid = this.route.snapshot.paramMap.get(environment.routeParams.groupid);
+    this.groupid = this.route.snapshot.paramMap.get(environment.routeParams.groupid);
 
 
     // Check user signed in.
@@ -71,7 +72,7 @@ export class GroupHomeComponent implements OnInit {
 
 
     // Get group data.
-    this.groupService.getGroup(groupid).subscribe((group: Group[]) => {
+    this.groupService.getGroup(this.groupid).subscribe((group: Group[]) => {
       this.group$ = group[0];
       // After getting group, get initial members and nonmembers of group. (initial)
       this.getGroupMembers();

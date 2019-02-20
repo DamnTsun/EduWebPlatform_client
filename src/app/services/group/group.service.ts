@@ -103,6 +103,20 @@ export class GroupService {
 
 
   /**
+   * Creates new group on api based on given values of object.
+   * @param group - object containing values for group.
+   */
+  public createGroup(group) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(group));
+    return this.api.post(
+      environment.apiUrl + `groups`,
+      data
+    );
+  }
+
+
+  /**
    * Deletes specified group.
    * @param groupid - id of group.
    */

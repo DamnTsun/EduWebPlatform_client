@@ -1,5 +1,10 @@
 <section class="container page-content">
 
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb">
+    <span class="breadcrumb-item active" aria-current="page">Groups</span>
+  </nav>
+
 
   <!-- Create button -->
   <div class="create-button-container">
@@ -19,7 +24,8 @@
       <div class="question-image-container">
         <!-- Show image if set, message otherwise -->
         <ng-container *ngIf="group.imageUrl !== null && group.imageUrl !== ''; else noImageTemplate">
-          <img class="card-img-top group-image" src="{{ group.imageUrl }}" alt="{{ group.name }} (#{{ group.id }}) Image">
+          <img class="card-img-top group-image" src="{{ group.imageUrl }}"
+            alt="{{ group.name }} (#{{ group.id }}) Image">
         </ng-container>
         <ng-template #noImageTemplate>
           <div class="no-image-message">An image has not been set for this group.</div>
