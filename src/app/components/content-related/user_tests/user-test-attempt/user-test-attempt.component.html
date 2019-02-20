@@ -39,7 +39,14 @@
       <!-- 1 card per question -->
       <div class="card" *ngFor="let tq of testQuestions$; let i = index;">
         <!-- Question img (if given) -->
-        <img class="card-img-top" src="{{ tq.imageUrl }}" alt="Question {{ i + 1 }} Image">
+        <div class="question-image-container">
+          <ng-container *ngIf="tq.imageUrl !== null && tq.imageUrl !== ''; else noImageTemplate">
+            <img class="card-img-top question-image" src="{{ tq.imageUrl }}" alt="Question {{ i + 1 }} Image">
+          </ng-container>
+          <ng-template #noImageTemplate>
+            <div class="no-image-message">An image has not been set for this question.</div>
+          </ng-template>
+        </div>
 
         <!-- Body (question no., text) -->
         <div class="card-body">

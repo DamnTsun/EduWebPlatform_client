@@ -2,13 +2,24 @@
 
   <!-- Display group details once loaded. -->
   <div class="card page-content-card" *ngIf="group$ !== null; else groupLoadingTemplate">
-    <!-- Group image -->
-    <img class="card-img-top" src="{{ getGroupImageUrl(group$) }}" alt="{{ group$.name }} (#{{ group$.id }}) image">
+
+    <!-- Group image if set. Else message -->
+    <div class="group-image-container">
+      <ng-container *ngIf="group$.imageUrl !== null && group$.imageUrl !== ''; else noImageTemplate">
+        <img class="card-img-top" src="{{ group$.imageUrl }}" alt="{{ group$.name }} (#{{ group$id }}) image">
+      </ng-container>
+      <ng-template #noImageTemplate>
+        <div class="no-image-message">An image has not been set for this group.</div>
+      </ng-template>
+    </div>
+
+
     <!-- Body (name, full description) -->
     <div class="card-body">
       <h2 class="card-title">{{ group$.name }}</h2>
       <div style="min-height: 5.8em">{{ group$.description }}</div>
     </div>
+    
     <!-- Footer (edit, leave group) -->
     <div class="card-footer">
       <button class="btn btn-outline-primary" routerLink="chat">
@@ -19,10 +30,11 @@
       </button>
     </div>
   </div>
+
   <!-- Edit and delete (admin only) buttons-->
   <div class="delete-button-container">
-    <button class="btn btn-warning delete-button">
-      <i class="material-icons button-icon">edit</i>Edit (NI)
+    <button class="btn btn-warning delete-button" routerLink="edit">
+      <i class="material-icons button-icon">edit</i>Edit
     </button>
   </div>
   <div class="delete-button-container">

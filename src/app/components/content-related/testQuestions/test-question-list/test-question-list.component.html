@@ -31,7 +31,7 @@
       <div class="question-image-container">
         <!-- Show image if set. -->
         <ng-container *ngIf="tq.imageUrl !== null && tq.imageUrl !== ''; else noImageTemplate">
-          <img class="card-img-top" src="{{ tq.imageUrl }}" alt="Question Image" style="position: relative; max-height: 100%; max-width: 100%;">
+          <img class="card-img-top question-image" src="{{ tq.imageUrl }}" alt="Question Image">
         </ng-container>
         <!-- Show message if not set. -->
         <ng-template #noImageTemplate>

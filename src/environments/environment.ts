@@ -85,12 +85,13 @@ export const environment = {
     // GROUPS
     // Group list.
     groupList: 'groups',
-
     // All groups (admin).
 
+    // Group creator / editor.
+    groupCreator: 'groups/create',
+    groupEditor: 'groups/:groupid/edit',
     // Group home (including add/remove users).
     groupHome: 'groups/:groupid',
-
     // Group chat.
     groupChat: 'groups/:groupid/chat'
   }

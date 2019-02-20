@@ -3,7 +3,7 @@
 
   <!-- Create button -->
   <div class="create-button-container">
-    <button class="btn btn-success create-button">
+    <button class="btn btn-success create-button" routerLink="create">
       <i class="material-icons button-icon">add</i>Create a Group
     </button>
   </div>
@@ -16,7 +16,16 @@
     <!-- 1 card per group -->
     <div class="card" *ngFor="let group of groups$; let i = index;">
       <!-- Show group image. (Or placeholder if not set) -->
-      <img class="card-img-top" src="{{ getGroupImageUrl(group) }}" alt="{{ group.name }} (#{{ group.id }}) image.">
+      <div class="question-image-container">
+        <!-- Show image if set, message otherwise -->
+        <ng-container *ngIf="group.imageUrl !== null && group.imageUrl !== ''; else noImageTemplate">
+          <img class="card-img-top group-image" src="{{ group.imageUrl }}" alt="{{ group.name }} (#{{ group.id }}) Image">
+        </ng-container>
+        <ng-template #noImageTemplate>
+          <div class="no-image-message">An image has not been set for this group.</div>
+        </ng-template>
+
+      </div>
 
       <!-- body (name, description) -->
       <div class="card-body">
@@ -28,6 +37,27 @@
       <div class="card-footer">
         <!-- View group button -->
         <button class="btn btn-outline-primary view-button" routerLink="{{ group.id }}">View</button>
+
+        <!-- Options dropdown (edit, leave) -->
+        <div class="btn-group card-footer-dropdown">
+          <!-- Toggle button -->
+          <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <i class="material-icons button-icon">settings</i>
+          </button>
+
+          <!-- Dropdown menu. -->
+          <div class="dropdown-menu dropdown-menu-right">
+            <!-- Edit button -->
+            <button class="dropdown-item" routerLink="{{ group.id }}/edit">
+              <i class="material-icons button-icon dropdown-icon">edit</i>Edit
+            </button>
+            <!-- Leave button -->
+            <button class="dropdown-item">
+              <i class="material-icons button-icon dropdown-icon">remove</i>Leave
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -38,7 +68,8 @@
 
 
   <!-- Infinite scroll div -->
-  <div id="infiniteScrollDiv" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+  <div id="infiniteScrollDiv" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000"
+    (scrolled)="onScroll()"></div>
 
 
 

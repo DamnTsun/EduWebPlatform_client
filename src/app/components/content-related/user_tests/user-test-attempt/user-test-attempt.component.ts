@@ -71,7 +71,6 @@ export class UserTestAttemptComponent implements OnInit {
     // Get questions for test from API.
     this.userTestsService.getUserTestQuestions(this.subjectid, this.topicid, this.testid, count).subscribe((testQuestions) => {
       this.testQuestions$ = testQuestions;
-      this.testQuestions$.forEach(e => e.imageUrl = 'https://placehold.it/128x128');
     }, (err) => {
       this.loadingError = true;
       console.error('User_test Questions Error:', err);

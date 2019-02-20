@@ -37,6 +37,8 @@ import { GroupHomeComponent } from "./components/account/groups/group-home/group
 import { GroupChatComponent } from "./components/account/groups/group-chat/group-chat.component";
 import { SubjectNewsCreatorComponent } from "./components/content-related/subjects/subject-news-creator/subject-news-creator.component";
 import { SubjectNewsEditorComponent } from "./components/content-related/subjects/subject-news-editor/subject-news-editor.component";
+import { GroupEditorComponent } from "./components/account/groups/group-editor/group-editor.component";
+import { GroupCreatorComponent } from "./components/account/groups/group-creator/group-creator.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -223,6 +225,14 @@ export const appRoutes = [
   { // View groups that user is in.
     path: environment.routes.groupList,
     component: GroupListComponent
+  },
+  { // Group creator.
+    path: environment.routes.groupCreator,
+    component: GroupCreatorComponent
+  },
+  { // Group editor.
+    path: environment.routes.groupEditor,
+    component: GroupEditorComponent
   },
   { // Group home.
     path: environment.routes.groupHome,

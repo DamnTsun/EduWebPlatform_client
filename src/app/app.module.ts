@@ -64,6 +64,8 @@ import { GroupHomeComponent } from './components/account/groups/group-home/group
 import { GroupChatComponent } from './components/account/groups/group-chat/group-chat.component';
 import { SubjectNewsCreatorComponent } from './components/content-related/subjects/subject-news-creator/subject-news-creator.component';
 import { SubjectNewsEditorComponent } from './components/content-related/subjects/subject-news-editor/subject-news-editor.component';
+import { GroupCreatorComponent } from './components/account/groups/group-creator/group-creator.component';
+import { GroupEditorComponent } from './components/account/groups/group-editor/group-editor.component';
 
 
 
@@ -130,7 +132,9 @@ export function provideConfig() {
     GroupHomeComponent,
     GroupChatComponent,
     SubjectNewsCreatorComponent,
-    SubjectNewsEditorComponent
+    SubjectNewsEditorComponent,
+    GroupCreatorComponent,
+    GroupEditorComponent
   ],
   imports: [
     BrowserModule,
