@@ -117,10 +117,27 @@ export class GroupService {
 
 
   /**
+   * Edits existing group on api based on given object.
+   * @param groupid - id of group.
+   * @param group - object containing new values for group.
+   */
+  public editGroup(groupid, group) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(group));
+    return this.api.post(
+      environment.apiUrl + `groups/${groupid}`,
+      data
+    );
+  }
+
+
+  /**
    * Deletes specified group.
    * @param groupid - id of group.
    */
   public deleteGroup(groupid) {
-    // not implemented...
+    return this.api.delete(
+      environment.apiUrl + `groups/${groupid}`
+    );
   }
 }

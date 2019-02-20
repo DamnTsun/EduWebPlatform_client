@@ -136,7 +136,7 @@ export class GroupCreatorComponent implements OnInit {
   // Successful request.
   private handleSuccess = (res) => {
     // Success. Redirect to group list.
-    this.router.navigate([environment.routes.groupList]);
+    this.router.navigate([this.navService.getGroupHomeRoute(res[0].id)]);
   }
 
   // Failed request.

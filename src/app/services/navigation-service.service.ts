@@ -222,4 +222,14 @@ export class NavigationServiceService {
   public getGroupListRoute(): string {
     return `/${environment.routes.groupList}`;
   }
+
+  /**
+   * Gets route of group home.
+   * @param groupid - id of group.
+   */
+  public getGroupHomeRoute(groupid): string {
+    let route = `/${environment.routes.groupHome}`;
+    route = route.replace(`:${environment.routeParams.groupid}`, groupid);
+    return route;
+  }
 }

@@ -265,7 +265,13 @@ export class GroupHomeComponent implements OnInit {
     // Check admin.
     if (!this.isAdmin) { return; }
 
-    alert('Sorry. Admin group deletion is not fully implemented yet.\n(On the server-side at least...)');
+    // Attempt delete.
+    this.groupService.deleteGroup(this.group$.id).subscribe((res) => {
+      // Success. Redirect to group list.
+      this.router.navigate([this.navService.getGroupListRoute()]);
+    }, (err) => {
+      console.error('Group Home delete group Error:', err);
+    });
   }
 
 
