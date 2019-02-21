@@ -37,3 +37,37 @@ section.page-sub-content {
 .white-footer {
     background-color: white;
 }
+
+
+
+/* Subject admins table styling */
+.table {
+    margin-bottom: 0px; /* Remove margin-bottom. */
+    max-width: 100%;
+}
+
+.table-options-cell {
+    text-align: right;
+}
+
+.table-id-header {
+    width: 5em;
+    max-width: 10%
+}
+
+.table-displayname-header {
+    width: 30em;
+    max-width: 30%;
+}
+
+.table-cell-button {
+    position: relative;
+    max-width: 100%;
+    width: 7em;
+    margin: 0.25em;
+}
+
+
+.create-button-container {
+    margin: 0.5em 0.5em;
+}

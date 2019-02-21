@@ -2,31 +2,43 @@
 
 
   <!-- Breadcrumb navigation -->
-  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subject$ !== null">
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null">
     <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
-    <span class="breadcrumb-item active" aria-current="page">{{ subject$.id }}</span>
+    <span class="breadcrumb-item active" aria-current="page">{{ subjectid }}</span>
   </nav>
 
-  <ng-container *ngIf="(this.subject$ !== null); else loadingTemplate">
-    <!-- Show subject details. -->
+
+  <!-- Subject details -->
+  <ng-container *ngIf="subject$ !== null; else subjectLoadingTemplate">
+    <!-- Show subject info on card -->
     <div class="card page-body">
+      <!-- Body (details) -->
       <div class="card-body">
-        <h2>{{ this.subject$.name }}</h2>
+        <h2>{{ subject$.name }}</h2>
         <markdown ngPreserveWhitespaces [data]="subject$.description"></markdown>
       </div>
+      <!-- Footer (options) -->
       <div class="card-footer">
         <button class="btn btn-outline-primary footer-button" routerLink="topics">Topics</button>
         <button class="btn btn-outline-primary footer-button footer-right" routerLink="news">News</button>
       </div>
     </div>
+  </ng-container>
+  <ng-template #subjectLoadingTemplate>
+    <app-loader *ngIf="!subjectLoadingError"></app-loader>
+    <div class="alert alert-dark" *ngIf="subjectLoadingError">Loading Failed</div>
+  </ng-template>
 
-    <!-- Show latest news posts (with no way to display more, and no admin controls) -->
-    <div class="news-post-container">
 
-      <h2>Latest News:</h2>
+  <!-- Subject recent news -->
+  <div class="news-post-container">
+
+    <h2>Latest News:</h2>
+    <ng-container *ngIf="news$ !== null && news$.length > 0; else newsLoadingTemplate">
       <small>Showing {{ newsCount }} latest news posts. To see all news posts, go to the dedicated news area.</small>
+
       <!-- 1 card per post. -->
-      <div class="card post" *ngFor="let post of news">
+      <div class="card post" *ngFor="let post of news$">
         <!-- Last modified timestamp as badge. -->
         <div class="last-modified-badge">
           <span class="badge badge-secondary">Last modified: {{ post.modificationDate }}</span>
@@ -37,19 +49,84 @@
           <div markdown class="card-text">{{ post.body }}</div>
         </div>
       </div>
-    </div>
 
-  </ng-container>
-
-
-  <ng-template #loadingTemplate>
-    <ng-container *ngIf="!loadingError; else loadingErrorTemplate">
-      <app-loader></app-loader>
     </ng-container>
-    <ng-template #loadingErrorTemplate>
-      Loading failed
+    <ng-template #newsLoadingTemplate>
+      <app-loader *ngIf="!newsLoadingError"></app-loader>
+      <div class="alert alert-dark" *ngIf="newsLoadingError">Loading Failed</div>
     </ng-template>
 
-  </ng-template>
+  </div>
+
+</section>
+
+
+
+<!-- Subject admins list -->
+<section class="container container-no-margin page-content" *ngIf="currentUser !== null">
+  <h2>Subject Admins:</h2>
+
+  <!-- Admin options to add / remove themself as a subject admin. -->
+  <ng-container *ngIf="isSubjectAdmin !== null">
+    <div class="create-button-container">
+      <ng-container *ngIf="isSubjectAdmin; else notSubjectAdminTemplate">
+        <button class="btn btn-outline-danger create-button" (click)="setSubjectAdminStatus(false)">
+          <i class="material-icons button-icon">remove</i>Dissassociate with this Subject
+        </button>
+      </ng-container>
+      <ng-template #notSubjectAdminTemplate>
+        <button class="btn btn-outline-success create-button" (click)="setSubjectAdminStatus(true)">
+          <i class="material-icons button-icon">add</i>Associate with this Subject
+        </button>
+      </ng-template>
+      
+    </div>
+  </ng-container>
+
+  <!-- Contain in card. No use of card-body so that entire card are is used. -->
+  <div class="card">
+    <!-- Display subject admins in table -->
+    <table class="table table-striped table-hover">
+      <!-- Header (dark) -->
+      <thead class="thead-dark">
+        <tr>
+          <!-- Set custom widths -->
+          <th role="col" class="table-id-header">ID</th>
+          <th role="col" class="table-displayname-header">DisplayName</th>
+          <th role="col">Options</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- 1 row per subject admin -->
+        <ng-container *ngFor="let sa of subjectAdmins$; let i = index">
+          <!-- Do not add row if subject admin is current user. -->
+          <tr scope="row" *ngIf="sa.id !== currentUser.id">
+            <td>{{ sa.id }}</td>
+            <td>{{ sa.displayname }}</td>
+            <td>
+              <!-- Chat button -->
+              <button class="btn btn-outline-primary table-cell-button"
+                routerLink="{{ navService.getUserChatRoute(sa.id) }}">
+                <i class="material-icons button-icon">chat</i>Chat
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+
+    <!-- Infinite scroll div -->
+    <div id="infiniteScrollDiv" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000"
+      (scrolled)="subjectAdmins_onScroll()"></div>
+
+
+    <!-- Loader or no more content message -->
+    <app-loader *ngIf="!subjectAdminsEndOfContent"></app-loader>
+    <div class="alert alert-dark no-more-content-message" *ngIf="subjectAdminsEndOfContent">
+      End of Subject Admins...
+    </div>
+  </div>
 
 </section>

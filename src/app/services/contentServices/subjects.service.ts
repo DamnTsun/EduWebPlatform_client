@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from '../api.service';
 import { Post } from 'src/app/classes/Posts';
 import { environment } from 'src/environments/environment';
+import { SubjectAdmin } from 'src/app/classes/SubjectAdmin';
 
 @Injectable({
   providedIn: 'root'
@@ -153,5 +154,57 @@ export class SubjectsService {
   public deletePost(subjectid, postid) {
     return this.api.delete(environment.apiUrl +
         `subjects/${subjectid}/posts/${postid}`);
+  }
+
+
+
+
+  // SUBJECT ADMINS
+  /**
+   * Gets subject admins associated with the specified subject.
+   * @param subjectid - id of subject.
+   * @param count - number of records to get.
+   * @param offset - number of records to skip.
+   */
+  public getSubjectAdmins(subjectid, count, offset): Observable<SubjectAdmin[]> {
+    return this.api.get(
+      environment.apiUrl + `subjects/${subjectid}/admins`
+    ) as Observable<SubjectAdmin[]>;
+  }
+
+  /**
+   * Gets whether the current user is a subject admin for the specified subject.
+   * @param subjectid - id of subject.
+   */
+  public getCurrentUserSubjectAdminStatus(subjectid) {
+    return this.api.get(
+      environment.apiUrl + `subjects/${subjectid}/admins/me`
+    );
+  }
+
+  /**
+   * Adds the current user as a subject admin for the specified subject.
+   * Will only be successful if:
+   * - The current user is an admin.
+   * - The current user is not already a subject admin for the specified subject.
+   * @param subjectid - id of subject.
+   */
+  public addMyselfAsSubjectAdmin(subjectid): Observable<SubjectAdmin[]> {
+    return this.api.post(
+      environment.apiUrl + `subjects/${subjectid}/admins`,
+      new FormData()
+    ) as Observable<SubjectAdmin[]>;
+  }
+
+
+  /**
+   * Removes the current user as a subject admin for the specified subject.
+   * Will only be successful if both:
+   * - The current user is an admin.
+   * - The current user is already a subject admin for the specified subject.
+   * @param subjectid 
+   */
+  public removeMyselfAsSubjectAdmin(subjectid) {
+    return this.api.delete(environment.apiUrl + `subjects/${subjectid}/admins`);
   }
 }
