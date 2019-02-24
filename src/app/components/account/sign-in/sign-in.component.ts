@@ -39,11 +39,5 @@ export class SignInComponent implements OnInit {
     this.signIn.signInWithFacebook();
   }
 
-  private signInWithLinkedIn(): void {
-    // todo
-  }
 
-
-
-  
 }

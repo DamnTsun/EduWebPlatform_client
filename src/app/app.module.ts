@@ -13,7 +13,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Social login.
 import { SocialLoginModule, AuthServiceConfig, LoginOpt } from 'angularx-social-login';
-import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 // Quill RCT
 import { QuillModule } from 'ngx-quill';
 // Infinite-Scroll

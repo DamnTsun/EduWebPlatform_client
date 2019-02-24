@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { AuthObject } from '../classes/AuthObject';
@@ -69,7 +69,6 @@ export class SignInService {
       case FacebookLoginProvider.PROVIDER_ID:
         this.authorizeWithAPIFacebook();
         break;
-      // TODO LinkedIn login...
 
       default:
         // Provider not supported. Forcably sign user out.
@@ -135,15 +134,6 @@ export class SignInService {
     this.api.clearAuthObject();
     this.userIsAdminRecord.next(false);
     this.userInternalRecordRecord.next(null);
-  }
-
-
-
-  /**
-   * Checks wheter signed in user is an admin and updates isUserAdminRecord (and observable).
-   */
-  private checkUserAdminStatus(): void {
-    
   }
   // *** END OF AUTHORIZING USER ***
 
