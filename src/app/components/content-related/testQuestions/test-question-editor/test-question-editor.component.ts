@@ -15,13 +15,13 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class TestQuestionEditorComponent implements OnInit {
 
   // Ids of parent objects and question being editted.
-  private subjectid = null;
-  private topicid = null;
-  private testid = null;
-  private question$ = null;
+  public subjectid = null;
+  public topicid = null;
+  public testid = null;
+  public question$ = null;
 
-  private submitted: boolean = false;           // Whether page has been submitted.
-  private errorMessage: string = null;          // Error message if something goes wrong.
+  public submitted: boolean = false;           // Whether page has been submitted.
+  public errorMessage: string = null;          // Error message if something goes wrong.
 
   // Value of question / answer / imageUrl inputs.
   public questionValue: string = '';
@@ -38,7 +38,7 @@ export class TestQuestionEditorComponent implements OnInit {
     private signIn: SignInService,
     private route: ActivatedRoute,
     private router: Router,
-    private navService: NavigationServiceService
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -111,7 +111,7 @@ export class TestQuestionEditorComponent implements OnInit {
   /**
    * Resets inputs to their initial values.
    */
-  private resetValues(): void {
+  public resetValues(): void {
     if (this.question$ !== null) {
       this.setPageValues(this.question$);
     }
@@ -122,7 +122,7 @@ export class TestQuestionEditorComponent implements OnInit {
   /**
    * Validates inputs and updates question on api if valid.
    */
-  private editTestQuestion(): void {
+  public editTestQuestion(): void {
     // Get and validate question.
     let question = this.buildTestQuestion();
     if (question == null) { return; }

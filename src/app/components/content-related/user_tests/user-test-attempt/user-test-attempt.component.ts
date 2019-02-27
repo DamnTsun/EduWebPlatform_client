@@ -17,15 +17,15 @@ import { UtilService } from 'src/app/services/util.service';
 export class UserTestAttemptComponent implements OnInit {
 
   // Id of test that this user_test is based off.
-  private subjectid = null;
-  private topicid = null;
-  private testid = null;
+  public subjectid = null;
+  public topicid = null;
+  public testid = null;
   // Test questions for user_test.
-  private testQuestions$: TestQuestion[] = null;
+  public testQuestions$: TestQuestion[] = null;
   // Whether a loading error has occurred.
-  private loadingError: boolean = false;
+  public loadingError: boolean = false;
   // Whether the user_test has been submitted successfully.
-  private hasSubmitted: boolean = false;
+  public hasSubmitted: boolean = false;
 
   public errorMessage: string = null;
 
@@ -40,7 +40,7 @@ export class UserTestAttemptComponent implements OnInit {
     private userTestsService: UserTestsService,
     private signIn: SignInService,
     private utilService: UtilService,
-    private navService: NavigationServiceService
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {

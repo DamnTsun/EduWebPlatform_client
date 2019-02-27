@@ -14,13 +14,13 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 })
 export class TestHomeComponent implements OnInit {
 
-  private subjectid = null;
-  private topicid = null;
+  public subjectid = null;
+  public topicid = null;
 
-  private test$: Test = null;
-  private loadingError: boolean = false;
-  private user = null;
-  private isAdmin: boolean = false;
+  public test$: Test = null;
+  public loadingError: boolean = false;
+  public user = null;
+  public isAdmin: boolean = false;
 
 
   constructor(
@@ -29,7 +29,7 @@ export class TestHomeComponent implements OnInit {
     private subjectService: SubjectsService,
     private testService: TestsService,
     private signIn: SignInService,
-    private navService: NavigationServiceService
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {

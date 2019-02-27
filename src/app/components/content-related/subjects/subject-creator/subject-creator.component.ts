@@ -12,8 +12,8 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 })
 export class SubjectCreatorComponent implements OnInit {
 
-  private submitted: boolean = false;     // Whether user has submitted subject.
-  private errorMessage: string = null;    // Error message to display if something goes wrong.
+  public submitted: boolean = false;     // Whether user has submitted subject.
+  public errorMessage: string = null;    // Error message to display if something goes wrong.
 
   // Holds current values. Used by preview.
   public nameValue: string = '';

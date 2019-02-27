@@ -18,11 +18,11 @@ export class TestListComponent implements OnInit {
   private count = 18;           // Number of test to get at a time.
   private offset = 0;           // How many tests have already been fetched.
 
-  private subjectid = null;
-  private topicid = null;
-  private endOfContent: boolean = false;
-  private isAdmin: boolean = false;
-  private tests$: Test[] = [];
+  public subjectid = null;
+  public topicid = null;
+  public endOfContent: boolean = false;
+  public isAdmin: boolean = false;
+  public tests$: Test[] = [];
 
 
   constructor(
@@ -30,7 +30,7 @@ export class TestListComponent implements OnInit {
     private testService: TestsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private navService: NavigationServiceService
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -57,7 +57,7 @@ export class TestListComponent implements OnInit {
   /**
    * Scroll event for infinite scroll.
    */
-  private onScroll() {
+  public onScroll() {
     if (!this.endOfContent) {
       this.getTests();
     }
@@ -93,7 +93,7 @@ export class TestListComponent implements OnInit {
    * Deletes test with given index in array.
    * @param index - index of test.
    */
-  private deleteTest(index) {
+  public deleteTest(index) {
     // Check user is admin.
     if (!this.isAdmin) { return; }
     // Check index is valid.

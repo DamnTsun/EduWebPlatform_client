@@ -14,13 +14,13 @@ export class SubjectNewsComponent implements OnInit {
 
   // Subject being viewed and whether user is admin.
   private subjectid = null;
-  private isAdmin: boolean = false;
+  public isAdmin: boolean = false;
 
   // Vars for handling posts, such as the currently stored posts, number to get / skip for api, whether end of posts reached.
-  private posts$: Post[] = [];
+  public posts$: Post[] = [];
   private count: number = 10;
   private offset: number = 0;
-  private endOfContent: boolean = false;
+  public endOfContent: boolean = false;
 
 
 

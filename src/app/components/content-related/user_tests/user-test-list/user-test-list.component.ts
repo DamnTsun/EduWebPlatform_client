@@ -19,12 +19,12 @@ export class UserTestListComponent implements OnInit {
   private offset: number = 0;
 
   // Ids of parent objects.
-  private subjectid = null;
-  private topicid = null;
-  private testid = null;
+  public subjectid = null;
+  public topicid = null;
+  public testid = null;
 
-  private userTestResults$ = [];
-  private endOfContent: boolean = false;
+  public userTestResults$ = [];
+  public endOfContent: boolean = false;
 
 
   constructor(
@@ -33,7 +33,7 @@ export class UserTestListComponent implements OnInit {
     private signIn: SignInService,                    // For checking user signin/admin status.
     private route: ActivatedRoute,                    // For getting route params.
     private router: Router,                           // For redirecting user if needed.
-    private navService: NavigationServiceService      // For getting routes for breadcrumb nav.
+    public navService: NavigationServiceService      // For getting routes for breadcrumb nav.
   ) { }
 
   ngOnInit() {

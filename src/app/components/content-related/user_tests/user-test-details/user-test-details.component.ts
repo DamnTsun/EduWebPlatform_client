@@ -16,10 +16,10 @@ import { UserTest } from 'src/app/classes/UserTest';
 export class UserTestDetailsComponent implements OnInit {
 
   // Ids of parent objects.
-  private subjectid = null;
-  private topicid = null;
-  private testid = null;
-  private utestid = null;
+  public subjectid = null;
+  public topicid = null;
+  public testid = null;
+  public utestid = null;
 
   public usertest$: UserTest = null;
   public utestQuestions: UserTestQuestion[] = [];
@@ -34,7 +34,7 @@ export class UserTestDetailsComponent implements OnInit {
     private signIn: SignInService,                // For checking user is signed in.
     private route: ActivatedRoute,                // For getting route params.
     private router: Router,                       // For redirect user if needed.
-    private navService: NavigationServiceService  // For getting routes for redirects.
+    public navService: NavigationServiceService  // For getting routes for redirects.
   ) { }
 
   ngOnInit() {

@@ -15,13 +15,13 @@ import { SignInService } from 'src/app/services/sign-in.service';
 })
 export class LessonHomeComponent implements OnInit {
 
-  private subjectid = null;
-  private topicid = null;
+  public subjectid = null;
+  public topicid = null;
   public isAdmin: boolean = false;
 
-  private lesson$: Lesson = null;
-  private loadingError: boolean = false;
-  private lessonBody: SafeHtml;
+  public lesson$: Lesson = null;
+  public loadingError: boolean = false;
+  public lessonBody: SafeHtml;
 
 
 

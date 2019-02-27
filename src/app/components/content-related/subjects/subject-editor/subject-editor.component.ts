@@ -13,9 +13,9 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 })
 export class SubjectEditorComponent implements OnInit {
 
-  private subject$: Subject = null;
-  private submitted: boolean = false;
-  private errorMessage: string = null;
+  public subject$: Subject = null;
+  public submitted: boolean = false;
+  public errorMessage: string = null;
 
   public nameValue: string = '';
   public descriptionValue: string = '';
@@ -87,7 +87,7 @@ export class SubjectEditorComponent implements OnInit {
   /**
    * Resets field values to initial values. (The current values for the subject pre-edit.)
    */
-  private resetValues(): void {
+  public resetValues(): void {
     if (this.subject$ !== null) {
       this.setPageValues(this.subject$);
     }
@@ -97,7 +97,7 @@ export class SubjectEditorComponent implements OnInit {
   /**
    * Validates inputs and sends request to api to edit subject.
    */
-  private editSubject(): void {
+  public editSubject(): void {
     // Get subject object.
     let subject = this.buildSubject();
     // Ensure object received successfully / the user is actually changing something.

@@ -16,22 +16,22 @@ export class UsersListComponent implements OnInit {
   private count = 36;
   private offset = 0;
 
-  private userid = null;
+  public userid = null;
 
   // Users list.
-  private users$ = [];
-  private endOfContent: boolean = false;
+  public users$ = [];
+  public endOfContent: boolean = false;
 
-  private isAdmin: boolean = false;
+  public isAdmin: boolean = false;
 
   // Output message for things such as admin changing a user privilege level.
-  private message: string = null;
+  public message: string = null;
 
 
   // User search.
-  private isSearching: boolean = false;
-  private searchTerm: string = '';
-  private searchUsers = [];
+  public isSearching: boolean = false;
+  public searchTerm: string = '';
+  public searchUsers = [];
 
 
   constructor(
@@ -73,7 +73,7 @@ export class UsersListComponent implements OnInit {
   /**
    * Scroll event for infinite scroll.
    */
-  private onScroll() {
+  public onScroll() {
     if (!this.endOfContent) {
       this.getUsers();
     }
@@ -130,7 +130,7 @@ export class UsersListComponent implements OnInit {
    * @param index - index of user in list.
    * @param state - whether to set user to admin.
    */
-  private setAdminStatus(index, state: boolean) {
+  public setAdminStatus(index, state: boolean) {
     // If searching, get index of user from main list. (index is from search list)
     let originalIndex = index;
     if (this.isSearching) {
@@ -169,7 +169,7 @@ export class UsersListComponent implements OnInit {
    * @param index - index of user in list.
    * @param state - whether to set user to banned.
    */
-  private setBannedStatus(index, state: boolean) {
+  public setBannedStatus(index, state: boolean) {
     // If searching, get index of user from main list. (index is from search list)
     let originalIndex = index;
     if (this.isSearching) {

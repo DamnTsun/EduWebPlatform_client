@@ -14,10 +14,10 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 })
 export class TopicEditorComponent implements OnInit {
 
-  private subjectid = null;
-  private topic$: Topic = null;               // Topic being editted. Used when setting / resetting to init vals.
-  private submitted: boolean = false;         // Whether form has been submitted successfully or in process of.
-  private errorMessage: string = null;        // Error message displayed if something goes wrong.
+  public subjectid = null;
+  public topic$: Topic = null;               // Topic being editted. Used when setting / resetting to init vals.
+  public submitted: boolean = false;         // Whether form has been submitted successfully or in process of.
+  public errorMessage: string = null;        // Error message displayed if something goes wrong.
 
   // Values of name / description. Used by preview.
   public nameValue: string = '';
@@ -96,7 +96,7 @@ export class TopicEditorComponent implements OnInit {
   /**
    * Resets value on page back to original values of topic being editted.
    */
-  private resetValues(): void {
+  public resetValues(): void {
     if (this.topic$ !== null) {
       this.setPageValues(this.topic$);
     }
@@ -107,7 +107,7 @@ export class TopicEditorComponent implements OnInit {
   /**
    * Validates inputs and sends request to api to edit subject if inputs valid.
    */
-  private editTopic(): void {
+  public editTopic(): void {
     // Attempt to build topic object. Check it.
     let topic = this.buildTopic();
     if (topic == null) { return; }

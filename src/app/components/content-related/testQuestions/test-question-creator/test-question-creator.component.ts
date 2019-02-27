@@ -14,12 +14,12 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class TestQuestionCreatorComponent implements OnInit {
 
   // Ids of parent objects.
-  private subjectid = null;
-  private topicid = null;
-  private testid = null;
+  public subjectid = null;
+  public topicid = null;
+  public testid = null;
 
-  private submitted: boolean = false;         // Whether page has been submitted.
-  private errorMessage: string = null;        // Error message to display if something goes wrong.
+  public submitted: boolean = false;         // Whether page has been submitted.
+  public errorMessage: string = null;        // Error message to display if something goes wrong.
 
   // Values of question / answer / imageUrl. Used by preview.
   public questionValue: string = '';
@@ -36,7 +36,7 @@ export class TestQuestionCreatorComponent implements OnInit {
     private signIn: SignInService,
     private route: ActivatedRoute,
     private router: Router,
-    private navService: NavigationServiceService
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -76,7 +76,7 @@ export class TestQuestionCreatorComponent implements OnInit {
   /**
    * Validates input and attempts to create testquestion on api if valid.
    */
-  private createTestQuestion(): void {
+  public createTestQuestion(): void {
     // Build question. Ensure valid.
     let question = this.buildTestQuestion();
     if (question == null) { return; }

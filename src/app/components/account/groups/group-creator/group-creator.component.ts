@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class GroupCreatorComponent implements OnInit {
 
-  private submitted: boolean = false;       // Whether form has or is in process of being submitted.
+  public submitted: boolean = false;       // Whether form has or is in process of being submitted.
   public errorMessage: string = null;       // Error message if something goes wrong.
 
   // Current name / description / imageUrl of group. Used by preview.

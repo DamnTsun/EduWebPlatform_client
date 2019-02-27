@@ -15,11 +15,11 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class TestCreatorComponent implements OnInit {
 
   // Ids of parents / test being editted.
-  private subjectid = null;
-  private topicid = null;
+  public subjectid = null;
+  public topicid = null;
 
-  private submitted: boolean = false;       // Whether page has been submitted.
-  private errorMessage: string = null;      // Error message to display if something goes wrong.
+  public submitted: boolean = false;       // Whether page has been submitted.
+  public errorMessage: string = null;      // Error message to display if something goes wrong.
 
   // Value of name / description. Used by preview.
   public nameValue: string = '';

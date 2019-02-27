@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'src/app/classes/Subject';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
-import { NavigationServiceService } from 'src/app/services/navigation-service.service';
-import { $ } from 'protractor';
 
 @Component({
   selector: 'app-subject-list',
@@ -16,10 +14,10 @@ export class SubjectListComponent implements OnInit {
   private count = 18;
   private offset = 0;
 
-  private subjects$: Subject[] = [];
-  private endOfContent: boolean = false;
+  public subjects$: Subject[] = [];
+  public endOfContent: boolean = false;
 
-  private isAdmin: boolean = false;
+  public isAdmin: boolean = false;
 
 
 

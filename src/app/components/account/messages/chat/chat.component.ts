@@ -13,14 +13,14 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class ChatComponent implements OnInit, OnDestroy {
 
-  private userid = null;
-  private otherUserId = null;
-  private submitDisabled = true;
-  private errorMessage: string = null;
+  public userid = null;
+  public otherUserId = null;
+  public submitDisabled = true;
+  public errorMessage: string = null;
 
-  private messages$: Message[] = [];
+  public messages$: Message[] = [];
 
-  private endOfContent: boolean = false;
+  public endOfContent: boolean = false;
   private count = 25;
   private offset = 0;
   private newMessageCheckInterval = 10; // Number of seconds between checking for new messages.

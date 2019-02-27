@@ -18,12 +18,12 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 })
 export class TopicHomeComponent implements OnInit {
 
-  private subjectid = null;
+  public subjectid = null;
   
-  private topic$: Topic = null;
-  private loadingError: boolean = false;
+  public topic$: Topic = null;
+  public loadingError: boolean = false;
 
-  private isAdmin: boolean = false;
+  public isAdmin: boolean = false;
 
 
 

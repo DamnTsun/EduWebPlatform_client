@@ -18,10 +18,10 @@ export class TopicListComponent implements OnInit {
   private count = 18;
   private offset = 0;
 
-  private subjectid = null;
-  private topics$: Topic[] = [];
-  private endOfContent: boolean = false;
-  private isAdmin: boolean = false;
+  public subjectid = null;
+  public topics$: Topic[] = [];
+  public endOfContent: boolean = false;
+  public isAdmin: boolean = false;
 
 
 
@@ -32,7 +32,7 @@ export class TopicListComponent implements OnInit {
     private subjectService: SubjectsService,
     private topicService: TopicsService,
     private signIn: SignInService,
-    private navService: NavigationServiceService
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -57,7 +57,7 @@ export class TopicListComponent implements OnInit {
   /**
    * Scroll event for infinite scroll.
    */
-  private onScroll() {
+  public onScroll() {
     if (!this.endOfContent) {
       this.getTopics();
     }
@@ -87,7 +87,7 @@ export class TopicListComponent implements OnInit {
    * Deletes topic with given index in array.
    * @param index - index of topic in topics$.
    */
-  private deleteTopic(index) {
+  public deleteTopic(index) {
     // Check user is admin.
     if (!this.isAdmin) { return; }
     // Check index is valid.

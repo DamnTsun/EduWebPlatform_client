@@ -14,12 +14,12 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 })
 export class TestQuestionHomeComponent implements OnInit {
 
-  private subjectid = null;
-  private topicid = null;
-  private testid = null;
-  private testQuestion$: TestQuestion = null;
+  public subjectid = null;
+  public topicid = null;
+  public testid = null;
+  public testQuestion$: TestQuestion = null;
 
-  private loadingFailed: boolean = false;
+  public loadingFailed: boolean = false;
 
 
 
@@ -31,7 +31,7 @@ export class TestQuestionHomeComponent implements OnInit {
     private signIn: SignInService,
     private route: ActivatedRoute,
     private router: Router,
-    private navService: NavigationServiceService
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {

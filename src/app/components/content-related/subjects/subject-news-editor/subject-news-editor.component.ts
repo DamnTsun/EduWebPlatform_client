@@ -13,10 +13,10 @@ import { environment } from 'src/environments/environment';
 })
 export class SubjectNewsEditorComponent implements OnInit {
 
-  private subjectid = null;
-  private post$: Post = null;           // Post being editted.
+  public subjectid = null;
+  public post$: Post = null;           // Post being editted.
   public submitted: boolean = false;
-  private errorMessage: string = null;
+  public errorMessage: string = null;
 
   // Holds current values for page for use on preview.
   public titleValue: string = '';

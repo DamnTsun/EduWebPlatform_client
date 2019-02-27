@@ -21,13 +21,13 @@ export class SubjectHomeComponent implements OnInit {
   public currentUser: User = null;
   public isSubjectAdmin: boolean = null;
 
-  private subjectid = null;
-  private subject$: Subject = null;
-  private subjectLoadingError: boolean = false;
+  public subjectid = null;
+  public subject$: Subject = null;
+  public subjectLoadingError: boolean = false;
 
   // Number of news posts to get.
   public newsCount: number = 3;
-  private news$: Post[] = [];
+  public news$: Post[] = [];
   public newsLoadingError: boolean = false;
 
   // Variables for handling subject admin display.
@@ -46,7 +46,7 @@ export class SubjectHomeComponent implements OnInit {
     private router: Router,
     private subjectService: SubjectsService,
     private signIn: SignInService,
-    private navService: NavigationServiceService
+    public navService: NavigationServiceService
   ) { }
 
 

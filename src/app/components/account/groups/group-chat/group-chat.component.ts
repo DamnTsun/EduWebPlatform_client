@@ -14,19 +14,19 @@ import { MessageService } from 'src/app/services/user/message.service';
 export class GroupChatComponent implements OnInit, OnDestroy {
 
   // ID of current user / the group.
-  private userid = null;
-  private groupid = null;
+  public userid = null;
+  public groupid = null;
 
   // Message list and related values.
-  private messages$: Message[] = [];
+  public messages$: Message[] = [];
   private count = 25;
   private offset = 0;
-  private endOfContent: boolean = false;
+  public endOfContent: boolean = false;
   private newMessageCheckInterval = 10; // Number of seconds between checking for new messages.
   private newMessageCheckHandle = null; // Reference to interval so that it may be cancelled.
 
   // Error message for display if something goes wrong.
-  private errorMessage: string = null;
+  public errorMessage: string = null;
 
 
 

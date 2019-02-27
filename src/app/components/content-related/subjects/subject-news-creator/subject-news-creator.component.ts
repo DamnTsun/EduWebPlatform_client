@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class SubjectNewsCreatorComponent implements OnInit {
 
-  private subjectid = null;
+  public subjectid = null;
   public submitted: boolean = false;        // Whether user has submitted subject.
   public errorMessage: string = null;       // Error message to display if something goes wrong.
 
@@ -29,7 +29,7 @@ export class SubjectNewsCreatorComponent implements OnInit {
     private signIn: SignInService,                  // For checking user is an admin.
     private route: ActivatedRoute,                  // For getting route params.
     private router: Router,                         // For redirecting user if necessary.
-    private navService: NavigationServiceService    // For getting routes, such as for breadcrumb navigation.
+    public navService: NavigationServiceService    // For getting routes, such as for breadcrumb navigation.
   ) { }
 
   ngOnInit() {

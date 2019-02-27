@@ -14,10 +14,10 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 })
 export class TopicCreatorComponent implements OnInit {
 
-  private subjectid = null;
-  private subject$: Subject = null;
-  private submitted: boolean = false;     // Whether page has been submitted.
-  private errorMessage: string = null;    // Error message to display if something goes wrong.
+  public subjectid = null;
+  public subject$: Subject = null;
+  public submitted: boolean = false;     // Whether page has been submitted.
+  public errorMessage: string = null;    // Error message to display if something goes wrong.
 
   // Values of name / description. Used by preview.
   public nameValue: string = '';

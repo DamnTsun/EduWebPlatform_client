@@ -16,13 +16,13 @@ export class GroupListComponent implements OnInit {
   // For keeping track of current position in api data.
   private count = 18;
   private offset = 0;
-  private endOfContent: boolean = false;
-  private groups$: Group[] = [];
+  public endOfContent: boolean = false;
+  public groups$: Group[] = [];
 
 
   // Userid and admin status.
-  private userid = null;
-  private isAdmin: boolean = false;
+  public userid = null;
+  public isAdmin: boolean = false;
 
 
 
@@ -32,7 +32,7 @@ export class GroupListComponent implements OnInit {
     private signIn: SignInService,                  // For getting user signed in / admin status.
     private groupService: GroupService,             // For interacting with groups on api.
     private router: Router,                         // For redirecting user if necessary.
-    private navService: NavigationServiceService    // Helps getting routes for redirects.
+    public navService: NavigationServiceService    // Helps getting routes for redirects.
   ) { }
 
   ngOnInit() {

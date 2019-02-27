@@ -16,10 +16,10 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class LessonCreatorComponent implements OnInit {
 
   // Ids of 'parent'. Subject -> Topic -> Lesson.
-  private subjectid = null;
-  private topicid = null;
-  private submitted: boolean = false;           // Whether page has been submitted.
-  private errorMessage: string = null;          // Error message to display if something goes wrong.
+  public subjectid = null;
+  public topicid = null;
+  public submitted: boolean = false;           // Whether page has been submitted.
+  public errorMessage: string = null;          // Error message to display if something goes wrong.
 
   @ViewChild('body') editor: QuillEditorComponent;      // Rich-text editor for body.
   private body: string = null;                          // User input for body.
@@ -70,7 +70,7 @@ export class LessonCreatorComponent implements OnInit {
   /**
    * Validates inputs and creates lesson on API if valid.
    */
-  private createLesson(): void {
+  public createLesson(): void {
     // Get and check lesson.
     let lesson = this.buildLesson();
     if (lesson == null) { return; }
@@ -157,7 +157,7 @@ export class LessonCreatorComponent implements OnInit {
   }
 
 
-  private getBodyLength() {
+  public getBodyLength() {
     if (this.body == null) { return 0; }
     return this.body.length;
   }

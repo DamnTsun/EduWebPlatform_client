@@ -14,13 +14,13 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class TestEditorComponent implements OnInit {
 
   // Ids of parents / test being editted.
-  private subjectid = null;
-  private topicid = null;
-  private testid = null;
-  private test$ = null;
+  public subjectid = null;
+  public topicid = null;
+  public testid = null;
+  public test$ = null;
 
-  private submitted: boolean = false;       // Whether form has been submitted.
-  private errorMessage: string = null;      // Error message to display if something goes wrong.
+  public submitted: boolean = false;       // Whether form has been submitted.
+  public errorMessage: string = null;      // Error message to display if something goes wrong.
 
   // Values of name / description. Used by preview.
   public nameValue: string = '';
@@ -101,7 +101,7 @@ export class TestEditorComponent implements OnInit {
   /**
    * Resets values on page back to originals.
    */
-  private resetValues(): void {
+  public resetValues(): void {
     if (this.test$ !== null) {
       this.setPageValues(this.test$);
     }
@@ -112,7 +112,7 @@ export class TestEditorComponent implements OnInit {
   /**
    * Validates inputs and updates test on api if valid.
    */
-  private editTest(): void {
+  public editTest(): void {
     let test = this.buildTest();
     if (test == null) { return; }
     if (Object.keys(test).length == 0) {

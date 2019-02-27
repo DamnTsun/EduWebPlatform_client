@@ -17,13 +17,13 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class LessonEditorComponent implements OnInit {
 
   // Stores ids of parent objects, and the lesson itself (for id and original values)
-  private subjectid = null;
-  private topicid = null;
-  private lessonid = null;
-  private lesson$: Lesson = null;
+  public subjectid = null;
+  public topicid = null;
+  public lessonid = null;
+  public lesson$: Lesson = null;
 
-  private submitted: boolean = false;           // Whether page has been submitted.
-  private errorMessage: string = null;          // Error message if something goes wrong.
+  public submitted: boolean = false;           // Whether page has been submitted.
+  public errorMessage: string = null;          // Error message if something goes wrong.
 
   @ViewChild('body') editor: QuillEditorComponent;
   private body: string = null;
@@ -94,7 +94,7 @@ export class LessonEditorComponent implements OnInit {
     this.editor.writeValue(insert.toString());
   }
 
-  private resetValues(): void {
+  public resetValues(): void {
     if (this.lesson$ !== null) {
       this.setPageValues(this.lesson$);
     }
@@ -105,7 +105,7 @@ export class LessonEditorComponent implements OnInit {
   /**
    * Validates and sends edit lesson request to api if valid.
    */
-  private editLesson(): void {
+  public editLesson(): void {
     // Get and validate lesson.
     let lesson = this.buildLesson();
     if (lesson == null) { return; }
@@ -219,7 +219,7 @@ export class LessonEditorComponent implements OnInit {
   /**
    * Gets length of body in memory for display.
    */
-  private getBodyLength() {
+  public getBodyLength() {
     if (this.body == null) { return 0; }
     return this.body.length;
   }

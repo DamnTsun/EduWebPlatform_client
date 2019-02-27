@@ -109,7 +109,7 @@ export class GroupEditorComponent implements OnInit {
   /**
    * Resets field values to initial values. (Based on currently stored group object)
    */
-  private resetValues(): void {
+  public resetValues(): void {
     if (this.group$ !== null) {
       this.setPageValues(this.group$);
     }
