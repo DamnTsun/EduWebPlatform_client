@@ -55,6 +55,12 @@ body {
   margin: 1em auto;
 }
 
+span.content-hidden-badge {
+  float: right;
+  margin-bottom: 0.2em;
+  margin-right: 0.2em
+}
+
 
 
 

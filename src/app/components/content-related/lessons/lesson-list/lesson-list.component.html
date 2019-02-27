@@ -29,6 +29,13 @@
         <h5>{{ lesson.name }}</h5>
       </div>
 
+
+      <!-- Hidden / badge (has no child elements, so cannot auto-hide) -->
+      <div *ngIf="isAdmin">
+        <span class="badge badge-secondary content-hidden-badge" *ngIf="lesson.hidden">Hidden</span>
+      </div>
+
+
       <!-- Card footer (options) -->
       <div class="card-footer">
         <button class="btn btn-outline-primary view-button" routerLink="{{ lesson.id }}">View</button>
@@ -47,7 +54,8 @@
               <i class="material-icons button-icon dropdown-icon dropdown-icon-edit">edit</i>Edit
             </button>
             <!-- Set index of subject to be deleted. Used by modal. -->
-            <button class="dropdown-item" data-toggle="modal" data-target="#deleteModal" (click)="deleteLessonIndex = i">
+            <button class="dropdown-item" data-toggle="modal" data-target="#deleteModal"
+              (click)="deleteLessonIndex = i">
               <i class="material-icons button-icon dropdown-icon dropdown-icon-delete">delete</i>Delete
             </button>
           </div>
@@ -75,7 +83,8 @@
 
 
 <!-- Delete confirmation modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
 
     <div class="modal-content">
@@ -94,7 +103,8 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <!-- Delete subject at index, then clear index -->
-        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteLesson(deleteLessonIndex); deleteLessonIndex = null">Confirm
+        <button type="button" class="btn btn-danger" data-dismiss="modal"
+          (click)="deleteLesson(deleteLessonIndex); deleteLessonIndex = null">Confirm
           Delete</button>
       </div>
     </div>

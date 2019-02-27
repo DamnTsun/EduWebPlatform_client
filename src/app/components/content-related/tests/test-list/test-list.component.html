@@ -29,6 +29,15 @@
         <h5>{{ test.name }}</h5>
       </div>
 
+
+      <!-- Hidden / auto-hidden badge -->
+      <div *ngIf="isAdmin">
+        <span class="badge badge-secondary content-hidden-badge" *ngIf="test.hidden">Hidden</span>
+        <span class="badge badge-secondary content-hidden-badge"
+          *ngIf="!test.hidden && test.testQuestionCount === 0">Auto-Hidden</span>
+      </div>
+
+
       <!-- Card footer (options) -->
       <div class="card-footer">
         <button class="btn btn-outline-primary view-button" routerLink="{{ test.id }}">View</button>
@@ -74,7 +83,8 @@
 
 
 <!-- Delete confirmation modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
 
     <div class="modal-content">
@@ -93,7 +103,8 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <!-- Delete subject at index, then clear index -->
-        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteTest(deleteTestIndex); deleteTestIndex = null">Confirm
+        <button type="button" class="btn btn-danger" data-dismiss="modal"
+          (click)="deleteTest(deleteTestIndex); deleteTestIndex = null">Confirm
           Delete</button>
       </div>
     </div>

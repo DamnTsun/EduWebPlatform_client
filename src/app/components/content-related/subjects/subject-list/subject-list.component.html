@@ -26,6 +26,14 @@
         <div markdown class="card-text content-description">{{ subject.description }}</div>
       </div>
 
+
+      <!-- Hidden / auto-hidden badge -->
+      <div *ngIf="isAdmin">
+        <span class="badge badge-secondary content-hidden-badge" *ngIf="subject.hidden">Hidden</span>
+        <span class="badge badge-secondary content-hidden-badge" *ngIf="!subject.hidden && subject.topicCount === 0">Auto-Hidden</span>
+      </div>
+
+
       <!-- Card footer (options (view, { edit, delete } ) )-->
       <div class="card-footer">
         <button class="btn btn-outline-primary view-button" routerLink="{{ subject.id }}">View</button>
@@ -43,7 +51,8 @@
               <i class="material-icons button-icon dropdown-icon dropdown-icon-edit">edit</i>Edit
             </button>
             <!-- Set index of subject to be deleted. Used by modal. -->
-            <button class="dropdown-item" data-toggle="modal" data-target="#deleteModal" (click)="deleteSubjectIndex = i">
+            <button class="dropdown-item" data-toggle="modal" data-target="#deleteModal"
+              (click)="deleteSubjectIndex = i">
               <i class="material-icons button-icon dropdown-icon dropdown-icon-delete">delete</i>Delete
             </button>
           </div>
@@ -69,7 +78,8 @@
 
 
 <!-- Delete confirmation modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
 
     <div class="modal-content">
@@ -88,7 +98,8 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <!-- Delete subject at index, then clear index -->
-        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteSubject(deleteSubjectIndex); deleteSubjectIndex = null">Confirm
+        <button type="button" class="btn btn-danger" data-dismiss="modal"
+          (click)="deleteSubject(deleteSubjectIndex); deleteSubjectIndex = null">Confirm
           Delete</button>
       </div>
     </div>

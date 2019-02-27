@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 import { Subject } from 'src/app/classes/Subject';
@@ -43,6 +43,7 @@ export class SubjectHomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private subjectService: SubjectsService,
     private signIn: SignInService,
     private navService: NavigationServiceService
@@ -70,7 +71,7 @@ export class SubjectHomeComponent implements OnInit {
       this.subject$ = subject;
     }, (err) => {
       this.subjectLoadingError = true;
-      console.error(err);
+      console.error('SubjectHome get subject Error:', err);
     });
 
 

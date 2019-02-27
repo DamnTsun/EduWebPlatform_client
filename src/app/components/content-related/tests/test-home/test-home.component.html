@@ -2,7 +2,8 @@
 
 
   <!-- Breadcrumb navigation -->
-  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null && topicid !== null && test$ !== null">
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb"
+    *ngIf="subjectid !== null && topicid !== null && test$ !== null">
     <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
     <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
     <a class="breadcrumb-item" routerLink="{{ navService.getTopicListRoute(subjectid) }}">Topics</a>
@@ -29,6 +30,15 @@
         <div markdown ngPreserveWhitespaces class="test-description">{{ test$.description }}</div>
       </div>
 
+
+      <!-- Hidden / auto-hidden badge -->
+      <div *ngIf="isAdmin">
+        <span class="badge badge-secondary content-hidden-badge" *ngIf="test$.hidden">Hidden</span>
+        <span class="badge badge-secondary content-hidden-badge"
+          *ngIf="!test$.hidden && test$.testQuestionCount !== 0">Auto-Hidden</span>
+      </div>
+
+
       <div class="card-footer">
         <div class="footer-button-container">
           <button class="btn btn-outline-primary footer-button" routerLink="user_tests">Previous Test Results</button>
@@ -53,20 +63,23 @@
             questions)</p>
           <!-- Buttons for choose question count (5, 10, 25, custom) -->
           <div class="user-test-button-container">
-            <button class="btn btn-outline-primary user-test-button" (click)="generateTest(5)" [disabled]="test$.testQuestionCount < 5">Short
+            <button class="btn btn-outline-primary user-test-button" (click)="generateTest(5)"
+              [disabled]="test$.testQuestionCount < 5">Short
               (5 Questions)</button>
           </div>
           <div class="user-test-button-container">
-            <button class="btn btn-outline-primary user-test-button" (click)="generateTest(10)" [disabled]="test$.testQuestionCount < 10">Normal
+            <button class="btn btn-outline-primary user-test-button" (click)="generateTest(10)"
+              [disabled]="test$.testQuestionCount < 10">Normal
               (10 Questions)</button>
           </div>
           <div class="user-test-button-container">
-            <button class="btn btn-outline-primary user-test-button" (click)="generateTest(25)" [disabled]="test$.testQuestionCount < 25">Long
+            <button class="btn btn-outline-primary user-test-button" (click)="generateTest(25)"
+              [disabled]="test$.testQuestionCount < 25">Long
               (25 Questions)</button>
           </div>
           <div class="user-test-button-container">
-            <button class="btn btn-outline-primary user-test-button" data-toggle="modal" data-target="#customQuestionCountModal"
-              [disabled]="test$.testQuestionCount < 1">Custom
+            <button class="btn btn-outline-primary user-test-button" data-toggle="modal"
+              data-target="#customQuestionCountModal" [disabled]="test$.testQuestionCount < 1">Custom
               (You Choose Question Count)</button>
           </div>
         </section>
@@ -95,8 +108,8 @@
 
 
   <!-- Modal for choosing custom number of questions -->
-  <div class="modal fade" id="customQuestionCountModal" tabindex="-1" role="dialog" aria-labelledby="customQuestionCountModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="customQuestionCountModal" tabindex="-1" role="dialog"
+    aria-labelledby="customQuestionCountModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -109,20 +122,23 @@
           <!-- number input field -->
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <button class="btn btn-outline-secondary" id="utq_count_decrement" type="button" (click)="incrementCustomQuestionCount(-1)"
+              <button class="btn btn-outline-secondary" id="utq_count_decrement" type="button"
+                (click)="incrementCustomQuestionCount(-1)"
                 [disabled]="test$ == null || questionCountInput.value <= 1">-</button>
             </div>
             <input type="number" id="utq_numberinput" class="form-control" value="10" pattern="[0-9]"
               #questionCountInput min="1" max="10">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" id="utq_count_increment" type="button" (click)="incrementCustomQuestionCount(1)"
+              <button class="btn btn-outline-secondary" id="utq_count_increment" type="button"
+                (click)="incrementCustomQuestionCount(1)"
                 [disabled]="test$ == null || questionCountInput.value >= test$.testQuestionCount">+</button>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="this.generateTestCustom(questionCountInput.value)"
+          <button type="button" class="btn btn-primary" data-dismiss="modal"
+            (click)="this.generateTestCustom(questionCountInput.value)"
             [disabled]="test$ == null || questionCountInput.value < 1 || questionCountInput.value > test$.testQuestionCount">Generate
             Test</button>
         </div>

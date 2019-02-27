@@ -65,6 +65,7 @@ export class TestHomeComponent implements OnInit {
     }, (err) => {
       this.loadingError = true;
       console.error('TestHome test$ Error:', err);
+      this.router.navigate([ this.navService.getSubjectListRoute() ]);
     });
   }
 

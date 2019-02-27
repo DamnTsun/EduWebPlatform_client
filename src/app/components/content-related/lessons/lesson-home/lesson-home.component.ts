@@ -1,11 +1,12 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Lesson } from 'src/app/classes/Lesson';
 import { environment } from 'src/environments/environment';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { LessonsService } from 'src/app/services/contentServices/lessons.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
+import { SignInService } from 'src/app/services/sign-in.service';
 
 @Component({
   selector: 'app-lesson-home',
@@ -16,6 +17,7 @@ export class LessonHomeComponent implements OnInit {
 
   private subjectid = null;
   private topicid = null;
+  public isAdmin: boolean = false;
 
   private lesson$: Lesson = null;
   private loadingError: boolean = false;
@@ -25,6 +27,8 @@ export class LessonHomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
+    private signIn: SignInService,
     private subjectService: SubjectsService,
     private lessonService: LessonsService,
     private navService: NavigationServiceService,
@@ -49,6 +53,15 @@ export class LessonHomeComponent implements OnInit {
     }, (err) => {
       this.loadingError = true;
       console.error('LessonHome lesson$ Error:', err);
+      this.router.navigate([ this.navService.getSubjectListRoute() ]);
+    });
+
+
+    // Get user admin status.
+    this.signIn.userIsAdmin().subscribe((isAdmin) => {
+      this.isAdmin = isAdmin;
+    }, (err) => {
+      console.error('LessonHome isAdmin Error:', err);
     });
   }
 }

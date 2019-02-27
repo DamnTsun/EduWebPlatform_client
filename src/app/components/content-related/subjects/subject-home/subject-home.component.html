@@ -17,6 +17,16 @@
         <h2>{{ subject$.name }}</h2>
         <markdown ngPreserveWhitespaces [data]="subject$.description"></markdown>
       </div>
+
+
+      <!-- Hidden / auto-hidden badge -->
+      <div *ngIf="currentUser !== null && currentUser.admin">
+        <span class="badge badge-secondary content-hidden-badge" *ngIf="subject$.hidden">Hidden</span>
+        <span class="badge badge-secondary content-hidden-badge"
+          *ngIf="!subject$.hidden && subject$.topicCount === 0">Auto-Hidden</span>
+      </div>
+
+
       <!-- Footer (options) -->
       <div class="card-footer">
         <button class="btn btn-outline-primary footer-button" routerLink="topics">Topics</button>
@@ -79,7 +89,7 @@
           <i class="material-icons button-icon">add</i>Associate with this Subject
         </button>
       </ng-template>
-      
+
     </div>
   </ng-container>
 

@@ -5,6 +5,8 @@ import { ApiService } from '../api.service';
 import { Post } from 'src/app/classes/Posts';
 import { environment } from 'src/environments/environment';
 import { SubjectAdmin } from 'src/app/classes/SubjectAdmin';
+import { Router } from '@angular/router';
+import { NavigationServiceService } from '../navigation-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +24,9 @@ export class SubjectsService {
 
 
   constructor(
-    private api: ApiService
+    private api: ApiService,
+    private router: Router,
+    private navService: NavigationServiceService
   ) { }
 
 
@@ -40,6 +44,7 @@ export class SubjectsService {
     }, (err) => {
       console.error('SiteService - Subject: ', err);
       this.subjectRecord.next(null);
+      this.router.navigate([ this.navService.getSubjectListRoute() ]);
     });
   }
 

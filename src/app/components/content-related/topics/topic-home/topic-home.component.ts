@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Topic } from 'src/app/classes/Topic';
 import { Lesson } from 'src/app/classes/Lesson';
@@ -31,6 +31,7 @@ export class TopicHomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private subjectService: SubjectsService,
     private topicService: TopicsService,
     private signIn: SignInService,
@@ -51,6 +52,7 @@ export class TopicHomeComponent implements OnInit {
       this.topic$ = topics[0];
     }, (err) => {
       console.error('Topic-Home Error:', err);
+      this.router.navigate([ this.navService.getSubjectListRoute() ]);
     });
 
 
