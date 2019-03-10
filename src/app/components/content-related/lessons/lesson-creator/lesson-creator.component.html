@@ -10,44 +10,85 @@
   </nav>
 
 
-  <!-- Message if something goes wrong with api request. -->
-  <div class="alert alert-danger" route="alert" *ngIf="errorMessage !== null">
-    <div>Unable to add lesson:</div>
-    {{ this.errorMessage }}
+  <div class="card">
+    <div class="card-body">
+      <!-- Message if something goes wrong with api request. -->
+      <div class="alert alert-danger" route="alert" *ngIf="errorMessage !== null">
+        <div>Unable to add lesson:</div>
+        {{ this.errorMessage }}
+      </div>
+
+      <h2>Create a Lesson:</h2>
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Lesson Name</label>
+        <input name="name" class="form-control form-control-lg" id="lessonName" type="text" placeholder="Enter Lesson Name"
+          maxlength="100">
+        <small class="form-text text-muted">
+          Lesson Name Must Not:
+          <ul>
+            <li>Be blank.</li>
+            <li>Contain more than 100 characters.</li>
+            <li>Be the same as an existing lessons name, in this topic.</li>
+          </ul>
+        </small>
+      </div>
+
+
+      <!-- Body -->
+      <div class="form-group">
+        <label for="body">Lesson Body</label>
+        <textarea name="body" class="form-control" id="lessonBody" placeholder="Enter Lesson Body" rows="20" maxlength="65535"></textarea>
+        <small class="form-text text-muted">
+          Body can be styled using Markdown.
+          <div>
+            Lesson Body Must Not:
+            <ul>
+              <li>Be blank.</li>
+              <li>Contain more than 65,535 characters.</li>
+              <ul>
+                <li>Current body length: {{ bodyValue.length }}</li>
+              </ul>
+            </ul>
+          </div>
+        </small>
+      </div>
+
+
+      <!-- Hidden -->
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="hidden" id="lessonHidden" value="option1">
+        <label class="form-check-label" for="lessonHidden">Hidden</label>
+        <small class="form-text text-muted">
+          When hidden, a lesson will only be visible to admin users.
+        </small>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="card-footer">
+      <div class="submit-button-container">
+        <button class="btn btn-primary submit-button" (click)="createLesson()" *ngIf="!this.submitted">Submit</button>
+      </div>
+    </div>
   </div>
 
-  <h2>Create a Lesson:</h2>
-  <!-- Name -->
-  <div class="form-group">
-    <label for="name">Lesson Name</label>
-    <input name="name" class="form-control form-control-lg" id="lessonName" type="text" placeholder="Enter Lesson Name"
-      maxlength="50">
-    <small class="form-text text-muted">
-      Lesson Name Must Not:
-      <ul>
-        <li>Be blank.</li>
-        <li>Contain more than 50 characters.</li>
-        <li>Be the same as an existing lessons name, in this topic.</li>
-      </ul>
-    </small>
+
+
+  <!-- Preview -->
+  <h2>Preview:</h2>
+  <div class="card">
+    <div class="card-body">
+      <h2>{{ nameValue }}</h2>
+      <markdown [data]="bodyValue" ngPreserveWhitespaces></markdown>
+    </div>
+
+
+    <!-- Hidden / auto-hidden badge -->
+    <div>
+      <span class="badge badge-secondary content-hidden-badge" *ngIf="hiddenValue">Hidden</span>
+    </div>
   </div>
 
-  <!-- Body -->
-  <div class="form-group">
-    <label for="body">Lesson Body</label>
-    <quill-editor #body [style]="{ height: '50em' }"></quill-editor>
-    <small class="form-text text-muted">
-      <div>Lesson body may contain rich-text elements, such as bold and italics, as well as images.</div>
-      Lesson Body Must Not:
-      <ul>
-        <li>Be blank.</li>
-        <li>Contain more than 65,535 characters.</li>
-      </ul>
-      <div>Current encoded lesson body: {{ getBodyLength() }} characters.</div>
-    </small>
-  </div>
-
-
-  <button class="btn btn-primary" (click)="createLesson()" *ngIf="!this.submitted">Submit</button>
 
 </section>

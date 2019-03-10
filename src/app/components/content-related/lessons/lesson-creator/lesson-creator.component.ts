@@ -4,8 +4,6 @@ import { LessonsService } from 'src/app/services/contentServices/lessons.service
 import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { Body } from '@angular/http/src/body';
-import { QuillEditorComponent } from 'ngx-quill';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
@@ -21,8 +19,14 @@ export class LessonCreatorComponent implements OnInit {
   public submitted: boolean = false;           // Whether page has been submitted.
   public errorMessage: string = null;          // Error message to display if something goes wrong.
 
-  @ViewChild('body') editor: QuillEditorComponent;      // Rich-text editor for body.
-  private body: string = null;                          // User input for body.
+
+  // Current value of name, body, hidden values.
+  public nameValue: string = '';
+  public bodyValue: string = '';
+  public hiddenValue: boolean = false;
+
+
+
 
 
   constructor(
@@ -41,6 +45,7 @@ export class LessonCreatorComponent implements OnInit {
     // Set subject.
     this.subjectService.setSubject(this.subjectid);
 
+
     // Get user admin status.
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
       // Send back to topic home if not admin.
@@ -51,18 +56,20 @@ export class LessonCreatorComponent implements OnInit {
       console.error('Lesson-Creator isAdmin Error:', err);
     });
 
-    // Set event listener onto editor to get the current text.
-    this.editor.onEditorCreated.subscribe(e => {
-      let tool = e.getModule('toolbar');
-      tool.addHandler('image', (val) => {
-        console.log('add image')
-      });
-      this.editor = e;
-      console.log(e);
+
+    // Watch input values.
+    document.getElementById('lessonName').addEventListener('input', (e) => {
+      this.nameValue = (<HTMLInputElement>e.target).value.trim();
+      console.log(this.nameValue);
     });
-    this.editor.onContentChanged.subscribe(e => {
-      this.body = e.html;
-    })
+    document.getElementById('lessonBody').addEventListener('input', (e) => {
+      this.bodyValue = (<HTMLInputElement>e.target).value.trim();
+      console.log(this.bodyValue);
+    });
+    document.getElementById('lessonHidden').addEventListener('input', (e) => {
+      this.hiddenValue = (<HTMLInputElement>e.target).checked;
+      console.log(this.hiddenValue);
+    });
   }
 
 
@@ -93,7 +100,8 @@ export class LessonCreatorComponent implements OnInit {
   private buildLesson(): object {
     let lesson = {
       name: null,
-      body: null
+      body: null,
+      hidden: false
     }
 
     // Name
@@ -106,16 +114,19 @@ export class LessonCreatorComponent implements OnInit {
     lesson.name = nameInput.value.trim();
 
     // Body
-    if (this.body == null ||
-        this.body == '') {
+    if (this.bodyValue == null ||
+        this.bodyValue == '') {
       this.errorMessage = 'You must enter a body.';
       return null;
     }
-    if (this.body.length > 65535) {
+    if (this.bodyValue.length > 65535) {
       this.errorMessage = 'Encoded body cannot contain more than 65,535 characters.';
       return null;
     }
-    lesson.body = this.body;
+    lesson.body = this.bodyValue;
+
+    // Hidden
+    lesson.hidden = this.hiddenValue;
 
     // Clear error since inputs must be valid.
     this.errorMessage = null;
@@ -156,11 +167,6 @@ export class LessonCreatorComponent implements OnInit {
     }
   }
 
-
-  public getBodyLength() {
-    if (this.body == null) { return 0; }
-    return this.body.length;
-  }
 
 
   /**

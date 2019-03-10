@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Lesson } from 'src/app/classes/Lesson';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { LessonsService } from 'src/app/services/contentServices/lessons.service';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { QuillEditorComponent } from 'ngx-quill';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
@@ -25,8 +24,13 @@ export class LessonEditorComponent implements OnInit {
   public submitted: boolean = false;           // Whether page has been submitted.
   public errorMessage: string = null;          // Error message if something goes wrong.
 
-  @ViewChild('body') editor: QuillEditorComponent;
-  private body: string = null;
+  // Current values of inputs.
+  public nameValue: string = '';
+  public bodyValue: string = '';
+  public hiddenValue: boolean = false;
+
+
+
 
 
   constructor(
@@ -58,12 +62,6 @@ export class LessonEditorComponent implements OnInit {
     });
 
 
-    // Store html when it is changed.
-    this.editor.onContentChanged.subscribe(e => {
-      this.body = e.html;
-    });
-
-
     // Get lesson being editted.
     this.lessonService.getLesson(this.subjectid, this.topicid, this.lessonid).subscribe((lessons) => {
       this.lesson$ = lessons[0];
@@ -72,6 +70,17 @@ export class LessonEditorComponent implements OnInit {
       console.error('Lesson-Editor getLesson Error:', err);
     });
 
+
+    // Watch input values.
+    document.getElementById('lessonName').addEventListener('input', (e) => {
+      this.nameValue = (<HTMLInputElement>e.target).value.trim();
+    });
+    document.getElementById('lessonBody').addEventListener('input', (e) => {
+      this.bodyValue = (<HTMLTextAreaElement>e.target).value.trim();
+    });
+    document.getElementById('lessonHidden').addEventListener('input', (e) => {
+      this.hiddenValue = (<HTMLInputElement>e.target).checked;
+    });
   }
 
 
@@ -84,14 +93,17 @@ export class LessonEditorComponent implements OnInit {
     // Name
     let name = (<HTMLInputElement>document.getElementById('lessonName'));
     if (name !== null) { name.value = lesson.name; }
+    this.nameValue = lesson.name;
 
     // Body
-    // Remove the '\"' around image sources.
-    let insert = this.sanitizer.bypassSecurityTrustHtml(this.deescapeHTML(lesson.body)).toString();
-    // Angular adds a message at start and end about unsafe html.
-    // And conviently don't provide any easy method to get rid of that crap...
-    insert = insert.substring(39, insert.length - 34);
-    this.editor.writeValue(insert.toString());
+    let body = (<HTMLTextAreaElement>document.getElementById('lessonBody'));
+    if (body !== null) { body.value = lesson.body; }
+    this.bodyValue = lesson.body;
+
+    // Hidden
+    let hidden = (<HTMLInputElement>document.getElementById('lessonHidden'));
+    if (hidden !== null) { hidden.checked = lesson.hidden; }
+    this.hiddenValue = lesson.hidden;
   }
 
   public resetValues(): void {
@@ -141,19 +153,24 @@ export class LessonEditorComponent implements OnInit {
 
 
     // Body
-    if (this.body == null ||
-        this.body == '') {
+    if (this.bodyValue == null ||
+        this.bodyValue == '') {
       this.errorMessage = 'You must enter a body.';
       return null;
     }
-    if (this.body.length > 65535) {
+    if (this.bodyValue.length > 65535) {
       this.errorMessage = 'Encoded body cannot contain more than 65,535 characters.';
       return null;
     }
-    // Store body if it has changed.
-    if (this.body !== this.deescapeHTML(this.lesson$.body)) {
-      lesson['body'] = this.body;
+    if (this.bodyValue !== this.lesson$.body) {
+      lesson['body'] = this.bodyValue;
     }
+
+    // Hidden
+    if (this.hiddenValue !== this.lesson$.hidden) {
+      lesson['hidden'] = this.hiddenValue;
+    }
+
 
     return lesson;
   }
@@ -205,22 +222,4 @@ export class LessonEditorComponent implements OnInit {
     this.router.navigate([ route ]);
   }
 
-
-
-  /**
-   * 'De-escapes' HTML. Does things such as changing '\"' to '"', etc.
-   * @param html - HTML to be 'de-escaped'.
-   */
-  private deescapeHTML(html: string) {
-    html = html.replace(/\\"/g, '"');
-    return html;
-  }
-
-  /**
-   * Gets length of body in memory for display.
-   */
-  public getBodyLength() {
-    if (this.body == null) { return 0; }
-    return this.body.length;
-  }
 }
