@@ -9,6 +9,7 @@ export const environment = {
   routeParams: {
     // Content related.
     subjectid: 'subjectid',
+    postid: 'postid',
     topicid: 'topicid',
     lessonid: 'lessonid',
     testid: 'testid',
@@ -18,16 +19,22 @@ export const environment = {
     usertestid: 'usertestid',
 
     // User / Messaging related.
-    userid: 'userid'
+    userid: 'userid',
+
+    // Group related.
+    groupid: 'groupid'
   },
   routes: {
     // *** CONTENT RELATED ***
     // SUBJECTS
     subjectSelect: 'subjects',
     subjectHome: 'subjects/:subjectid',
-    subjectNews: 'subjects/:subjectid/news',
     subjectCreator: 'subjects/create',
     subjectEditor: 'subjects/:subjectid/edit',
+    // SUBJECT POSTS
+    subjectNews: 'subjects/:subjectid/news',
+    subjectPostCreator: 'subjects/:subjectid/news/create',
+    subjectPostEditor: 'subjects/:subjectid/news/:postid/edit',
 
     // TOPICS
     topicHome: 'subjects/:subjectid/topics/:topicid',
@@ -70,9 +77,31 @@ export const environment = {
     messageSentList: 'users/messages/sent',
     messageSentToList: 'users/messages/sent/:userid',
 
-    sendMessage: 'users/messages/send/:userid'
+    sendMessage: 'users/messages/send/:userid',
+    chat: 'users/chat/:userid',
 
     // sentList -> sentTolist -> sendMessage -> messageFromlist ->  messagelist
+
+    // GROUPS
+    // Group list.
+    groupList: 'groups',
+    // All groups (admin).
+
+    // Group creator / editor.
+    groupCreator: 'groups/create',
+    groupEditor: 'groups/:groupid/edit',
+    // Group home (including add/remove users).
+    groupHome: 'groups/:groupid',
+    // Group chat.
+    groupChat: 'groups/:groupid/chat'
+  },
+
+  // Defines debug stuff, such as console logging certain values for testing reasons.
+  debug: {
+    // Show media sign in objects. Contains the users name, email, id token. Generally used to see id token.
+    showSocialMediaSignInObjects: false,
+    // Show API authorization objects. Generally used to see authorization JWT / to check it is working correctly.
+    showAPIAuthorizationObjects: false
   }
 };
 

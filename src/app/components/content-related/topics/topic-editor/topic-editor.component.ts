@@ -5,6 +5,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Topic } from 'src/app/classes/Topic';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-topic-editor',
@@ -13,9 +14,18 @@ import { Topic } from 'src/app/classes/Topic';
 })
 export class TopicEditorComponent implements OnInit {
 
-  private topic$: Topic = null;               // Topic being editted. Used when setting / resetting to init vals.
-  private submitted: boolean = false;         // Whether form has been submitted successfully or in process of.
-  private errorMessage: string = null;        // Error message displayed if something goes wrong.
+  public subjectid = null;
+  public topic$: Topic = null;               // Topic being editted. Used when setting / resetting to init vals.
+  public submitted: boolean = false;         // Whether form has been submitted successfully or in process of.
+  public errorMessage: string = null;        // Error message displayed if something goes wrong.
+
+  // Values of name / description. Used by preview.
+  public nameValue: string = '';
+  public descriptionValue: string = '';
+  public hiddenValue: boolean = false;
+
+
+
 
 
   constructor(
@@ -23,15 +33,16 @@ export class TopicEditorComponent implements OnInit {
     private topicService: TopicsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
     // Get route params.
-    let subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
+    this.subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
     let topicid = this.route.snapshot.paramMap.get(environment.routeParams.topicid);
     // Set current subject.
-    this.subjectService.setSubject(subjectid);
+    this.subjectService.setSubject(this.subjectid);
 
     // Get user admin status.
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
@@ -45,7 +56,7 @@ export class TopicEditorComponent implements OnInit {
 
 
     // Get topic being editted.
-    this.topicService.getTopic(subjectid, topicid).subscribe((topics) => {
+    this.topicService.getTopic(this.subjectid, topicid).subscribe((topics) => {
       // If topic returned, set initial values for inputs. Also store to allow for resets.
       if (topics !== null && topics.length > 0) {
         this.topic$ = topics[0];
@@ -53,6 +64,18 @@ export class TopicEditorComponent implements OnInit {
       }
     }, (err) => {
       console.error('Topic-Editor topic Error:', err);
+    });
+
+
+    // Get values of name / description.
+    document.getElementById('topicName').addEventListener('input', (e) => {
+      this.nameValue = (<HTMLInputElement>e.target).value;
+    });
+    document.getElementById('topicDescription').addEventListener('input', (e) => {
+      this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
+    });
+    document.getElementById('topicHidden').addEventListener('input', (e) => {
+      this.hiddenValue = (<HTMLInputElement>e.target).checked;
     });
   }
 
@@ -66,16 +89,23 @@ export class TopicEditorComponent implements OnInit {
     // Name
     let name = <HTMLInputElement>document.getElementById('topicName');
     if (name !== null) { name.value = topic.name; }
+    this.nameValue = topic.name;
 
     // Description
     let description = <HTMLTextAreaElement>document.getElementById('topicDescription');
     if (description !== null) { description.value = topic.description; }
+    this.descriptionValue = topic.description;
+
+    // Hidden
+    let hidden = <HTMLInputElement>document.getElementById('topicHidden');
+    if (hidden !== null) { hidden.checked = topic.hidden; }
+    this.hiddenValue = topic.hidden;
   }
 
   /**
    * Resets value on page back to original values of topic being editted.
    */
-  private resetValues(): void {
+  public resetValues(): void {
     if (this.topic$ !== null) {
       this.setPageValues(this.topic$);
     }
@@ -86,7 +116,7 @@ export class TopicEditorComponent implements OnInit {
   /**
    * Validates inputs and sends request to api to edit subject if inputs valid.
    */
-  private editTopic(): void {
+  public editTopic(): void {
     // Attempt to build topic object. Check it.
     let topic = this.buildTopic();
     if (topic == null) { return; }
@@ -132,6 +162,12 @@ export class TopicEditorComponent implements OnInit {
     let description = (<HTMLTextAreaElement>document.getElementById('topicDescription')).value;
     if (description !== this.topic$.description) {
       topic['description'] = description;
+    }
+
+
+    // Hidden
+    if (this.hiddenValue !== this.topic$.hidden) {
+      topic['hidden'] = this.hiddenValue;
     }
 
     // Clear error message if validation passed.

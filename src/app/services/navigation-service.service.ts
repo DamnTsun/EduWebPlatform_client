@@ -30,6 +30,17 @@ export class NavigationServiceService {
     return route;
   }
 
+  // NEWS POSTS
+  /**
+   * Gets subject news route.
+   * @param subjectid - id of subject.
+   */
+  public getSubjectNewsRoute(subjectid): string {
+    let route = `/${environment.routes.subjectNews}`;
+    route = route.replace(`:${environment.routeParams.subjectid}`, subjectid);
+    return route;
+  }
+
 
 
   // TOPICS
@@ -80,7 +91,7 @@ export class NavigationServiceService {
     let route = `/${environment.routes.lessonHome}`;
     route = route.replace(`:${environment.routeParams.subjectid}`, subjectid);
     route = route.replace(`:${environment.routeParams.topicid}`, topicid);
-    route = route.replace(`:${environment.routeParams.testid}`, lessonid);
+    route = route.replace(`:${environment.routeParams.lessonid}`, lessonid);
     return route;
   }
 
@@ -114,12 +125,111 @@ export class NavigationServiceService {
   }
 
 
+  // TEST QUESTIONS
+  /**
+   * Gets test question list route.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   */
+  public getTestQuestionListRoute(subjectid, topicid, testid): string {
+    let route = `/${environment.routes.testQuestionList}`;
+    route = route.replace(`:${environment.routeParams.subjectid}`, subjectid);
+    route = route.replace(`:${environment.routeParams.topicid}`, topicid);
+    route = route.replace(`:${environment.routeParams.testid}`, testid);
+    return route;
+  }
 
-  
+  /**
+   * Gets test question home route.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   * @param questionid id of test question.
+   */
+  public getTestQuestionHomeRoute(subjectid, topicid, testid, questionid): string {
+    let route = `/${environment.routes.testQuestionHome}`;
+    route = route.replace(`:${environment.routeParams.subjectid}`, subjectid);
+    route = route.replace(`:${environment.routeParams.topicid}`, topicid);
+    route = route.replace(`:${environment.routeParams.testid}`, testid);
+    route = route.replace(`:${environment.routeParams.questionId}`, questionid);
+    return route;
+  }
+
+
+
+  // USER TESTS
+
+  /**
+   * Gets user test list route.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   */
+  public getUserTestListRoute(subjectid, topicid, testid) {
+    let route = `/${environment.routes.userTestList}`;
+    route = route.replace(`:${environment.routeParams.subjectid}`, subjectid);
+    route = route.replace(`:${environment.routeParams.topicid}`, topicid);
+    route = route.replace(`:${environment.routeParams.testid}`, testid);
+    return route;
+  }
+
+  /**
+   * Gets user test details route.
+   * @param subjectid - id of sujbect.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   * @param utestid - id of user test.
+   */
+  public getUserTestDetailsRoute(subjectid, topicid, testid, utestid) {
+    let route = `/${environment.routes.userTestDetails}`;
+    route = route.replace(`:${environment.routeParams.subjectid}`, subjectid);
+    route = route.replace(`:${environment.routeParams.topicid}`, topicid);
+    route = route.replace(`:${environment.routeParams.testid}`, testid);
+    route = route.replace(`:${environment.routeParams.usertestid}`, utestid);
+    return route;
+  }
+
+
+
+
 
 
   // USERS
   public getUserListRoute(): string {
     return `/${environment.routes.usersList}`;
+  }
+
+
+
+  // CHAT
+  /**
+   * Gets user chat route.
+   * @param userid - id of user.
+   */
+  public getUserChatRoute(userid): string {
+    let route = `/${environment.routes.chat}`;
+    route = route.replace(`:${environment.routeParams.userid}`, userid);
+    return route;
+  }
+
+
+
+  // GROUPS
+  /**
+   * Gets route of group list.
+   */
+  public getGroupListRoute(): string {
+    return `/${environment.routes.groupList}`;
+  }
+
+  /**
+   * Gets route of group home.
+   * @param groupid - id of group.
+   */
+  public getGroupHomeRoute(groupid): string {
+    let route = `/${environment.routes.groupHome}`;
+    route = route.replace(`:${environment.routeParams.groupid}`, groupid);
+    return route;
   }
 }

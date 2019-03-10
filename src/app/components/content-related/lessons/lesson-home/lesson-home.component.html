@@ -2,7 +2,8 @@
 
 
   <!-- Breadcrumb navigation -->
-  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null && topicid !== null && lesson$ !== null">
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb"
+    *ngIf="subjectid !== null && topicid !== null && lesson$ !== null">
     <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
     <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
     <a class="breadcrumb-item" routerLink="{{ navService.getTopicListRoute(subjectid) }}">Topics</a>
@@ -12,13 +13,28 @@
   </nav>
 
 
+
+  <button class="btn btn-success back-button" routerLink="../">
+    <i class="material-icons button-icon">arrow_back</i>
+    Back to Lesson Select
+  </button>
+
   <!-- Shown after successfully fetching lesson from api -->
   <ng-container *ngIf="(lesson$ !== null); else loadingTemplate">
 
     <div class="card">
-      <h2 class="card-header">{{ lesson$.name }}</h2>
-      <div class="card-body" [innerHTML]="lessonBody"></div>
+      <div class="card-body">
+        <h2 class="card-title">{{ lesson$.name }}</h2>
+        <markdown ngPreserveWhitespaces [data]="lesson$.body"></markdown>
+      </div>
+
+
+      <!-- Hidden / auto-hidden badge -->
+      <div *ngIf="isAdmin">
+        <span class="badge badge-secondary content-hidden-badge" *ngIf="lesson$.hidden">Hidden</span>
+      </div>
     </div>
+
   </ng-container>
 
 

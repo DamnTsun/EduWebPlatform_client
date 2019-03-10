@@ -5,6 +5,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TestQuestion } from 'src/app/classes/TestQuestion';
 import { environment } from 'src/environments/environment';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-test-question-home',
@@ -13,12 +14,15 @@ import { environment } from 'src/environments/environment';
 })
 export class TestQuestionHomeComponent implements OnInit {
 
-  private subjectid = null;
-  private topicid = null;
-  private testid = null;
-  private testQuestion$: TestQuestion = null;
+  public subjectid = null;
+  public topicid = null;
+  public testid = null;
+  public testQuestion$: TestQuestion = null;
 
-  private loadingFailed: boolean = false;
+  public loadingFailed: boolean = false;
+
+
+
 
 
   constructor(
@@ -26,7 +30,8 @@ export class TestQuestionHomeComponent implements OnInit {
     private testQuestionService: TestQuestionsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -56,7 +61,6 @@ export class TestQuestionHomeComponent implements OnInit {
     this.testQuestionService.getTestQuestion(this.subjectid, this.topicid, this.testid, questionid).subscribe((questions: TestQuestion[]) => {
       if (questions !== null && questions.length > 0) {
         this.testQuestion$ = questions[0];
-        console.log(questions[0]);
       }
     }, (err) => {
       console.error('TestQuestion-Home getQuestion Error:', err);
@@ -75,5 +79,27 @@ export class TestQuestionHomeComponent implements OnInit {
     route = route.replace(`:${environment.routeParams.topicid}`, this.topicid);
     route = route.replace(`:${environment.routeParams.testid}`, this.testid);
     this.router.navigate([ route ]);
+  }
+
+
+
+
+
+  /**
+   * Deletes the question being viewed.
+   */
+  public deleteQuestion() {
+    // Check currently viewing a question.
+    if (this.testQuestion$ == null) { return; }
+
+    this.testQuestionService.deleteTestQuestion(this.subjectid, this.topicid,
+      this.testid, this.testQuestion$.id).subscribe((res) => {
+        // Success. Redirect to test questions list.
+        this.router.navigate([
+          this.navService.getTestQuestionListRoute(this.subjectid, this.topicid, this.testid)
+        ]);
+    }, (err) => {
+      console.error('TestQuestion-Home delete question Error:', err);
+    })
   }
 }

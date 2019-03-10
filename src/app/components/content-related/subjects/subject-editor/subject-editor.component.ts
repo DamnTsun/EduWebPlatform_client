@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { environment } from 'src/environments/environment';
 import { Subject } from 'src/app/classes/Subject';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-subject-editor',
@@ -12,9 +13,13 @@ import { Subject } from 'src/app/classes/Subject';
 })
 export class SubjectEditorComponent implements OnInit {
 
-  private subject$: Subject = null;
-  private submitted: boolean = false;
-  private errorMessage: string = null;
+  public subject$: Subject = null;
+  public submitted: boolean = false;
+  public errorMessage: string = null;
+
+  public nameValue: string = '';
+  public descriptionValue: string = '';
+  public hiddenValue: boolean = false;
 
 
 
@@ -24,7 +29,8 @@ export class SubjectEditorComponent implements OnInit {
     private subjectService: SubjectsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -53,6 +59,18 @@ export class SubjectEditorComponent implements OnInit {
     }, (err) => {
       console.error('Subject-Editor subject Error:', err);
     });
+
+    // Get updates to name.
+    document.getElementById('subjectName').addEventListener('input', (e) => {
+      this.nameValue = (<HTMLInputElement>e.target).value;
+    });
+    // Get updates to description.
+    document.getElementById('subjectDescription').addEventListener('input', (e) => {
+      this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
+    });
+    document.getElementById('subjectHidden').addEventListener('input', (e) => {
+      this.hiddenValue = (<HTMLInputElement>e.target).checked;
+    });
   }
 
   /**
@@ -63,15 +81,21 @@ export class SubjectEditorComponent implements OnInit {
     // Name field.
     let name = <HTMLInputElement>document.getElementById('subjectName');
     if (name !== null) { name.value = subject.name; }
+    this.nameValue = subject.name;
     // Description field.
     let description = <HTMLTextAreaElement>document.getElementById('subjectDescription');
     if (description !== null) { description.value = subject.description; }
+    this.descriptionValue = subject.description;
+    // Hidden.
+    let hidden = <HTMLInputElement>document.getElementById('subjectHidden');
+    if (hidden !== null) { hidden.checked = subject.hidden; }
+    this.hiddenValue = subject.hidden;
   }
 
   /**
    * Resets field values to initial values. (The current values for the subject pre-edit.)
    */
-  private resetValues(): void {
+  public resetValues(): void {
     if (this.subject$ !== null) {
       this.setPageValues(this.subject$);
     }
@@ -81,7 +105,7 @@ export class SubjectEditorComponent implements OnInit {
   /**
    * Validates inputs and sends request to api to edit subject.
    */
-  private editSubject(): void {
+  public editSubject(): void {
     // Get subject object.
     let subject = this.buildSubject();
     // Ensure object received successfully / the user is actually changing something.
@@ -121,6 +145,11 @@ export class SubjectEditorComponent implements OnInit {
     let description = (<HTMLTextAreaElement>document.getElementById('subjectDescription')).value;
     if (description !== this.subject$.description) {
       subject['description'] = description;
+    }
+
+    // Hidden
+    if (this.hiddenValue !== this.subject$.hidden) {
+      subject['hidden'] = this.hiddenValue;
     }
 
     return subject;

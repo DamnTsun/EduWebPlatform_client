@@ -1,0 +1,73 @@
+.page-content-card {
+    margin: 1em auto;
+    width: 40em;
+    max-width: 100%;
+}
+
+.delete-button-container {
+    width: fit-content;
+    max-width: 100%;
+    margin: 1em auto;
+}
+.delete-button {
+    width: 20em;
+    max-width: 100%;
+}
+
+
+.group-members-card {
+    margin: 1em 0em;
+}
+
+
+
+.card-table-container {
+    border-color: black;
+}
+
+
+.table {
+    margin-bottom: 0px; /* Remove margin-bottom. */
+    max-width: 100%;
+}
+
+.table-options-cell {
+    text-align: right;
+}
+
+.table-id-header {
+    width: 5em;
+    max-width: 10%
+}
+
+.table-displayname-header {
+    width: 30em;
+    max-width: 30%;
+}
+
+.table-cell-button {
+    position: relative;
+    max-width: 100%;
+    width: 7em;
+    margin: 0.25em;
+}
+
+
+
+/* Container for group image */
+.group-image-container {
+    border-bottom: 1px solid black;
+    background-color: lightgray;
+    /* Inherit card border radius. */
+    border-radius: inherit;
+    /* Set 0 bottom radius to act as separator. */
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    overflow: hidden;
+}
+
+.no-image-message {
+    text-align: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}

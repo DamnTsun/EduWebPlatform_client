@@ -1,40 +1,100 @@
 <section class="container page-content">
-  <!-- Message if something goes wrong with api request. -->
-  <div class="alert alert-danger" route="alert" *ngIf="errorMessage !== null">
-    <div>Unable to add test:</div>
-    {{ this.errorMessage }}
-  </div>
-  
-  <h2>Create a Test:</h2>
-  <!-- Name -->
-  <div class="form-group">
-    <label for="name">Test Name</label>
-    <input name="name" class="form-control form-control-lg" id="testName" type="text" placeholder="Enter Test Name"
-      maxlength="50">
-    <small class="form-text text-muted">
-      Test Name Must Not:
-      <ul>
-        <li>Be blank.</li>
-        <li>Contain more than 50 characters.</li>
-        <li>Be the same as an existing tests name, in this topic.</li>
-      </ul>
-    </small>
-  </div>
 
-  <!-- Description -->
-  <div class="form-group">
-    <label for="description">Test Description (Optional)</label>
-    <textarea name="description" class="form-control" id="testDescription" placeholder="Enter Test Desciption (Optional)"
-      rows="10" maxlength="1024"></textarea>
-    <small class="form-text text-muted">
-      Test Description Must Not:
-      <ul>
-        <li>Contain more than 1024 characters.</li>
-      </ul>
-    </small>
-  </div>
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null && topicid !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicListRoute(subjectid) }}">Topics</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicHomeRoute(subjectid, topicid) }}">{{ topicid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTestListRoute(subjectid, topicid) }}">Tests</a>
+    <span class="breadcrumb-item active" aria-current="page">Create</span>
+  </nav>
 
 
-  <button class="btn btn-primary" (click)="createTest()" *ngIf="!this.submitted">Submit</button>
+  <div class="card">
+    <div class="card-body">
+
+      <!-- Message if something goes wrong with api request. -->
+      <div class="alert alert-danger" route="alert" *ngIf="errorMessage !== null">
+        <div>Unable to add test:</div>
+        {{ this.errorMessage }}
+      </div>
+
+      <h2>Create a Test:</h2>
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Test Name</label>
+        <input name="name" class="form-control form-control-lg" id="testName" type="text" placeholder="Enter Test Name"
+          maxlength="100">
+        <small class="form-text text-muted">
+          Test Name Must Not:
+          <ul>
+            <li>Be blank.</li>
+            <li>Be the same as an existing tests name, in this topic.</li>
+            <li>Contain more than 100 characters.</li>
+            <ul>
+              <li>Current name length: {{ nameValue.length }}</li>
+            </ul>
+          </ul>
+        </small>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Test Description</label>
+        <textarea name="description" class="form-control" id="testDescription" placeholder="Enter Test Description"
+          rows="10" maxlength="4096"></textarea>
+        <small class="form-text text-muted">
+          Test Description Must Not:
+          <ul>
+            <li>Contain more than 4096 characters.</li>
+            <ul>
+              <li>Current description length: {{ descriptionValue.length }}</li>
+            </ul>
+          </ul>
+        </small>
+      </div>
+
+
+      <!-- Hidden -->
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="hidden" id="testHidden" value="option1">
+        <label class="form-check-label" for="testHidden">Hidden</label>
+        <small class="form-text text-muted">
+          Description can be styled using Markdown.
+          <div>
+            When hidden, a test will only be visible to admin users.
+            <div>
+              Note: New tests will be auto-hidden due to containing less than 10 test questions.
+            </div>
+          </div>
+        </small>
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <div class="submit-button-container">
+        <button class="btn btn-primary submit-button" (click)="createTest()" *ngIf="!this.submitted">Submit</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Preview -->
+  <h2>Preview:</h2>
+  <div class="card">
+    <div class="card-body">
+      <h2>{{ nameValue }}</h2>
+      <markdown [data]="descriptionValue" ngPreserveWhitespaces></markdown>
+    </div>
+
+
+    <!-- Hidden / auto-hidden badge -->
+    <div>
+      <span class="badge badge-secondary content-hidden-badge" *ngIf="hiddenValue">Hidden</span>
+      <span class="badge badge-secondary content-hidden-badge" *ngIf="!hiddenValue">Auto-Hidden</span>
+    </div>
+  </div>
 
 </section>

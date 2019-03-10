@@ -1,0 +1,29 @@
+.card-table-container {
+    border-color: black;
+}
+
+
+.table {
+    margin-bottom: 0px; /* Remove margin-bottom. */
+    max-width: 100%;
+}
+
+
+.delete-button {
+    width: 20em;
+    max-width: 100%;
+}
+
+.delete-button-container {
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.back-button {
+    margin: 1em 0em;
+    width: 25em;
+    max-width: 100%;
+}

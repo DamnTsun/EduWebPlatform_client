@@ -4,6 +4,7 @@ import { TestQuestionsService } from 'src/app/services/contentServices/test-ques
 import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-test-question-creator',
@@ -13,12 +14,20 @@ import { environment } from 'src/environments/environment';
 export class TestQuestionCreatorComponent implements OnInit {
 
   // Ids of parent objects.
-  private subjectid = null;
-  private topicid = null;
-  private testid = null;
+  public subjectid = null;
+  public topicid = null;
+  public testid = null;
 
-  private submitted: boolean = false;         // Whether page has been submitted.
-  private errorMessage: string = null;        // Error message to display if something goes wrong.
+  public submitted: boolean = false;         // Whether page has been submitted.
+  public errorMessage: string = null;        // Error message to display if something goes wrong.
+
+  // Values of question / answer / imageUrl. Used by preview.
+  public questionValue: string = '';
+  public answerValue: string = '';
+  public imageUrlValue: string = '';
+
+
+
 
 
   constructor(
@@ -26,7 +35,8 @@ export class TestQuestionCreatorComponent implements OnInit {
     private testQuestionService: TestQuestionsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -42,10 +52,22 @@ export class TestQuestionCreatorComponent implements OnInit {
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
       // Redirect to topic home if not admin.
       if (!isAdmin) {
-        this.redirectToTopicHome();
+        this.redirectToTestHome();
       }
     }, (err) => {
       console.error('TestQuestion-Creator isAdmin Error:', err);
+    });
+
+
+    // Watch values of question / answer / imageUrl inputs.
+    document.getElementById('questionText').addEventListener('input', (e) => {
+      this.questionValue = (<HTMLInputElement>e.target).value;
+    });
+    document.getElementById('questionAnswer').addEventListener('input', (e) => {
+      this.answerValue = (<HTMLInputElement>e.target).value;
+    });
+    document.getElementById('questionImageUrl').addEventListener('input', (e) => {
+      this.imageUrlValue = (<HTMLInputElement>e.target).value;
     });
   }
 
@@ -54,10 +76,9 @@ export class TestQuestionCreatorComponent implements OnInit {
   /**
    * Validates input and attempts to create testquestion on api if valid.
    */
-  private createTestQuestion(): void {
+  public createTestQuestion(): void {
     // Build question. Ensure valid.
     let question = this.buildTestQuestion();
-    console.log(question);
     if (question == null) { return; }
 
     // Submit if allowed.
@@ -130,7 +151,7 @@ export class TestQuestionCreatorComponent implements OnInit {
         this.submitted = false;
         break;
       case 401: // User not admin.
-        this.redirectToTopicHome();
+        this.redirectToTestHome();
         break;
       case 500: // Server went wrong.
         this.errorMessage = 'Sorry, something went wrong with the server. Please try again later.';
@@ -147,10 +168,9 @@ export class TestQuestionCreatorComponent implements OnInit {
   /**
    * Redirects user to test question list.
    */
-  private redirectToTopicHome() {
-    let route = environment.routes.topicHome;
-    route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid);
-    route = route.replace(`:${environment.routeParams.topicid}`, this.topicid);
-    this.router.navigate([route]);
+  private redirectToTestHome() {
+    this.router.navigate([
+      this.navService.getTestHomeRoute(this.subjectid, this.topicid, this.testid)
+    ]);
   }
 }

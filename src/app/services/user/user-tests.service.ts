@@ -39,10 +39,24 @@ export class UserTestsService {
    * @param subjectid - id of subject.
    * @param topicid - id of topic.
    * @param testid - id of test.
+   * @param count - number of results to get.
+   * @param offset - number of results to skip.
    */
-  public getUserTestResults(subjectid, topicid, testid): Observable<UserTest[]> {
+  public getUserTestResults(subjectid, topicid, testid, count, offset): Observable<UserTest[]> {
     return this.api.get(environment.apiUrl +
-        `subjects/${subjectid}/topics/${topicid}/tests/${testid}/user_tests`) as Observable<UserTest[]>;
+        `subjects/${subjectid}/topics/${topicid}/tests/${testid}/user_tests?count=${count}&offset=${offset}`) as Observable<UserTest[]>;
+  }
+
+  /**
+   * Gets an individual user test result by id.
+   * @param subjectid - id of subject.
+   * @param topicid - id of topic.
+   * @param testid - id of test.
+   * @param utestid - id of user_test.
+   */
+  public getUserTestResult(subjectid, topicid, testid, utestid): Observable<UserTest[]> {
+    return this.api.get(environment.apiUrl +
+        `subjects/${subjectid}/topics/${topicid}/tests/${testid}/user_tests/${utestid}`) as Observable<UserTest[]>;
   }
 
 
@@ -84,7 +98,7 @@ export class UserTestsService {
    */
   public deleteUserTest(subjectid, topicid, testid, utestid) {
     return this.api.delete(environment.apiUrl +
-      `subjects/${subjectid}/topics/${topicid}/tests/${testid}/user_test/${utestid}`);
+      `subjects/${subjectid}/topics/${topicid}/tests/${testid}/user_tests/${utestid}`);
   }
 
 

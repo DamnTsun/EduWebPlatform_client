@@ -1,0 +1,92 @@
+<section class="container page-content">
+
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb">
+    <span class="breadcrumb-item active" aria-current="page">Groups</span>
+  </nav>
+
+
+  <!-- Create button -->
+  <div class="create-button-container">
+    <button class="btn btn-success create-button" routerLink="create">
+      <i class="material-icons button-icon">add</i>Create a Group
+    </button>
+  </div>
+
+
+
+  <!-- Grid of groups -->
+  <div class="content-grid">
+
+    <!-- 1 card per group -->
+    <div class="card" *ngFor="let group of groups$; let i = index;">
+      <!-- Show group image. (Or placeholder if not set) -->
+      <div class="question-image-container">
+        <!-- Show image if set, message otherwise -->
+        <ng-container *ngIf="group.imageUrl !== null && group.imageUrl !== ''; else noImageTemplate">
+          <img class="card-img-top group-image" src="{{ group.imageUrl }}"
+            alt="{{ group.name }} (#{{ group.id }}) Image">
+        </ng-container>
+        <ng-template #noImageTemplate>
+          <div class="no-image-message">An image has not been set for this group.</div>
+        </ng-template>
+
+      </div>
+
+      <!-- body (name, description) -->
+      <div class="card-body">
+        <h5 class="card-title">{{ group.name }} (#{{ group.id }})</h5>
+        <div class="card-text content-description" markdown>{{ group.description }}</div>
+      </div>
+
+      <!-- Footer (options) -->
+      <div class="card-footer">
+        <!-- View group button -->
+        <button class="btn btn-outline-primary view-button" routerLink="{{ group.id }}">View</button>
+
+        <!-- Options dropdown (edit, leave) -->
+        <div class="btn-group card-footer-dropdown">
+          <!-- Toggle button -->
+          <button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <i class="material-icons button-icon">settings</i>
+          </button>
+
+          <!-- Dropdown menu. -->
+          <div class="dropdown-menu dropdown-menu-right">
+            <!-- Edit button -->
+            <button class="dropdown-item" routerLink="{{ group.id }}/edit">
+              <i class="material-icons button-icon dropdown-icon">edit</i>Edit
+            </button>
+            <!-- Leave button -->
+            <button class="dropdown-item">
+              <i class="material-icons button-icon dropdown-icon">remove</i>Leave
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- Infinite scroll div -->
+  <div id="infiniteScrollDiv" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000"
+    (scrolled)="onScroll()"></div>
+
+
+
+  <!-- Display loader if not end of content. -->
+  <app-loader *ngIf="!endOfContent"></app-loader>
+  <!-- If no more groups left show, show message (no more messages, or user not in any groups) -->
+  <div class="alert alert-dark no-more-content-message" *ngIf="endOfContent && groups$.length > 0">
+    No more groups...
+  </div>
+  <div class="alert alert-dark no-more-content-message" *ngIf="endOfContent && groups$.length == 0">
+    You are not yet a member of any groups.
+  </div>
+
+</section>

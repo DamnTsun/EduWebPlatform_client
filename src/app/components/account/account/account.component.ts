@@ -12,8 +12,8 @@ import { UserTestsService } from 'src/app/services/user/user-tests.service';
 })
 export class AccountComponent implements OnInit {
 
-  private user$ = null;
-  private errorMessage: string = null;          // Error message if something goes wrong.
+  public user$ = null;
+  public errorMessage: string = null;          // Error message if something goes wrong.
 
 
 
@@ -47,7 +47,7 @@ export class AccountComponent implements OnInit {
   /**
    * Signs user out of the platform.
    */
-  private signOut(): void {
+  public signOut(): void {
     this.signIn.signOut();
   }
 
@@ -56,7 +56,7 @@ export class AccountComponent implements OnInit {
   /**
    * Updates the users name, if the new value is valid.
    */
-  private updateName(): void {
+  public updateName(): void {
     // Get name from input.
     let name = <HTMLInputElement>document.getElementById('displayNameInput');
     if (name == null) { return; }
@@ -84,7 +84,7 @@ export class AccountComponent implements OnInit {
   /**
    * Deletes the users account.
    */
-  private deleteAccount(): void {
+  public deleteAccount(): void {
     // Get confirmation.
     if (!confirm('Are you sure you want to delete your account?\nThis cannot be undone.')) { return; }
     // Delete the users account.
@@ -98,7 +98,7 @@ export class AccountComponent implements OnInit {
   /**
    * Deletes the users user tests.
    */
-  private deleteAllUserTests(): void {
+  public deleteAllUserTests(): void {
     if (!confirm('Are you sure you want to delete all of your previous test results?\nThis cannot be undone.')) { return; }
     // Delete the users test results.
     this.userTestService.deleteAllCurrentUserUserTests().subscribe((res) => {

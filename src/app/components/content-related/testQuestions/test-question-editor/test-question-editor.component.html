@@ -1,54 +1,109 @@
 <section class="container page-content">
-  <!-- Message if something goes wrong with api request. -->
-  <div class="alert alert-danger" route="alert" *ngIf="errorMessage !== null">
-    <div>Unable to edit test question:</div>
-    {{ this.errorMessage }}
-  </div>
+
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null && topicid !== null && testid !== null && question$ !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicListRoute(subjectid) }}">Topics</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicHomeRoute(subjectid, topicid) }}">{{ topicid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTestListRoute(subjectid, topicid) }}">Tests</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTestHomeRoute(subjectid, topicid, testid) }}">{{ testid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTestQuestionListRoute(subjectid, topicid, testid) }}">Questions</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTestQuestionHomeRoute(subjectid, topicid, testid, question$.id) }}">{{ question$.id }}</a>
+    <span class="breadcrumb-item active" aria-current="page">Edit</span>
+  </nav>
+
+
 
   <h2>Edit a Test Question:</h2>
-  <!-- Name -->
-  <div class="form-group">
-    <label for="name">Question Text</label>
-    <input name="name" class="form-control form-control-lg" id="questionText" type="text" placeholder="Enter Question Text"
-      maxlength="50">
-    <small class="form-text text-muted">
-      Question Text Must Not:
-      <ul>
-        <li>Be blank.</li>
-        <li>Contain more than 50 characters.</li>
-      </ul>
-    </small>
+
+  <div class="card">
+    <div class="card-body">
+
+      <!-- Message if something goes wrong with api request. -->
+      <div class="alert alert-danger" route="alert" *ngIf="errorMessage !== null">
+        <div>Unable to edit test question:</div>
+        {{ this.errorMessage }}
+      </div>
+
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Question Text</label>
+        <input name="name" class="form-control form-control-lg" id="questionText" type="text" placeholder="Enter Question Text"
+          maxlength="50">
+        <small class="form-text text-muted">
+          Question Text Must Not:
+          <ul>
+            <li>Be blank.</li>
+            <li>Contain more than 50 characters.</li>
+            <ul>
+              <li>Current question text length: {{ questionValue.length }}</li>
+            </ul>
+          </ul>
+        </small>
+      </div>
+
+      <!-- Answer -->
+      <div class="form-group">
+        <label for="answer">Question Answer</label>
+        <input name="answer" class="form-control form-control-lg" id="questionAnswer" type="text" placeholder="Enter Question Answer"
+          maxlength="50">
+        <small class="form-text text-muted">
+          Question Answer Must Not:
+          <ul>
+            <li>Be blank.</li>
+            <li>Contain more than 50 characters.</li>
+            <ul>
+              <li>Current answer length: {{ answerValue.length }}</li>
+            </ul>
+          </ul>
+        </small>
+      </div>
+
+      <!-- Image url-->
+      <div>
+        <label for="imageUrl">Question Image URL (Optional)</label>
+        <input name="imageUrl" class="form-control form-control-lg" id="questionImageUrl" type="text" placeholder="Enter Question Image Url (Optional)"
+          maxlength="255">
+        <small class="form-text text-muted">
+          Question Image URL Must not:
+          <ul>
+            <li>Contain more than 255 characters.</li>
+            <ul>
+              <li>Current image URL length: {{ imageUrlValue.length }}</li>
+            </ul>
+          </ul>
+        </small>
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <div class="submit-button-container">
+        <button class="btn btn-primary submit-button" (click)="editTestQuestion()" *ngIf="!this.submitted">Submit</button>
+      </div>
+    </div>
   </div>
 
-  <!-- Answer -->
-  <div class="form-group">
-    <label for="answer">Question Answer</label>
-    <input name="answer" class="form-control form-control-lg" id="questionAnswer" type="text" placeholder="Enter Question Answer"
-      maxlength="50">
-    <small class="form-text text-muted">
-      Question Answer Must Not:
-      <ul>
-        <li>Be blank.</li>
-        <li>Contain more than 50 characters.</li>
-      </ul>
-    </small>
+
+  <!-- Preview -->
+  <h2>Preview:</h2>
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">{{ questionValue }}</h2>
+      <div class="card-text content-description">{{ answerValue }}</div>
+    </div>
+
+    <!-- Image at bottom -->
+    <div class="question-image-container">
+      <ng-container *ngIf="imageUrlValue !== null && imageUrlValue !== ''; else noImageTemplate">
+        <img class="card-img-bottom" src="{{ imageUrlValue }}" alt="Question Image">
+      </ng-container>
+      <ng-template #noImageTemplate>
+        <div class="no-image-message">An image has not been set for this question.</div>
+      </ng-template>
+
+    </div>
   </div>
-
-  <!-- Image url-->
-  <div>
-    <label for="imageUrl">Question Image URL (Optional)</label>
-    <input name="imageUrl" class="form-control form-control-lg" id="questionImageUrl" type="text" placeholder="Enter Question Image Url (Optional)"
-      maxlength="255">
-    <small class="form-text text-muted">
-      Question Image URL Must not:
-      <ul>
-        <li>Contain more than 255 characters.</li>
-      </ul>
-    </small>
-  </div>
-
-
-
-  <button class="btn btn-primary" (click)="editTestQuestion()" *ngIf="!this.submitted">Submit</button>
 
 </section>

@@ -36,7 +36,7 @@ export class UsersServiceService {
 
 
 
-
+// OLD
   /**
    * Gets messages sent to user.
    * @param count - number of messages to get.
@@ -81,10 +81,6 @@ export class UsersServiceService {
     return this.api.get(environment.apiUrl + `users/messages/sent/${userid}?count=${count}&offset=${offset}`);
   }
 
-
-
-
-
   /**
    * Sends message to user.
    * @param userid - user that message is being sent to.
@@ -99,8 +95,6 @@ export class UsersServiceService {
     );
   }
 
-
-
   /**
    * Deletes a message. (Must be sender or receiver)
    * @param messageid - id of message.
@@ -108,8 +102,7 @@ export class UsersServiceService {
   public deleteUserMessage(messageid) {
     return this.api.delete(environment.apiUrl + `users/messages/${messageid}`);
   }
-
-
+// END OF OLD
 
 
 

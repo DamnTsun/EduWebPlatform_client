@@ -19,12 +19,12 @@ export class TestQuestionListComponent implements OnInit {
   private offset = 0;
 
   // Ids of parent objects.
-  private subjectid = null;
-  private topicid = null;
-  private testid = null;
+  public subjectid = null;
+  public topicid = null;
+  public testid = null;
 
-  private testQuestions$ = [];
-  private endOfContent: boolean = false;
+  public testQuestions$ = [];
+  public endOfContent: boolean = false;
 
 
   constructor(
@@ -33,7 +33,7 @@ export class TestQuestionListComponent implements OnInit {
     private signIn: SignInService,                          // For getting user admin status.
     private route: ActivatedRoute,                          // For getting route parameters.
     private router: Router,                                 // For redirecting user if not admin.
-    private navService: NavigationServiceService
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -64,7 +64,7 @@ export class TestQuestionListComponent implements OnInit {
   /**
    * Scroll event for infinite scroll. Will load more questions if it should.
    */
-  private onScroll() {
+  public onScroll() {
     if (!this.endOfContent) {
       this.getTestQuestion();
     }
@@ -106,12 +106,18 @@ export class TestQuestionListComponent implements OnInit {
 
 
 
-  private deleteTestQuestion(index) {
+
+
+  // Index of question to be deleted. Used by delete modal.
+  public deleteQuestionIndex = null;
+  /**
+   * Deletes test question at given index.
+   * @param index - index of test question in array.
+   */
+  public deleteTestQuestion(index) {
     // User should be admin to be on the component. Request will fail if they're not.
     // Check index valid.
     if (index < 0 || index >= this.testQuestions$.length) { return; }
-    // Get confirmation from user.
-    if (!confirm(`Are you sure you want to delete test question '${this.testQuestions$[index].question}'?`)) { return; }
 
     // Attempt to delete.
     this.testQuestionService.deleteTestQuestion(this.subjectid, this.topicid, this.testid, this.testQuestions$[index].id).subscribe((res) => {
@@ -123,4 +129,7 @@ export class TestQuestionListComponent implements OnInit {
       console.error('TestQuestion-List delete question Error:', err);
     })
   }
+
+
+
 }

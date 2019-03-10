@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 import { environment } from 'src/environments/environment';
 import { UserTestQuestion } from 'src/app/classes/UserTestQuestion';
+import { UserTest } from 'src/app/classes/UserTest';
 
 @Component({
   selector: 'app-user-test-details',
@@ -15,12 +16,16 @@ import { UserTestQuestion } from 'src/app/classes/UserTestQuestion';
 export class UserTestDetailsComponent implements OnInit {
 
   // Ids of parent objects.
-  private subjectid = null;
-  private topicid = null;
-  private testid = null;
-  private utestid = null;
+  public subjectid = null;
+  public topicid = null;
+  public testid = null;
+  public utestid = null;
 
-  private utestQuestions = [];
+  public usertest$: UserTest = null;
+  public utestQuestions: UserTestQuestion[] = [];
+
+
+
 
 
   constructor(
@@ -29,7 +34,7 @@ export class UserTestDetailsComponent implements OnInit {
     private signIn: SignInService,                // For checking user is signed in.
     private route: ActivatedRoute,                // For getting route params.
     private router: Router,                       // For redirect user if needed.
-    private navService: NavigationServiceService  // For getting routes for redirects.
+    public navService: NavigationServiceService  // For getting routes for redirects.
   ) { }
 
   ngOnInit() {
@@ -57,26 +62,101 @@ export class UserTestDetailsComponent implements OnInit {
     });
 
 
-    // Get user test questions.
+    // Get user test being viewed.
+    this.userTestService.getUserTestResult(
+      this.subjectid, this.topicid, this.testid, this.utestid)
+      .subscribe((utest: UserTest[]) => {
+        this.usertest$ = utest[0];
+      }, (err) => {
+        console.error('UserTestDetails getUserTest Error:', err);
+      });
+
+
+    // Get individual questions of user test. (all questions)
     this.userTestService.getUserTestQuestionResults(
       this.subjectid, this.topicid, this.testid, this.utestid)
       .subscribe((questions: UserTestQuestion[]) => {
         this.utestQuestions = questions;
-        console.log(questions);
-    }, (err) => {
-      console.error('UserTestDetails getDetails Error:', err);
-    })
+      }, (err) => {
+        console.error('UserTestDetails getQuestions Error:', err);
+      })
   }
 
 
-  
+
   /**
    * Gets number of test question results where the user has chosen the correct answer.
    */
-  public getCorrectQuestionCount() {
-    return this.utestQuestions.reduce((acc, { userAnswer, correctAnswer}) => {
+  public getCorrectQuestionCount(): number {
+    return this.utestQuestions.reduce((acc, { userAnswer, correctAnswer }) => {
       if (userAnswer == correctAnswer) { return acc + 1; }
       return acc;
     }, 0);
+  }
+
+  /**
+   * Gets percentage of questions that are correct.
+   */
+  public getCorrectQuestionPercentage(): number {
+    // Get correct count.
+    return Math.floor((this.usertest$.score / this.usertest$.questionCount) * 100);
+  }
+
+
+  /**
+   * Deletes this user test and redirects user to user test list.
+   */
+  public deleteUserTest() {
+    // Attempt to delete.
+    this.userTestService.deleteUserTest(this.subjectid, this.topicid, this.testid, this.utestid)
+      .subscribe((res) => {
+        // Successful. Redirect to user test list.
+        this.router.navigate([
+          this.navService.getUserTestListRoute(this.subjectid, this.topicid, this.testid)
+        ])
+    }, (err) => {
+      console.error('UserTestDetails delete user test Error:', err);
+    });
+  }
+
+
+
+
+
+  // HTML methods
+  /**
+   * Gets class for the score badge.
+   */
+  public getScoreContainerClass(): string {
+    let score = this.getCorrectQuestionPercentage();
+    if (score == 100) {
+      return 'badge-primary';
+    } else if (score > 70) {
+      return 'badge-success';
+    } else if (score > 60) {
+      return 'badge-success';
+    } else if (score > 50) {
+      return 'badge-warning';
+    } else {
+      return 'badge-danger';
+    }
+  }
+
+  /**
+   * Gets feedback message for the score badge.
+   */
+  public getScoreFeedbackMessage(): string {
+    let score = this.getCorrectQuestionPercentage();
+    if (score == 100) {
+      return 'Perfect! (100%)';
+    } else if (score > 70) {
+      return 'Excellent! (70+%)';
+    } else if (score > 60) {
+      return 'Great! (>60+%)';
+    } else if (score > 50) {
+      return 'Satisfactory. (50+%)';
+    } else {
+      return 'Needs Improvement! (Sub 50%)';
+    }
   }
 }

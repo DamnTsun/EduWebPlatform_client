@@ -15,9 +15,9 @@ export class PHeaderComponent implements OnInit {
 
   private routes: object;
   // store current subject / user as these can change appear of header.
-  private subject$: Subject = null;
-  private user$: SocialUser = null;
-  private isAdmin$: boolean = false;
+  public subject$: Subject = null;
+  public user$: SocialUser = null;
+  public isAdmin$: boolean = false;
 
 
 

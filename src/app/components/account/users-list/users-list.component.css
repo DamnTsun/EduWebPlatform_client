@@ -21,3 +21,9 @@ div.user-name {
 div.options-button {
     float: right;
 }
+
+
+div.badge-container {
+    margin-left: 0.2em;
+    margin-bottom: 0.2em;
+}

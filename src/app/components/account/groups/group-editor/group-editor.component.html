@@ -1,0 +1,112 @@
+<section class="container page-content">
+
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="groupid !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getGroupListRoute() }}">Groups</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getGroupHomeRoute(groupid) }}">{{ groupid }}</a>
+    <span class="breadcrumb-item active" aria-current="page">Edit</span>
+  </nav>
+
+
+  <h2>Create a Group:</h2>
+
+  <div class="card">
+    <div class="card-body">
+
+      <!-- Message if something goes wrong with api request. -->
+      <div class="alert alert-danger" role="alert" *ngIf="errorMessage !== null">
+        <div>Unable to create Group:</div>
+        {{ this.errorMessage }}
+      </div>
+
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Group Name</label>
+        <input name="name" class="form-control form-control-lg" id="groupName" type="text"
+          placeholder="Enter Group Name" maxlength="50">
+        <small class="form-text text-muted">
+          Group Name Must Not:
+          <ul>
+            <li>Be blank.</li>
+            <li>Contain more than 50 characters.</li>
+            <ul>
+              <li>Current name length: {{ nameValue.length }}</li>
+            </ul>
+          </ul>
+        </small>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Group Description (Optional)</label>
+        <textarea name="description" class="form-control" id="groupDescription"
+          placeholder="Enter Group Desciption (Optional)" rows="10" maxlength="1024"></textarea>
+        <small class="form-text text-muted">
+          Description may be styled using Markdown.
+          <div>
+            Group Description Must Not:
+            <ul>
+              <li>Contain more than 1024 characters.</li>
+              <ul>
+                <li>Current description length: {{ descriptionValue.length }}</li>
+              </ul>
+            </ul>
+          </div>
+        </small>
+      </div>
+
+
+      <!-- Image url-->
+      <div>
+        <label for="imageUrl">Group Image URL (Optional)</label>
+        <input name="imageUrl" class="form-control form-control-lg" id="groupImageUrl" type="text"
+          placeholder="Enter Group Image Url (Optional)" maxlength="255">
+        <small class="form-text text-muted">
+          Group Image URL Must not:
+          <ul>
+            <li>Contain more than 255 characters.</li>
+            <ul>
+              <li>Current image URL length: {{ imageUrlValue.length }}</li>
+            </ul>
+          </ul>
+        </small>
+        <small class="error-input-feedback" *ngIf="!imageUrlValid">
+          Invalid image URL. Please correct or clear it.
+        </small>
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <div class="submit-button-container">
+        <button class="btn btn-primary submit-button" [disabled]="nameValue.length === 0 || !imageUrlValid"
+          (click)="editGroup()" *ngIf="!this.submitted">Submit</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Preview -->
+  <div class="page-content-card">
+
+    <h2>Preview:</h2>
+    <div class="card">
+      <!-- Group image if set. Else message -->
+      <div class="group-image-container">
+        <ng-container *ngIf="imageUrlValue !== '' && imageUrlValid; else noImageTemplate">
+          <img class="card-img-top" src="{{ imageUrlValue }}" alt="Preview Image">
+        </ng-container>
+        <ng-template #noImageTemplate>
+          <div class="no-image-message">An image has not been set for this group.</div>
+        </ng-template>
+      </div>
+
+      <div class="card-body">
+        <h2>{{ nameValue }}</h2>
+        <markdown [data]="descriptionValue" ngPreserveWhitespaces></markdown>
+      </div>
+    </div>
+
+  </div>
+
+</section>

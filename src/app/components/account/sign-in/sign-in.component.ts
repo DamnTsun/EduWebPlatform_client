@@ -31,19 +31,13 @@ export class SignInComponent implements OnInit {
 
 
   // Methods for signing in with social media account.
-  private signInWithGoogle(): void {
+  public signInWithGoogle(): void {
     this.signIn.signInWithGoogle();
   }
 
-  private signInWithFacebook(): void {
+  public signInWithFacebook(): void {
     this.signIn.signInWithFacebook();
   }
 
-  private signInWithLinkedIn(): void {
-    // todo
-  }
 
-
-
-  
 }

@@ -1,0 +1,74 @@
+<div class="container page-content">
+
+  <button class="btn btn-success back-button" routerLink="../">
+    <i class="material-icons button-icon">arrow_back</i>
+    Back to Group Home
+  </button>
+
+  <div class="alert alert-danger" *ngIf="errorMessage !== null">
+    {{ errorMessage }}
+  </div>
+
+  <h2>Group Chat:</h2>
+
+  <!-- Send message input -->
+  <div class="form-text text-muted">Messages must be between 1 and 1024 characters long.</div>
+  <div class="input-group mb-3">
+    <input type="text" id="messageInput" class="form-control" placeholder="Type Message..." aria-label="Message Input"
+      maxlength="1024">
+    <div class="input-group-append">
+      <button id="messageSubmit" class="btn btn-outline-secondary" type="button" disabled="true"
+        (click)="sendMessage()">Send</button>
+    </div>
+  </div>
+
+
+  <!-- Messages panel -->
+  <div class="card">
+    <div class="card-body">
+      <div class="fade-in" *ngFor="let message of messages$; let i = index">
+        <!-- If message sent by current user -->
+        <ng-container *ngIf="message.sender_id == userid; else otherUserTemplate">
+          <div class="message-current-user-displayname" *ngIf="shouldShowNameOnMessage(i)">
+            <div>You</div>
+            <div>{{ message.date }}</div>
+          </div>
+          <div class="message message-current-user">
+            <span>{{ message.message }}</span>
+          </div>
+
+          <!-- Delete button -->
+          <div class="delete-button-container delete-button-container-current-user">
+            <button class="btn btn-outline-danger" (click)="deleteMessage(i)">
+              <i class="material-icons button-icon">delete</i>
+            </button>
+          </div>
+        </ng-container>
+
+
+        <!-- If message sent by another user. -->
+        <ng-template #otherUserTemplate>
+          <div class="message-other-user-displayname" *ngIf="shouldShowNameOnMessage(i)">
+            <div>{{ message.sender_displayname }} (#{{ message.sender_id }})</div>
+            <div>{{ message.date }}</div>
+          </div>
+          <div class="message message-other-user">
+            <span>{{ message.message }}</span>
+          </div>
+        </ng-template>
+
+      </div>
+
+      <!-- Show loader if not end of messages. -->
+      <app-loader *ngIf="!endOfContent"></app-loader>
+    </div>
+
+    <div class="card-footer" *ngIf="endOfContent">
+      <h5>No older messages.</h5>
+    </div>
+  </div>
+
+  <!-- Infinite scroll div. -->
+  <div id="infiniteScrollDiv" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000"
+    (scrolled)="onScroll()"></div>
+</div>

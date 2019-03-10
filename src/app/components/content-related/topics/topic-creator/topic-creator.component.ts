@@ -5,6 +5,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Subject } from 'src/app/classes/Subject';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-topic-creator',
@@ -13,9 +14,18 @@ import { Subject } from 'src/app/classes/Subject';
 })
 export class TopicCreatorComponent implements OnInit {
 
-  private subject$: Subject = null;
-  private submitted: boolean = false;     // Whether page has been submitted.
-  private errorMessage: string = null;    // Error message to display if something goes wrong.
+  public subjectid = null;
+  public subject$: Subject = null;
+  public submitted: boolean = false;     // Whether page has been submitted.
+  public errorMessage: string = null;    // Error message to display if something goes wrong.
+
+  // Values of name / description. Used by preview.
+  public nameValue: string = '';
+  public descriptionValue: string = '';
+  public hiddenValue: boolean = false;
+
+
+
 
 
   constructor(
@@ -23,13 +33,14 @@ export class TopicCreatorComponent implements OnInit {
     private topicService: TopicsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
     // Set subject.
-    let subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
-    this.subjectService.setSubject(subjectid);
+    this.subjectid = this.route.snapshot.paramMap.get(environment.routeParams.subjectid);
+    this.subjectService.setSubject(this.subjectid);
 
     // Get user admin status.
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
@@ -48,6 +59,18 @@ export class TopicCreatorComponent implements OnInit {
     }, (err) => {
       console.error('Topic-Creator subject$ Error:', err);
     });
+
+
+    // Watch values of name / description.
+    document.getElementById('topicName').addEventListener('input', (e) => {
+      this.nameValue = (<HTMLInputElement>e.target).value;
+    });
+    document.getElementById('topicDescription').addEventListener('input', (e) => {
+      this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
+    });
+    document.getElementById('topicHidden').addEventListener('input', (e) => {
+      this.hiddenValue = (<HTMLInputElement>e.target).checked;
+    })
   }
 
 
@@ -78,7 +101,8 @@ export class TopicCreatorComponent implements OnInit {
   private buildTopic(): object {
     let topic = {
       name: null,
-      description: null
+      description: null,
+      hidden: false
     }
 
     // Get name input.
@@ -94,6 +118,9 @@ export class TopicCreatorComponent implements OnInit {
     let descriptionInput = <HTMLInputElement>document.getElementById('topicDescription');
     if (descriptionInput == null) { return null; }
     topic.description = descriptionInput.value.trim();
+
+    // Hidden
+    topic.hidden = this.hiddenValue;
 
     return topic;
   }
@@ -132,7 +159,7 @@ export class TopicCreatorComponent implements OnInit {
 
   private redirectToTopicList() {
     let route = environment.routes.topicSelect;
-    route = route.replace(`:${environment.routeParams.subjectid}`, this.subject$.id.toString());
+    route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid.toString());
     this.router.navigate([ route ]);
   }
 }

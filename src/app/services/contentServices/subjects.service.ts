@@ -4,6 +4,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from '../api.service';
 import { Post } from 'src/app/classes/Posts';
 import { environment } from 'src/environments/environment';
+import { SubjectAdmin } from 'src/app/classes/SubjectAdmin';
+import { Router } from '@angular/router';
+import { NavigationServiceService } from '../navigation-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +24,9 @@ export class SubjectsService {
 
 
   constructor(
-    private api: ApiService
+    private api: ApiService,
+    private router: Router,
+    private navService: NavigationServiceService
   ) { }
 
 
@@ -39,6 +44,7 @@ export class SubjectsService {
     }, (err) => {
       console.error('SiteService - Subject: ', err);
       this.subjectRecord.next(null);
+      this.router.navigate([ this.navService.getSubjectListRoute() ]);
     });
   }
 
@@ -99,6 +105,111 @@ export class SubjectsService {
    * @param offset - number of posts to skip.
    */
   public getPosts(subjectId, count, offset): Observable<Post[]> {
-    return this.api.get(environment.apiUrl + `subjects/${subjectId}/posts?count=${count}&offset=${offset}`) as Observable<Post[]>;
+    return this.api.get(environment.apiUrl +
+      `subjects/${subjectId}/posts?count=${count}&offset=${offset}`) as Observable<Post[]>;
+  }
+
+  /**
+   * Gets a specified news post inside a subject.
+   * @param subjectid - id of subject.
+   * @param postid - id of post.
+   */
+  public getPost(subjectid, postid): Observable<Post[]> {
+    return this.api.get(environment.apiUrl
+        + `subjects/${subjectid}/posts/${postid}`) as Observable<Post[]>;
+  }
+
+
+  /**
+   * Creates a new post, associated with the specified subject, on the api.
+   * @param subjectid - id of subject.
+   * @param post - data for post.
+   */
+  public createPost(subjectid, post) {
+    // CURRENTLY UNTESTS / NOT USED ANYWHERE
+    let data = new FormData();
+    data.set('content', JSON.stringify(post));
+    return this.api.post(
+      environment.apiUrl + `subjects/${subjectid}/posts`,
+      data
+    );
+  }
+
+  /**
+   * Updates values of existing subject post based on given object.
+   * @param subjectid - id of subject.
+   * @param postid - id of post.
+   * @param post - new values for post.
+   */
+  public editPost(subjectid, postid, post) {
+    let data = new FormData();
+    data.set('content', JSON.stringify(post));
+    return this.api.post(
+      environment.apiUrl + `subjects/${subjectid}/posts/${postid}`,
+      data
+    );
+  }
+
+
+  /**
+   * Deletes specified post from api.
+   * @param subjectid - id of subject.
+   * @param postid - id of post.
+   */
+  public deletePost(subjectid, postid) {
+    return this.api.delete(environment.apiUrl +
+        `subjects/${subjectid}/posts/${postid}`);
+  }
+
+
+
+
+  // SUBJECT ADMINS
+  /**
+   * Gets subject admins associated with the specified subject.
+   * @param subjectid - id of subject.
+   * @param count - number of records to get.
+   * @param offset - number of records to skip.
+   */
+  public getSubjectAdmins(subjectid, count, offset): Observable<SubjectAdmin[]> {
+    return this.api.get(
+      environment.apiUrl + `subjects/${subjectid}/admins`
+    ) as Observable<SubjectAdmin[]>;
+  }
+
+  /**
+   * Gets whether the current user is a subject admin for the specified subject.
+   * @param subjectid - id of subject.
+   */
+  public getCurrentUserSubjectAdminStatus(subjectid) {
+    return this.api.get(
+      environment.apiUrl + `subjects/${subjectid}/admins/me`
+    );
+  }
+
+  /**
+   * Adds the current user as a subject admin for the specified subject.
+   * Will only be successful if:
+   * - The current user is an admin.
+   * - The current user is not already a subject admin for the specified subject.
+   * @param subjectid - id of subject.
+   */
+  public addMyselfAsSubjectAdmin(subjectid): Observable<SubjectAdmin[]> {
+    return this.api.post(
+      environment.apiUrl + `subjects/${subjectid}/admins`,
+      new FormData()
+    ) as Observable<SubjectAdmin[]>;
+  }
+
+
+  /**
+   * Removes the current user as a subject admin for the specified subject.
+   * Will only be successful if both:
+   * - The current user is an admin.
+   * - The current user is already a subject admin for the specified subject.
+   * @param subjectid 
+   */
+  public removeMyselfAsSubjectAdmin(subjectid) {
+    return this.api.delete(environment.apiUrl + `subjects/${subjectid}/admins`);
   }
 }

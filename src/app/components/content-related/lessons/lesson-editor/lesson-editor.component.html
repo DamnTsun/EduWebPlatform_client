@@ -1,39 +1,97 @@
 <section class="container page-content">
-    <!-- Error message if something goes wrong. -->
-    <div class="alert alert-danger" role="alert" *ngIf="this.errorMessage !== null">
-      <div>Unable to edit lesson:</div>
-      {{ this.errorMessage }}
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null && topicid !== null && lessonid !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicListRoute(subjectid) }}">Topics</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTopicHomeRoute(subjectid, topicid) }}">{{ topicid }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getLessonListRoute(subjectid, topicid) }}">Lessons</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getLessonHomeRoute(subjectid, topicid, lessonid) }}">{{
+      lessonid }}</a>
+    <span class="breadcrumb-item active" aria-current="page">Edit</span>
+  </nav>
+
+
+  <div class="card">
+    <div class="card-body">
+      <!-- Error message if something goes wrong. -->
+      <div class="alert alert-danger" role="alert" *ngIf="this.errorMessage !== null">
+        <div>Unable to edit lesson:</div>
+        {{ this.errorMessage }}
+      </div>
+
+      <h2>Edit a Lesson:</h2>
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Lesson Name</label>
+        <input name="name" class="form-control form-control-lg" id="lessonName" type="text" placeholder="Enter Lesson Name"
+          maxlength="50">
+        <small class="form-text text-muted">
+          Lesson Name Must Not:
+          <ul>
+            <li>Be blank.</li>
+            <li>Contain more than 50 characters.</li>
+            <li>Be the same as an existing lessons name, in this topic.</li>
+          </ul>
+        </small>
+      </div>
+
+
+      <!-- Body -->
+      <div class="form-group">
+        <label for="body">Lesson Body</label>
+        <textarea name="body" class="form-control" id="lessonBody" placeholder="Enter Lesson Body" rows="20" maxlength="65535"></textarea>
+        <small class="form-text text-muted">
+          Body can be styled using Markdown.
+          <div>
+            Lesson Body Must Not:
+            <ul>
+              <li>Be blank.</li>
+              <li>Contain more than 65,535 characters.</li>
+              <ul>
+                <li>Current body length: {{ bodyValue.length }}</li>
+              </ul>
+            </ul>
+          </div>
+        </small>
+      </div>
+
+
+      <!-- Hidden -->
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="hidden" id="lessonHidden" value="option1">
+        <label class="form-check-label" for="lessonHidden">Hidden</label>
+        <small class="form-text text-muted">
+          When hidden, a lesson will only be visible to admin users.
+        </small>
+      </div>
     </div>
-  
-    <h2>Edit a Lesson:</h2>
-    <!-- Name -->
-    <div class="form-group">
-      <label for="name">Lesson Name</label>
-      <input name="name" class="form-control form-control-lg" id="lessonName" type="text" placeholder="Enter Lesson Name"
-        maxlength="50">
-      <small class="form-text text-muted">
-        Lesson Name Must Not:
-        <ul>
-          <li>Be blank.</li>
-          <li>Contain more than 50 characters.</li>
-          <li>Be the same as an existing lessons name, in this topic.</li>
-        </ul>
-      </small>
+
+
+    <!-- Footer -->
+    <div class="card-footer">
+      <div class="submit-button-container">
+        <button class="btn btn-primary submit-button" (click)="editLesson()" *ngIf="!this.submitted">Submit</button>
+      </div>
     </div>
+  </div>
+
+
   
-    <!-- Description -->
-    <div class="form-group">
-      <label for="body">Lesson Body</label>
-      <quill-editor #body [style]="{ height: '50em' }"></quill-editor>
-      <small class="form-text text-muted">
-        Lesson Body Must Not:
-        <ul>
-          <li>Contain more than 65,535 characters.</li>
-        </ul>
-        <div>Current encoded lesson body: {{ getBodyLength() }} characters.</div>
-      </small>
+  <!-- Preview -->
+  <h2>Preview:</h2>
+  <div class="card">
+    <div class="card-body">
+      <h2>{{ nameValue }}</h2>
+      <markdown [data]="bodyValue" ngPreserveWhitespaces></markdown>
     </div>
-  
-    <button class="btn btn-primary" (click)="editLesson()" *ngIf="!this.submitted">Submit</button>
-  
-  </section>
+
+
+    <!-- Hidden / auto-hidden badge -->
+    <div>
+      <span class="badge badge-secondary content-hidden-badge" *ngIf="hiddenValue">Hidden</span>
+    </div>
+  </div>
+
+
+</section>

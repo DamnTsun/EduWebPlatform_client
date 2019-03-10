@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 
 import { Subject } from '../classes/Subject';
@@ -87,7 +87,10 @@ export class ApiService {
    */
   public setAuthObject(authObject: AuthObject): void {
     this.authObject = authObject;
-    console.log(this.authObject);
+    // Log auth object if debug param set.
+    if (!environment.production && environment.debug.showAPIAuthorizationObjects) {
+      console.log('Internal User Record Authorization Object:', this.authObject);
+    }
   }
   /**
    * Clears authorization object.

@@ -3,6 +3,7 @@ import { SubjectsService } from 'src/app/services/contentServices/subjects.servi
 import { SignInService } from 'src/app/services/sign-in.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-subject-creator',
@@ -11,14 +12,23 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class SubjectCreatorComponent implements OnInit {
 
-  private submitted: boolean = false;     // Whether user has submitted subject.
-  private errorMessage: string = null;    // Error message to display if something goes wrong.
+  public submitted: boolean = false;     // Whether user has submitted subject.
+  public errorMessage: string = null;    // Error message to display if something goes wrong.
+
+  // Holds current values. Used by preview.
+  public nameValue: string = '';
+  public descriptionValue: string = '';
+  public hiddenValue: boolean = false;
+
+
+
 
 
   constructor(
     private subjectService: SubjectsService,
     private signIn: SignInService,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -31,6 +41,18 @@ export class SubjectCreatorComponent implements OnInit {
     }, (err) => {
       console.error('Subject-Creator isAdmin Error:', err);
     });
+
+
+    // Subscribe to updates to name / description input.
+    document.getElementById('subjectName').addEventListener('input', (e) => {
+      this.nameValue = (<HTMLInputElement>e.target).value;
+    });
+    document.getElementById('subjectDescription').addEventListener('input', (e) => {
+      this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
+    });
+    document.getElementById('subjectHidden').addEventListener('input', (e) => {
+      this.hiddenValue = ((<HTMLInputElement>e.target).checked);
+    })
   }
 
 
@@ -59,7 +81,8 @@ export class SubjectCreatorComponent implements OnInit {
   private buildSubject(): object {
     let subject = {
       name: null,
-      description: null
+      description: null,
+      hidden: false
     }
 
     // Attempt to get name input.
@@ -77,6 +100,9 @@ export class SubjectCreatorComponent implements OnInit {
     if (descriptionInput == null) { return null; }
     if (descriptionInput.value == null) { return null; }
     subject.description = descriptionInput.value.trim();
+
+    // Attempt to get hidden.
+    subject.hidden = this.hiddenValue;
 
     return subject;
   }

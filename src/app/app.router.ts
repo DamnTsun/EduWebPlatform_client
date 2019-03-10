@@ -24,13 +24,16 @@ import { TestQuestionEditorComponent } from "./components/content-related/testQu
 import { LessonListComponent } from "./components/content-related/lessons/lesson-list/lesson-list.component";
 import { TestListComponent } from "./components/content-related/tests/test-list/test-list.component";
 import { UsersListComponent } from "./components/account/users-list/users-list.component";
-import { MessageListComponent } from "./components/account/messages/message-list/message-list.component";
-import { MessageFromUserListComponent } from "./components/account/messages/message-from-user-list/message-from-user-list.component";
-import { SendMessageComponent } from "./components/account/messages/send-message/send-message.component";
-import { MessageSentListComponent } from "./components/account/messages/message-sent-list/message-sent-list.component";
-import { MessageSentToUserListComponent } from "./components/account/messages/message-sent-to-user-list/message-sent-to-user-list.component";
 import { UserTestListComponent } from "./components/content-related/user_tests/user-test-list/user-test-list.component";
 import { UserTestDetailsComponent } from "./components/content-related/user_tests/user-test-details/user-test-details.component";
+import { ChatComponent } from "./components/account/messages/chat/chat.component";
+import { GroupListComponent } from "./components/account/groups/group-list/group-list.component";
+import { GroupHomeComponent } from "./components/account/groups/group-home/group-home.component";
+import { GroupChatComponent } from "./components/account/groups/group-chat/group-chat.component";
+import { SubjectNewsCreatorComponent } from "./components/content-related/subjects/subject-news-creator/subject-news-creator.component";
+import { SubjectNewsEditorComponent } from "./components/content-related/subjects/subject-news-editor/subject-news-editor.component";
+import { GroupEditorComponent } from "./components/account/groups/group-editor/group-editor.component";
+import { GroupCreatorComponent } from "./components/account/groups/group-creator/group-creator.component";
 
 // Routes for app.
 export const appRoutes = [
@@ -60,9 +63,18 @@ export const appRoutes = [
     path: environment.routes.subjectHome,
     component: SubjectHomeComponent
   },
+  // SUBJECT POSTS
   { // Subject news page.
     path: environment.routes.subjectNews,
     component: SubjectNewsComponent
+  },
+  { // Subject post creator.
+    path: environment.routes.subjectPostCreator,
+    component: SubjectNewsCreatorComponent
+  },
+  { // Subject post editor.
+    path: environment.routes.subjectPostEditor,
+    component: SubjectNewsEditorComponent
   },
 
 
@@ -177,24 +189,32 @@ export const appRoutes = [
 
 
   // Messages
-  { // Sent messages.
-    path: environment.routes.messageSentList,
-    component: MessageSentListComponent
+  { // Chat with a user.
+    path: environment.routes.chat,
+    component: ChatComponent
   },
-  { // Sent messages to a specific user.
-    path: environment.routes.messageSentToList,
-    component: MessageSentToUserListComponent
+
+
+
+  // GROUPS
+  { // View groups that user is in.
+    path: environment.routes.groupList,
+    component: GroupListComponent
   },
-  { // Send message
-    path: environment.routes.sendMessage,
-    component: SendMessageComponent
+  { // Group creator.
+    path: environment.routes.groupCreator,
+    component: GroupCreatorComponent
   },
-  { // Received message list.
-    path: environment.routes.messageList,
-    component: MessageListComponent
-  }, 
-  { // Received message list from a specific user.
-    path: environment.routes.messageFromList,
-    component: MessageFromUserListComponent
+  { // Group editor.
+    path: environment.routes.groupEditor,
+    component: GroupEditorComponent
+  },
+  { // Group home.
+    path: environment.routes.groupHome,
+    component: GroupHomeComponent
+  },
+  { // Group chat
+    path: environment.routes.groupChat,
+    component: GroupChatComponent
   }
 ];

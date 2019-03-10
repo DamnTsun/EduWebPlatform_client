@@ -12,41 +12,62 @@
     <span class="breadcrumb-item active" aria-current="page">User Test Attempt</span>
   </nav>
 
+  <div class="alert alert-danger" *ngIf="errorMessage !== null">
+    {{ errorMessage }}
+  </div>
+
 
   <!-- When test questions have been fetched from api -->
   <ng-container *ngIf="(testQuestions$ !== null); else loadingTemplate">
 
-    <!-- Input for user to set user_test name -->
-    <label for="ut_name_input">Test Name:</label>
-    <input type="text" class="form-control form-control-lg" id="ut_name" placeholder="Enter name for test" name="ut_name_input"
-      maxlength="50">
-    <small>Test name can be used to identify a specific test you have completed.</small>
-
-
-
-    <!-- List questions -->
-    <section class="questions">
-      <h2>Questions</h2>
-      <div class="form-group question" *ngFor="let tq of testQuestions$; let i = index">
-        <h5>Question {{ i+1 }}:</h5>
-        <label for="questionInput{{ tq.id }}">{{ tq.question }}</label>
-        <input class="form-control form-control-lg" id="question{{tq.id}}" type="text" placeholder="Please enter answer"
-          name="questionInput{{ tq.id }}" maxlength="50">
-        <img src="{{ tq.imageUrl }}" alt="" *ngIf="(tq.imageUrl !== '')">
+    <h2>User Test:</h2>
+    <div class="card">
+      <div class="card-body">
+        <!-- Input for user to set user_test name -->
+        <input type="text" class="form-control" id="ut_name" placeholder="Custom Name for User Test..." name="ut_name_input"
+          maxlength="50">
+        <small class="form-text text-muted">
+          <div>Users test may optionally be given a custom name.</div>
+          <div>If no name is given, the current time will be used instead.</div>
+        </small>
       </div>
-    </section>
-    <!-- Show submit button unless form has already been successfully submitted -->
-    <button class="btn btn-primary submitButton" *ngIf="(!this.hasSubmitted)" (click)="submitQuestions()">SUBMIT</button>
+    </div>
 
+    <!-- Display questions in a grid -->
+    <div class="content-grid">
 
+      <!-- 1 card per question -->
+      <div class="card" *ngFor="let tq of testQuestions$; let i = index;">
+        <!-- Question img (if given) -->
+        <div class="question-image-container">
+          <ng-container *ngIf="tq.imageUrl !== null && tq.imageUrl !== ''; else noImageTemplate">
+            <img class="card-img-top question-image" src="{{ tq.imageUrl }}" alt="Question {{ i + 1 }} Image">
+          </ng-container>
+          <ng-template #noImageTemplate>
+            <div class="no-image-message">An image has not been set for this question.</div>
+          </ng-template>
+        </div>
 
-    <!-- Completed test output (show name, total questions, correct questions) -->
-    <ng-container *ngIf="(completedTest$ !== null)">
-      <h5>Test has been marked and saved.</h5>
-      <p>Title: {{ completedTest$.title }}</p>
-      <p>You scored: {{ completedTest$.score }} out of {{ completedTest$.questionCount }}.</p>
-      <p>Completed on: {{ completedTest$.date }}</p>
-    </ng-container>
+        <!-- Body (question no., text) -->
+        <div class="card-body">
+          <h5>Question {{ i + 1 }} / {{ testQuestions$.length }}</h5>
+          <p>{{ tq.question }}</p>
+        </div>
+
+        <!-- Footer (answer input) -->
+        <div class="card-footer">
+          <input class="form-control" id="question{{tq.id}}" type="text" placeholder="Your Answer..." name="questionInput{{ tq.id }}"
+            maxlength="50">
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit button (bottom) -->
+    <div class="submit-button-container">
+      <button class="btn btn-primary submit-button" (click)="submitQuestions()" [disabled]="hasSubmitted">Submit
+        Answers</button>
+    </div>
+
   </ng-container>
 
 
@@ -57,7 +78,9 @@
       <app-loader></app-loader>
     </ng-container>
     <ng-template #loadingErrorTemplate>
-      Sorry, An Error Occurred.
+      <div class="alert alert-warning">
+        Sorry, An Error Occurred.
+      </div>
     </ng-template>
 
   </ng-template>

@@ -15,14 +15,14 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class TestListComponent implements OnInit {
 
   // Constants
-  private count = 10;           // Number of test to get at a time.
+  private count = 18;           // Number of test to get at a time.
   private offset = 0;           // How many tests have already been fetched.
 
-  private subjectid = null;
-  private topicid = null;
-  private endOfContent: boolean = false;
-  private isAdmin: boolean = false;
-  private tests$: Test[] = [];
+  public subjectid = null;
+  public topicid = null;
+  public endOfContent: boolean = false;
+  public isAdmin: boolean = false;
+  public tests$: Test[] = [];
 
 
   constructor(
@@ -30,7 +30,7 @@ export class TestListComponent implements OnInit {
     private testService: TestsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private navService: NavigationServiceService
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -57,7 +57,7 @@ export class TestListComponent implements OnInit {
   /**
    * Scroll event for infinite scroll.
    */
-  private onScroll() {
+  public onScroll() {
     if (!this.endOfContent) {
       this.getTests();
     }
@@ -72,6 +72,10 @@ export class TestListComponent implements OnInit {
         if (tests.length > 0) {
           this.tests$ = this.tests$.concat(tests);
           this.offset += tests.length;
+          // If less tests received than asked for, must be end of content.
+          if (tests.length < this.count) {
+            this.endOfContent = true;
+          }
         } else {
           // Empty list. Must be end of tests.
           this.endOfContent = true;
@@ -81,17 +85,19 @@ export class TestListComponent implements OnInit {
 
 
 
+
+
+  // Stores index of test to be deleted. Used by delete modal.
+  public deleteTestIndex = null;
   /**
    * Deletes test with given index in array.
    * @param index - index of test.
    */
-  private deleteTest(index) {
+  public deleteTest(index) {
     // Check user is admin.
     if (!this.isAdmin) { return; }
     // Check index is valid.
     if (index < 0 || index >= this.tests$.length) { return; }
-    // Get confirmation from user.
-    if (!confirm(`Are you sure you want to delete test '${this.tests$[index].name}'?`)) { return; }
 
     // Attempt to delete.
     this.testService.deleteTest(this.subjectid, this.topicid, this.tests$[index].id).subscribe((res) => {

@@ -5,6 +5,7 @@ import { TestsService } from 'src/app/services/contentServices/tests.service';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-test-creator',
@@ -14,11 +15,19 @@ import { environment } from 'src/environments/environment';
 export class TestCreatorComponent implements OnInit {
 
   // Ids of parents / test being editted.
-  private subjectid = null;
-  private topicid = null;
+  public subjectid = null;
+  public topicid = null;
 
-  private submitted: boolean = false;       // Whether page has been submitted.
-  private errorMessage: string = null;      // Error message to display if something goes wrong.
+  public submitted: boolean = false;       // Whether page has been submitted.
+  public errorMessage: string = null;      // Error message to display if something goes wrong.
+
+  // Value of name / description. Used by preview.
+  public nameValue: string = '';
+  public descriptionValue: string = '';
+  public hiddenValue: boolean = false;
+
+
+
 
 
   constructor(
@@ -26,7 +35,8 @@ export class TestCreatorComponent implements OnInit {
     private testService: TestsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public navService: NavigationServiceService
   ) { }
 
   ngOnInit() {
@@ -47,6 +57,18 @@ export class TestCreatorComponent implements OnInit {
     }, (err) => {
       console.error('TestCreator isAdmin Error:', err);
     })
+
+
+    // Watch values of name / description.
+    document.getElementById('testName').addEventListener('input', (e) => {
+      this.nameValue = (<HTMLInputElement>e.target).value;
+    });
+    document.getElementById('testDescription').addEventListener('input', (e) => {
+      this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
+    });
+    document.getElementById('testHidden').addEventListener('input', (e) => {
+      this.hiddenValue = (<HTMLInputElement>e.target).checked;
+    });
   }
 
 
@@ -77,7 +99,8 @@ export class TestCreatorComponent implements OnInit {
   private buildTest(): object {
     let test = {
       name: null,
-      description: null
+      description: null,
+      hidden: false
     }
 
     // Name
@@ -95,6 +118,9 @@ export class TestCreatorComponent implements OnInit {
       return null;
     }
     test.description = description.value.trim();
+
+    // Hidden
+    test.hidden = this.hiddenValue;
 
     return test;
   }
