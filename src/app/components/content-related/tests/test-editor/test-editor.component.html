@@ -44,13 +44,13 @@
       <div class="form-group">
         <label for="description">Test Description (Optional)</label>
         <textarea name="description" class="form-control" id="testDescription" placeholder="Enter Test Desciption (Optional)"
-          rows="10" maxlength="1024"></textarea>
+          rows="10" maxlength="4096"></textarea>
         <small class="form-text text-muted">
           Description may be styled using Markdown.
           <div>
             Test Description Must Not:
             <ul>
-              <li>Contain more than 1024 characters.</li>
+              <li>Contain more than 4096 characters.</li>
               <ul>
                 <li>Current description length: {{ descriptionValue.length }}</li>
               </ul>
@@ -58,6 +58,17 @@
           </div>
         </small>
       </div>
+
+
+      <!-- Hidden -->
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="hidden" id="testHidden" value="option1">
+        <label class="form-check-label" for="testHidden">Hidden</label>
+        <small class="form-text text-muted">
+          When hidden, a test will only be visible to admin users.
+        </small>
+      </div>
+
 
     </div>
 
@@ -75,6 +86,12 @@
     <div class="card-body">
       <h2>{{ nameValue }}</h2>
       <markdown [data]="descriptionValue" ngPreserveWhitespaces></markdown>
+    </div>
+
+    <!-- Hidden / auto-hidden badge -->
+    <div>
+      <span class="badge badge-secondary content-hidden-badge" *ngIf="hiddenValue">Hidden</span>
+      <span class="badge badge-secondary content-hidden-badge" *ngIf="!hiddenValue && this.test$ !== null && (this.test$.testQuestionCount) == 0">Auto-Hidden</span>
     </div>
   </div>
 

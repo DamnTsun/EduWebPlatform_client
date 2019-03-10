@@ -25,13 +25,13 @@
       <div class="form-group">
         <label for="name">Test Name</label>
         <input name="name" class="form-control form-control-lg" id="testName" type="text" placeholder="Enter Test Name"
-          maxlength="50">
+          maxlength="100">
         <small class="form-text text-muted">
           Test Name Must Not:
           <ul>
             <li>Be blank.</li>
             <li>Be the same as an existing tests name, in this topic.</li>
-            <li>Contain more than 50 characters.</li>
+            <li>Contain more than 100 characters.</li>
             <ul>
               <li>Current name length: {{ nameValue.length }}</li>
             </ul>
@@ -41,17 +41,30 @@
 
       <!-- Description -->
       <div class="form-group">
-        <label for="description">Test Description (Optional)</label>
-        <textarea name="description" class="form-control" id="testDescription" placeholder="Enter Test Desciption (Optional)"
-          rows="10" maxlength="1024"></textarea>
+        <label for="description">Test Description</label>
+        <textarea name="description" class="form-control" id="testDescription" placeholder="Enter Test Description"
+          rows="10" maxlength="4096"></textarea>
         <small class="form-text text-muted">
           Test Description Must Not:
           <ul>
-            <li>Contain more than 1024 characters.</li>
+            <li>Contain more than 4096 characters.</li>
             <ul>
               <li>Current description length: {{ descriptionValue.length }}</li>
             </ul>
           </ul>
+        </small>
+      </div>
+
+
+      <!-- Hidden -->
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="hidden" id="testHidden" value="option1">
+        <label class="form-check-label" for="testHidden">Hidden</label>
+        <small class="form-text text-muted">
+          When hidden, a test will only be visible to admin users.
+          <div>
+            Note: New tests will be auto-hidden due to containing less than 10 test questions.
+          </div>
         </small>
       </div>
 
@@ -71,6 +84,13 @@
     <div class="card-body">
       <h2>{{ nameValue }}</h2>
       <markdown [data]="descriptionValue" ngPreserveWhitespaces></markdown>
+    </div>
+
+
+    <!-- Hidden / auto-hidden badge -->
+    <div>
+      <span class="badge badge-secondary content-hidden-badge" *ngIf="hiddenValue">Hidden</span>
+      <span class="badge badge-secondary content-hidden-badge" *ngIf="!hiddenValue">Auto-Hidden</span>
     </div>
   </div>
 

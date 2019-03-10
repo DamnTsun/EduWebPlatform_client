@@ -24,6 +24,7 @@ export class TestCreatorComponent implements OnInit {
   // Value of name / description. Used by preview.
   public nameValue: string = '';
   public descriptionValue: string = '';
+  public hiddenValue: boolean = false;
 
 
 
@@ -65,6 +66,9 @@ export class TestCreatorComponent implements OnInit {
     document.getElementById('testDescription').addEventListener('input', (e) => {
       this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
     });
+    document.getElementById('testHidden').addEventListener('input', (e) => {
+      this.hiddenValue = (<HTMLInputElement>e.target).checked;
+    });
   }
 
 
@@ -95,7 +99,8 @@ export class TestCreatorComponent implements OnInit {
   private buildTest(): object {
     let test = {
       name: null,
-      description: null
+      description: null,
+      hidden: false
     }
 
     // Name
@@ -113,6 +118,9 @@ export class TestCreatorComponent implements OnInit {
       return null;
     }
     test.description = description.value.trim();
+
+    // Hidden
+    test.hidden = this.hiddenValue;
 
     return test;
   }

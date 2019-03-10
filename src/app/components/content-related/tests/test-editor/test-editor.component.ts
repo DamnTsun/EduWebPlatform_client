@@ -25,6 +25,7 @@ export class TestEditorComponent implements OnInit {
   // Values of name / description. Used by preview.
   public nameValue: string = '';
   public descriptionValue: string = '';
+  public hiddenValue: boolean = false;
 
 
 
@@ -78,6 +79,9 @@ export class TestEditorComponent implements OnInit {
     document.getElementById('testDescription').addEventListener('input', (e) => {
       this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
     });
+    document.getElementById('testHidden').addEventListener('input', (e) => {
+      this.hiddenValue = (<HTMLInputElement>e.target).checked;
+    });
   }
 
 
@@ -96,6 +100,11 @@ export class TestEditorComponent implements OnInit {
     let description = <HTMLTextAreaElement>document.getElementById('testDescription');
     if (description !== null) { description.value = test.description; }
     this.descriptionValue = test.description;
+
+    // Hidden
+    let hidden = <HTMLInputElement>document.getElementById('testHidden');
+    if (hidden !== null) { hidden.checked = test.hidden; }
+    this.hiddenValue = test.hidden;
   }
 
   /**
@@ -114,6 +123,7 @@ export class TestEditorComponent implements OnInit {
    */
   public editTest(): void {
     let test = this.buildTest();
+    console.log(test);
     if (test == null) { return; }
     if (Object.keys(test).length == 0) {
       this.errorMessage = 'You have not changed any values.';
@@ -138,7 +148,7 @@ export class TestEditorComponent implements OnInit {
    */
   private buildTest(): object {
     let test = {};
-
+    
     // Name
     let name = <HTMLInputElement>document.getElementById('testName');
     if (name == null) { return null; }
@@ -155,6 +165,11 @@ export class TestEditorComponent implements OnInit {
     if (description == null) { return null; }
     if (description.value.trim() !== this.test$.description) {
       test['description'] = description.value.trim();
+    }
+
+    // Hidden
+    if (this.hiddenValue !== this.test$.hidden) {
+      test['hidden'] = this.hiddenValue;
     }
 
     this.errorMessage = null;

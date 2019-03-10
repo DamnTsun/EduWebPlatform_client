@@ -35,7 +35,7 @@
       <div *ngIf="isAdmin">
         <span class="badge badge-secondary content-hidden-badge" *ngIf="test$.hidden">Hidden</span>
         <span class="badge badge-secondary content-hidden-badge"
-          *ngIf="!test$.hidden && test$.testQuestionCount !== 0">Auto-Hidden</span>
+          *ngIf="!test$.hidden && test$.testQuestionCount < 10">Auto-Hidden</span>
       </div>
 
 
