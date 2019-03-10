@@ -1,6 +1,6 @@
 export const environment = {
-  production: true,
-
+  production: false,
+  
   apiUrl: 'http://localhost/EduWebPlatform_api/',
   routeParams: {
     // Content related.
@@ -90,5 +90,13 @@ export const environment = {
     groupHome: 'groups/:groupid',
     // Group chat.
     groupChat: 'groups/:groupid/chat'
+  },
+
+  // Defines debug stuff, such as console logging certain values for testing reasons.
+  debug: {
+    // Show media sign in objects. Contains the users name, email, id token. Generally used to see id token.
+    showSocialMediaSignInObjects: false,
+    // Show API authorization objects. Generally used to see authorization JWT / to check it is working correctly.
+    showAPIAuthorizationObjects: false
   }
 };

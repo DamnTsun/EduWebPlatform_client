@@ -3,7 +3,7 @@ import { AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider, Li
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { AuthObject } from '../classes/AuthObject';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +40,11 @@ export class SignInService {
 
       // Get / clear authentication with backend.
       if (user !== null) {
+        // Show social media account info (name, email, id token) if debug param set.
+        if (!environment.production && environment.debug.showSocialMediaSignInObjects) {
+          console.log('User Social Media Object:', user);
+        }
+
         // Authorize with API for social media account type.
         this.authorizeUser(user.provider);
       } else {
