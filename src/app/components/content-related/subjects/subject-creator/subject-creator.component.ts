@@ -18,6 +18,7 @@ export class SubjectCreatorComponent implements OnInit {
   // Holds current values. Used by preview.
   public nameValue: string = '';
   public descriptionValue: string = '';
+  public hiddenValue: boolean = false;
 
 
 
@@ -49,6 +50,9 @@ export class SubjectCreatorComponent implements OnInit {
     document.getElementById('subjectDescription').addEventListener('input', (e) => {
       this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
     });
+    document.getElementById('subjectHidden').addEventListener('input', (e) => {
+      this.hiddenValue = ((<HTMLInputElement>e.target).checked);
+    })
   }
 
 
@@ -77,7 +81,8 @@ export class SubjectCreatorComponent implements OnInit {
   private buildSubject(): object {
     let subject = {
       name: null,
-      description: null
+      description: null,
+      hidden: false
     }
 
     // Attempt to get name input.
@@ -95,6 +100,9 @@ export class SubjectCreatorComponent implements OnInit {
     if (descriptionInput == null) { return null; }
     if (descriptionInput.value == null) { return null; }
     subject.description = descriptionInput.value.trim();
+
+    // Attempt to get hidden.
+    subject.hidden = this.hiddenValue;
 
     return subject;
   }

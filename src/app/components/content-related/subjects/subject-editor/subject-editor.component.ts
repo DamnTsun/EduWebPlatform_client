@@ -19,6 +19,7 @@ export class SubjectEditorComponent implements OnInit {
 
   public nameValue: string = '';
   public descriptionValue: string = '';
+  public hiddenValue: boolean = false;
 
 
 
@@ -67,6 +68,9 @@ export class SubjectEditorComponent implements OnInit {
     document.getElementById('subjectDescription').addEventListener('input', (e) => {
       this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
     });
+    document.getElementById('subjectHidden').addEventListener('input', (e) => {
+      this.hiddenValue = (<HTMLInputElement>e.target).checked;
+    });
   }
 
   /**
@@ -82,6 +86,10 @@ export class SubjectEditorComponent implements OnInit {
     let description = <HTMLTextAreaElement>document.getElementById('subjectDescription');
     if (description !== null) { description.value = subject.description; }
     this.descriptionValue = subject.description;
+    // Hidden.
+    let hidden = <HTMLInputElement>document.getElementById('subjectHidden');
+    if (hidden !== null) { hidden.checked = subject.hidden; }
+    this.hiddenValue = subject.hidden;
   }
 
   /**
@@ -137,6 +145,11 @@ export class SubjectEditorComponent implements OnInit {
     let description = (<HTMLTextAreaElement>document.getElementById('subjectDescription')).value;
     if (description !== this.subject$.description) {
       subject['description'] = description;
+    }
+
+    // Hidden
+    if (this.hiddenValue !== this.subject$.hidden) {
+      subject['hidden'] = this.hiddenValue;
     }
 
     return subject;

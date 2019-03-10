@@ -56,6 +56,16 @@
       </div>
 
 
+      <!-- Hidden -->
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="hidden" id="subjectHidden" value="option1">
+        <label class="form-check-label" for="subjectHidden">Hidden</label>
+        <small class="form-text text-muted">
+          When hidden, a subject will only be visible to admin users.
+        </small>
+      </div>
+
+
     </div>
 
     <div class="card-footer">
@@ -71,6 +81,12 @@
     <div class="card-body">
       <h2>{{ nameValue }}</h2>
       <markdown [data]="descriptionValue" ngPreserveWhitespaces></markdown>
+    </div>
+
+    <!-- Hidden / auto-hidden badge -->
+    <div>
+      <span class="badge badge-secondary content-hidden-badge" *ngIf="hiddenValue">Hidden</span>
+      <span class="badge badge-secondary content-hidden-badge" *ngIf="!hiddenValue && this.subject$ !== null && this.subject$.topicCount == 0">Auto-Hidden</span>
     </div>
   </div>
 
