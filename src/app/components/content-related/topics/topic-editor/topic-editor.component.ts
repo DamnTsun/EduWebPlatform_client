@@ -22,6 +22,7 @@ export class TopicEditorComponent implements OnInit {
   // Values of name / description. Used by preview.
   public nameValue: string = '';
   public descriptionValue: string = '';
+  public hiddenValue: boolean = false;
 
 
 
@@ -73,6 +74,9 @@ export class TopicEditorComponent implements OnInit {
     document.getElementById('topicDescription').addEventListener('input', (e) => {
       this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
     });
+    document.getElementById('topicHidden').addEventListener('input', (e) => {
+      this.hiddenValue = (<HTMLInputElement>e.target).checked;
+    });
   }
 
 
@@ -91,6 +95,11 @@ export class TopicEditorComponent implements OnInit {
     let description = <HTMLTextAreaElement>document.getElementById('topicDescription');
     if (description !== null) { description.value = topic.description; }
     this.descriptionValue = topic.description;
+
+    // Hidden
+    let hidden = <HTMLInputElement>document.getElementById('topicHidden');
+    if (hidden !== null) { hidden.checked = topic.hidden; }
+    this.hiddenValue = topic.hidden;
   }
 
   /**
@@ -153,6 +162,12 @@ export class TopicEditorComponent implements OnInit {
     let description = (<HTMLTextAreaElement>document.getElementById('topicDescription')).value;
     if (description !== this.topic$.description) {
       topic['description'] = description;
+    }
+
+
+    // Hidden
+    if (this.hiddenValue !== this.topic$.hidden) {
+      topic['hidden'] = this.hiddenValue;
     }
 
     // Clear error message if validation passed.

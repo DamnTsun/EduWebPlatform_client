@@ -1,5 +1,5 @@
 <section class="container page-content">
-  
+
   <!-- Breadcrumb navigation -->
   <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subject$ !== null">
     <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
@@ -53,6 +53,19 @@
         </small>
       </div>
 
+
+      <!-- Hidden -->
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="hidden" id="topicHidden" value="option1">
+        <label class="form-check-label" for="topicHidden">Hidden</label>
+        <small class="form-text text-muted">
+          When hidden, a topic will only be visible to admin users.
+          <div>
+            Note: New topics will be auto-hidden due to containing no lessons or tests.
+          </div>
+        </small>
+      </div>
+
     </div>
 
     <div class="card-footer">
@@ -69,6 +82,12 @@
     <div class="card-body">
       <h2>{{ nameValue }}</h2>
       <markdown [data]="descriptionValue" ngPreserveWhitespaces></markdown>
+    </div>
+
+    <!-- Hidden / auto-hidden badge -->
+    <div>
+      <span class="badge badge-secondary content-hidden-badge" *ngIf="hiddenValue">Hidden</span>
+      <span class="badge badge-secondary content-hidden-badge" *ngIf="!hiddenValue">Auto-Hidden</span>
     </div>
   </div>
 

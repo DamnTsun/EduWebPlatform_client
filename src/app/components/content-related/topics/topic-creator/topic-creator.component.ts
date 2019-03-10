@@ -22,6 +22,7 @@ export class TopicCreatorComponent implements OnInit {
   // Values of name / description. Used by preview.
   public nameValue: string = '';
   public descriptionValue: string = '';
+  public hiddenValue: boolean = false;
 
 
 
@@ -67,6 +68,9 @@ export class TopicCreatorComponent implements OnInit {
     document.getElementById('topicDescription').addEventListener('input', (e) => {
       this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
     });
+    document.getElementById('topicHidden').addEventListener('input', (e) => {
+      this.hiddenValue = (<HTMLInputElement>e.target).checked;
+    })
   }
 
 
@@ -97,7 +101,8 @@ export class TopicCreatorComponent implements OnInit {
   private buildTopic(): object {
     let topic = {
       name: null,
-      description: null
+      description: null,
+      hidden: false
     }
 
     // Get name input.
@@ -113,6 +118,9 @@ export class TopicCreatorComponent implements OnInit {
     let descriptionInput = <HTMLInputElement>document.getElementById('topicDescription');
     if (descriptionInput == null) { return null; }
     topic.description = descriptionInput.value.trim();
+
+    // Hidden
+    topic.hidden = this.hiddenValue;
 
     return topic;
   }
