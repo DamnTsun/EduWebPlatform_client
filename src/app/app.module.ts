@@ -12,8 +12,6 @@ import { appRoutes } from './app.router';
 // Social login.
 import { SocialLoginModule, AuthServiceConfig, LoginOpt } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
-// Quill RCT
-import { QuillModule } from 'ngx-quill';
 // Infinite-Scroll
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
@@ -140,7 +138,6 @@ export function provideConfig() {
     HttpClientModule,
     RouterModule.forRoot(appRoutes, { useHash: true }),
     SocialLoginModule,
-    QuillModule,
     InfiniteScrollModule,
     MarkdownModule.forRoot()
   ],

@@ -71,6 +71,8 @@ export class TopicListComponent implements OnInit {
       if (topics.length > 0) {
         this.topics$ = this.topics$.concat(topics);
         this.offset += topics.length;
+        // If less topics fetched than asked for, must be end of content.
+        if (topics.length < this.count) { this.endOfContent = true; }
       } else {
         // Empty list fetched. Must be end of topics.
         this.endOfContent = true;
