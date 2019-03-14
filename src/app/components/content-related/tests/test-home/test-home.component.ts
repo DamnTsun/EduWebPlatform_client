@@ -7,6 +7,8 @@ import { TestsService } from 'src/app/services/contentServices/tests.service';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
+import { UserTestListComponent } from 'src/app/components/content-related/user_tests/user-test-list/user-test-list.component';
+
 @Component({
   selector: 'app-test-home',
   templateUrl: './test-home.component.html',
@@ -65,7 +67,7 @@ export class TestHomeComponent implements OnInit {
     }, (err) => {
       this.loadingError = true;
       console.error('TestHome test$ Error:', err);
-      this.router.navigate([ this.navService.getSubjectListRoute() ]);
+      this.router.navigate([this.navService.getSubjectListRoute()]);
     });
   }
 
@@ -86,7 +88,7 @@ export class TestHomeComponent implements OnInit {
     url = url.replace(`:${environment.routeParams.topicid}`, topicid);
     url = url.replace(`:${environment.routeParams.testid}`, testid);
     // Change to user_tests page, passing desired number of questions.
-    this.router.navigate([ url, { count: numberOfQuestions } ]);
+    this.router.navigate([url, { count: numberOfQuestions }]);
   }
 
   /**
@@ -103,6 +105,47 @@ export class TestHomeComponent implements OnInit {
   }
 
 
+
+
+
+  /**
+   * Shows user previous user tests from all time.
+   */
+  public viewPreviousUserTests_allTime() {
+    this.viewPreviousUserTests(UserTestListComponent.TIMESPANS.ALL_TIME);
+  }
+
+  /**
+   * Shows user previous user tests from last month.
+   */
+  public viewPreviousUserTests_month() {
+    this.viewPreviousUserTests(UserTestListComponent.TIMESPANS.MONTH);
+  }
+
+  /**
+   * Redirects user to the previous user tests page.
+   * Optionally can specify the timespan parameter.
+   * @param timespan - Timespan to get user tests over, e.g. month.
+   */
+  private viewPreviousUserTests(timespan: string = null) {
+    let params: object = {};
+    if (timespan != null) {
+      params['timespan'] = timespan;
+    }
+    this.router.navigate(
+      [
+        this.navService.getUserTestListRoute(
+          this.subjectid, this.topicid, this.test$.id),
+        params
+      ]
+    );
+  }
+
+
+
+  
+
+  // HTML methods
   /**
    * Changes value of questionCountInput of custom question count modal by an amount.
    * @param increment - amount of change value. (typically +1 / -1)

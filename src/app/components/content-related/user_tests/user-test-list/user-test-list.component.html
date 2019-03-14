@@ -18,7 +18,7 @@
 
 
   <!-- Title -->
-  <h2>Previous Test Results:</h2>
+  <h2>Previous Test Results ({{ getTimespanForTitle() }}):</h2>
 </section>
 
 <section class="container container-no-margin page-content">
@@ -46,7 +46,8 @@
           <td>{{ result.score }} / {{ result.questionCount }} ({{ getScorePercentage(result) }}#)</td>
           <!-- Options cell -->
           <td class="table-options-cell">
-            <button class="btn btn-outline-primary table-cell-button" routerLink="{{ result.id }}">
+            <button class="btn btn-outline-primary table-cell-button"
+              [routerLink]="[navService.getUserTestDetailsRoute(subjectid, topicid, testid, result.id), getTimespanParamForNavigation()]">
               View
             </button>
             <button class="btn btn-outline-danger table-cell-button" data-toggle="modal" data-target="#deleteModal"

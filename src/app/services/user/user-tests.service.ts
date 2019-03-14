@@ -41,10 +41,11 @@ export class UserTestsService {
    * @param testid - id of test.
    * @param count - number of results to get.
    * @param offset - number of results to skip.
+   * @param timespan - timespan to get results over. Optional. Default is all time.
    */
-  public getUserTestResults(subjectid, topicid, testid, count, offset): Observable<UserTest[]> {
+  public getUserTestResults(subjectid, topicid, testid, count, offset, timespan = ''): Observable<UserTest[]> {
     return this.api.get(environment.apiUrl +
-        `subjects/${subjectid}/topics/${topicid}/tests/${testid}/user_tests?count=${count}&offset=${offset}`) as Observable<UserTest[]>;
+        `subjects/${subjectid}/topics/${topicid}/tests/${testid}/user_tests?count=${count}&offset=${offset}&timespan=${timespan}`) as Observable<UserTest[]>;
   }
 
   /**

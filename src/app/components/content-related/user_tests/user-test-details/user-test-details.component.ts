@@ -7,6 +7,7 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 import { environment } from 'src/environments/environment';
 import { UserTestQuestion } from 'src/app/classes/UserTestQuestion';
 import { UserTest } from 'src/app/classes/UserTest';
+import { UserTestListComponent } from '../user-test-list/user-test-list.component';
 
 @Component({
   selector: 'app-user-test-details',
@@ -14,6 +15,11 @@ import { UserTest } from 'src/app/classes/UserTest';
   styleUrls: ['./user-test-details.component.css']
 })
 export class UserTestDetailsComponent implements OnInit {
+
+  // Holds timespan of user test list if set.
+  /* Stored so that timespan value is not lost when navigating back to
+      the user tests list via breadcrumb navigation. */
+  public timespan: string = null;
 
   // Ids of parent objects.
   public subjectid = null;
@@ -45,6 +51,13 @@ export class UserTestDetailsComponent implements OnInit {
     this.utestid = this.route.snapshot.paramMap.get(environment.routeParams.usertestid);
     // Set subject.
     this.subjectService.setSubject(this.subjectid);
+
+
+    // Get timespan param if set.
+    this.timespan = this.route.snapshot.paramMap.get('timespan');
+    if (UserTestListComponent.validateTimespanValue(this.timespan)) {
+      this.timespan = null;
+    }
 
 
     // Get user signed in
@@ -124,6 +137,15 @@ export class UserTestDetailsComponent implements OnInit {
 
 
   // HTML methods
+  /**
+   * Get url parameter object for when navigating to user tests list via breadcrumb nav.
+   */
+  public getTimespanParamForNavigation(): Object {
+    let params = {};
+    if (this.timespan !== null) { params['timespan'] = this.timespan; }
+    return params;
+  }
+
   /**
    * Gets class for the score badge.
    */
