@@ -14,6 +14,8 @@ import { SocialLoginModule, AuthServiceConfig, LoginOpt } from 'angularx-social-
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 // Infinite-Scroll
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+// Ng2-charts / chart.js
+import { ChartsModule } from 'ng2-charts';
 
 // App components.
 // AppComponent and shared stuff (header, animated CSS loading icon thingy, etc)
@@ -139,7 +141,8 @@ export function provideConfig() {
     RouterModule.forRoot(appRoutes, { useHash: true }),
     SocialLoginModule,
     InfiniteScrollModule,
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot(),
+    ChartsModule
   ],
   providers: [
     {

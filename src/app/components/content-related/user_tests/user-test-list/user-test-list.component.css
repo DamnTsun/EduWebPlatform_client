@@ -28,3 +28,16 @@
     width: 25em;
     max-width: 100%;
 }
+
+
+.chart-mobile-warning {
+    visibility: visible;
+    color: red;
+    text-emphasis: emphasis;
+}
+
+@media (min-width: 768px) {
+    .chart-mobile-warning {
+        visibility: hidden;
+    }
+  }

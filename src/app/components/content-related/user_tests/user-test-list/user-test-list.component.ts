@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { UserTestsService } from 'src/app/services/user/user-tests.service';
 import { SignInService } from 'src/app/services/sign-in.service';
@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { UserTest } from 'src/app/classes/UserTest';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
+import { Color, Label, BaseChartDirective } from 'ng2-charts';
+import { ChartOptions, ChartDataSets } from 'chart.js';
 
 @Component({
   selector: 'app-user-test-list',
@@ -138,6 +140,9 @@ export class UserTestListComponent implements OnInit {
       if (results.length < this.count) {
         this.endOfContent = true;
       }
+
+      // Add results to chart.
+      results.forEach(r => this.addResultToChart(r));
     } else {
       // Empty list returned, must be end of results.
       this.endOfContent = true;
@@ -205,7 +210,7 @@ export class UserTestListComponent implements OnInit {
         return 'All-Time';
       case UserTestListComponent.TIMESPANS.MONTH:
         return 'Last 30 Days';
-      
+
       default:
         return 'All-Time';
     }
@@ -219,7 +224,7 @@ export class UserTestListComponent implements OnInit {
     if (this.timespan !== null) { params['timespan'] = this.timespan; }
     return params;
   }
-  
+
   /**
    * Gets user test score as a percentage.
    * @param { score, questionCount } - score/questionCount attributes of given UserTest object.
@@ -245,7 +250,72 @@ export class UserTestListComponent implements OnInit {
    * @param value - value to be checked.
    */
   public static validateTimespanValue(value: string) {
+    
     // Convert TIMESPANS to array and check if value is an element.
     return !Object.values(this.TIMESPANS).includes(value);
+  }
+
+
+
+
+  
+  // Variables for chart.
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+
+  // Stores data for chart.
+  public lineChartData: number[] = [];
+  // Stores labels for chart.
+  public lineChartLabels: Label[] = [];
+  // Stores options for chart.
+  public lineChartOptions: ChartOptions = {
+    responsive: true,
+    scales: {
+      // We use this empty structure as a placeholder for dynamic theming.
+      xAxes: [{
+        ticks: {
+          maxTicksLimit: 6,
+          maxRotation: 30
+        }
+      }],
+      yAxes: [
+        {
+          id: 'y-axis-0',
+          position: 'left',
+          ticks: {
+            fontSize: 12,
+            beginAtZero: true
+          }
+        }
+      ]
+    }
+  };
+  // Defines color of line and under-line area of chart.
+  public lineChartColors: Color[] = [
+    { // blue
+      backgroundColor: 'rgba(60,108,231,0.3)',
+      borderColor: 'rgba(60,108,231,1)',
+      pointBackgroundColor: 'rgba(92,140,231,1)',
+      pointBorderColor: 'rgba(255,255,255,1)',
+      pointRadius: 4
+    }
+  ];
+  public lineChartType = 'line';
+
+
+  /**
+   * Adds a new result to the chart.
+   * The y position is based on the score perecentage.
+   * The x label is the date of completion, formatted.
+   * @param result - User test to be plotted.
+   */
+  private addResultToChart(result: UserTest) {
+    // Get score.
+    let score = this.getScorePercentage(result);
+    // Format date to look nice.
+    let dateString = new Date(result.date).toLocaleString().replace(/\:\d\d /g, ' ');
+    // Add to data / labels of chart.
+    this.lineChartLabels.unshift(dateString);
+    this.lineChartData.unshift(score);
+    this.chart.update();
   }
 }
