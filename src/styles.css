@@ -5,28 +5,22 @@ Can probably copy-paste the content select /home / creator / editor sections and
 [x] - sign in
 [x] - breadcrumb nav
 [x] - subject select
-    [] - subject creator
-    [] - subject editor
+  [x] - subject creator/editor
   [] - subject home (main)
   [] - subject home (subject admins)
   [] - subject news
-    [] - subject news creator
-    [] - subject news editor
+    [] - subject news creator/editor
 [] - topics list
-    [] - topics creator
-    [] - topics editor
+  [] - topics creator/editor
   [] - topic home
 [] - lessons list
-    [] - lessons creaotr
-    [] - lessons editor
+  [] - lessons creator/editor
   [] - lessons home
 [] - tests list
-    [] - tests creator
-    [] - tests editor
+  [] - tests creator/editor
   [] - test home
 [] - test question list
-    [] - test question creator
-    [] - test question editor
+  [] - test question creator/editor
   [] - test question home
 
 [] - user test attempt
@@ -37,8 +31,7 @@ Can probably copy-paste the content select /home / creator / editor sections and
 [] - user chat
 
 [] - groups list
-  [] - group creator
-  [] - group editor
+  [] - group creator/editor
 [] - group home (main)
 [] - group home (member management)
 [] - group chat
