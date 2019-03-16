@@ -2,6 +2,13 @@
 
   <div class="news-post-container">
 
+    <!-- breadcrumb nav -->
+    <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null">
+      <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+      <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
+      <span class="breadcrumb-item active" aria-current="page">News</span>
+    </nav>
+
     <!-- Create button -->
     <div class="create-button-container" *ngIf="isAdmin">
       <button class="btn btn-success create-button" routerLink="create">
