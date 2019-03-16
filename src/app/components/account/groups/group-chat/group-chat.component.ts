@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UtilService } from 'src/app/services/util.service';
 import { environment } from 'src/environments/environment';
 import { MessageService } from 'src/app/services/user/message.service';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-group-chat',
@@ -37,6 +38,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private route: ActivatedRoute,
     private router: Router,
+    public navService: NavigationServiceService,
     private util: UtilService
   ) { }
 

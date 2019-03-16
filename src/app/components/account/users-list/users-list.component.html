@@ -1,5 +1,11 @@
 <section class="container page-content">
 
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb">
+    <span class="breadcrumb-item active" aria-current="page">Users</span>
+  </nav>
+
+
   <div class="alert alert-success" *ngIf="this.message != null">
     {{ message }}
   </div>
@@ -103,7 +109,7 @@
 
   <app-loader *ngIf="!endOfContent; else endOfContentTemplate"></app-loader>
   <ng-template #endOfContentTemplate>
-    <div class="alert alert-warning">
+    <div class="alert alert-dark no-more-content-message">
       End of Users
     </div>
   </ng-template>

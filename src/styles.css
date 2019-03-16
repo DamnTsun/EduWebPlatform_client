@@ -1,3 +1,50 @@
+/*
+*** SYSTEM TESTING CHECKLIST ***
+Can probably copy-paste the content select /home / creator / editor sections and adjust slightly...
+[x] - navbar
+[x] - sign in
+[x] - breadcrumb nav
+[x] - subject select
+    [] - subject creator
+    [] - subject editor
+  [] - subject home (main)
+  [] - subject home (subject admins)
+  [] - subject news
+    [] - subject news creator
+    [] - subject news editor
+[] - topics list
+    [] - topics creator
+    [] - topics editor
+  [] - topic home
+[] - lessons list
+    [] - lessons creaotr
+    [] - lessons editor
+  [] - lessons home
+[] - tests list
+    [] - tests creator
+    [] - tests editor
+  [] - test home
+[] - test question list
+    [] - test question creator
+    [] - test question editor
+  [] - test question home
+
+[] - user test attempt
+[] - user tests list
+[] - user tests home
+
+[] - users list
+[] - user chat
+
+[] - groups list
+  [] - group creator
+  [] - group editor
+[] - group home (main)
+[] - group home (member management)
+[] - group chat
+
+[] - account dashboard
+*/
 /* You can add global styles to this file, and also import other style files */
 
 /* Global stuff */
@@ -28,13 +75,13 @@ body {
   margin: 1em 0em;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   .content-grid {
     grid-template-columns: auto auto;
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
   .content-grid {
     grid-template-columns: auto auto auto;
   }

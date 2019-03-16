@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Message } from 'src/app/classes/Message';
 import { UtilService } from 'src/app/services/util.service';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-chat',
@@ -32,6 +33,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private route: ActivatedRoute,
     private router: Router,
+    public navService: NavigationServiceService,
     private util: UtilService
   ) { }
 
