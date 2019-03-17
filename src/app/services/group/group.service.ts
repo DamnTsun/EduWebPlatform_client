@@ -30,8 +30,9 @@ export class GroupService {
    * @param count - number of groups to get.
    * @param offset - number of groups to skip.
    */
-  public getAllGroups(count, offset) {
-    
+  public getAllGroups(count, offset): Observable<Group[]> {
+    return this.api.get(environment.apiUrl
+      + `groups/all?count=${count}&offset=${offset}`) as Observable<Group[]>;
   }
 
 
@@ -73,6 +74,17 @@ export class GroupService {
   public getGroupNonMembers(groupid, count, offset) {
     return this.api.get(environment.apiUrl
       + `groups/${groupid}/nonmembers?count=${count}&offset=${offset}`);
+  }
+
+
+
+  /**
+   * Gets whether the current user is a member of a group.
+   * @param groupid - id of group.
+   */
+  public getWhetherCurrentUserInGroup(groupid) {
+    return this.api.get(environment.apiUrl
+      + `groups/${groupid}/members/me`);
   }
 
 

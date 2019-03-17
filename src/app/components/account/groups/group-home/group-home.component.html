@@ -32,7 +32,10 @@
       <button class="btn btn-outline-primary" routerLink="chat">
         <i class="material-icons button-icon">chat</i>Chat
       </button>
-      <button class="btn btn-outline-danger card-footer-dropdown" data-toggle="modal" data-target="#removeSelfModal">
+      <button *ngIf="!isGroupMember && isAdmin" class="btn btn-outline-success card-footer-dropdown" (click)="joinGroup()">
+        <i class="material-icons button-icon">add</i>Join
+      </button>
+      <button *ngIf="isGroupMember" class="btn btn-outline-danger card-footer-dropdown" data-toggle="modal" data-target="#removeSelfModal">
         <i class="material-icons button-icon">remove</i>Leave
       </button>
     </div>
