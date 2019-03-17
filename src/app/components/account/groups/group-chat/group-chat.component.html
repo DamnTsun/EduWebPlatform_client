@@ -57,7 +57,7 @@
         <!-- If message sent by another user. -->
         <ng-template #otherUserTemplate>
           <div class="message-other-user-displayname" *ngIf="shouldShowNameOnMessage(i)">
-            <div>{{ message.sender_displayname }} (#{{ message.sender_id }})</div>
+            <div>{{ message.sender_displayname }} (#{{ message.sender_id }}) <span class="badge badge-success" *ngIf="message.sender_isAdmin">Admin</span></div>
             <div>{{ message.date }}</div>
           </div>
           <div class="message message-other-user">
