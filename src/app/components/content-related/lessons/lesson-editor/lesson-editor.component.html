@@ -30,8 +30,11 @@
           Lesson Name Must Not:
           <ul>
             <li>Be blank.</li>
-            <li>Contain more than 50 characters.</li>
             <li>Be the same as an existing lessons name, in this topic.</li>
+            <li>Contain more than 50 characters.</li>
+            <ul>
+              <li>Current name length: {{ getNameLength() }}</li>
+            </ul>
           </ul>
         </small>
       </div>

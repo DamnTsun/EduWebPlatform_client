@@ -175,4 +175,15 @@ export class LessonCreatorComponent implements OnInit {
     route = route.replace(`:${environment.routeParams.topicid}`, this.topicid);
     this.router.navigate([ route ]);
   }
+
+
+
+  // HTML methods
+  /**
+   * Gets length of name input.
+   */
+  public getNameLength(): number {
+    if (this.nameValue === null) { return 0; }
+    return this.nameValue.length;
+  }
 }
