@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   
+  siteName: 'Edu Web Platform',
   apiUrl: 'http://localhost/EduWebPlatform_api/',
   routeParams: {
     // Content related.

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SocialUser } from 'angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { UserTestsService } from 'src/app/services/user/user-tests.service';
@@ -14,6 +13,9 @@ export class AccountComponent implements OnInit {
 
   public user$ = null;
   public errorMessage: string = null;          // Error message if something goes wrong.
+
+  public deleteAccountMessage: string = null;
+  public deleteResultsMessage: string = null;
 
 
 
@@ -85,13 +87,13 @@ export class AccountComponent implements OnInit {
    * Deletes the users account.
    */
   public deleteAccount(): void {
-    // Get confirmation.
-    if (!confirm('Are you sure you want to delete your account?\nThis cannot be undone.')) { return; }
     // Delete the users account.
     this.signIn.deleteCurrentUsersAccount().subscribe((res) => {
       this.signIn.signOut();
       this.router.navigate([ environment.routes.account_signIn ]);
-    })
+    }, (err) => {
+      this.deleteAccountMessage = 'Something went wrong. Unable to delete your account.';
+    });
   }
 
 
@@ -99,10 +101,19 @@ export class AccountComponent implements OnInit {
    * Deletes the users user tests.
    */
   public deleteAllUserTests(): void {
-    if (!confirm('Are you sure you want to delete all of your previous test results?\nThis cannot be undone.')) { return; }
     // Delete the users test results.
     this.userTestService.deleteAllCurrentUserUserTests().subscribe((res) => {
-      // Todo. Some kind of notification that this was successful.
+      this.deleteResultsMessage = 'Your test results have been deleted successfully.';
+    }, (err) => {
+      this.deleteResultsMessage = 'Something went wrong. Unable to delete your test results.';
     });
+  }
+
+
+  /**
+   * Gets site name for use in HTML.
+   */
+  public getSiteName(): string {
+    return environment.siteName;
   }
 }
