@@ -148,7 +148,6 @@ export class SubjectNewsEditorComponent implements OnInit {
       post['body'] = body;
     }
 
-
     return post;
   }
 

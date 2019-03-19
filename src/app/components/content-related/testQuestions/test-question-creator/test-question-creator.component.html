@@ -73,13 +73,17 @@
             </ul>
           </ul>
         </small>
+        <small class="error-input-feedback" *ngIf="!imageUrlValid">
+          Invalid image URL. Please correct or clear it.
+        </small>
       </div>
 
     </div>
 
     <div class="card-footer">
       <div class="submit-button-container">
-        <button class="btn btn-primary submit-button" (click)="createTestQuestion()" *ngIf="!this.submitted">Submit</button>
+        <button class="btn btn-primary submit-button" [disabled]="questionValue.length === 0 || answerValue.length === 0 || !imageUrlValid"
+          (click)="createTestQuestion()" *ngIf="!this.submitted">Submit</button>
       </div>
     </div>
   </div>

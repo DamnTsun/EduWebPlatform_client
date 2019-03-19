@@ -25,6 +25,7 @@ export class TestQuestionCreatorComponent implements OnInit {
   public questionValue: string = '';
   public answerValue: string = '';
   public imageUrlValue: string = '';
+  public imageUrlValid: boolean = true;
 
 
 
@@ -68,6 +69,16 @@ export class TestQuestionCreatorComponent implements OnInit {
     });
     document.getElementById('questionImageUrl').addEventListener('input', (e) => {
       this.imageUrlValue = (<HTMLInputElement>e.target).value;
+      // Check if current value is valid.
+      if (this.imageUrlValue !== '') {
+        let img = new Image();
+        img.src = this.imageUrlValue;
+        img.onload = () => { this.imageUrlValid = true; }
+        img.onerror = () => { this.imageUrlValid = false; }
+      } else {
+        // If blank, set to valid.
+        this.imageUrlValid = true;
+      }
     });
   }
 
