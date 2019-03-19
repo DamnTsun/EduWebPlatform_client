@@ -132,7 +132,7 @@ export class SubjectEditorComponent implements OnInit {
     let subject = {};
     // Name
     let name = (<HTMLInputElement>document.getElementById('subjectName')).value;
-    if (name == '') {
+    if (name.trim() == '') {
       this.errorMessage = 'You must enter a name.';
       return null;
     }

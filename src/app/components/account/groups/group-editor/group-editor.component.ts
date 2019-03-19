@@ -146,7 +146,7 @@ export class GroupEditorComponent implements OnInit {
     let group = {};
     // Name
     let name = (<HTMLInputElement>document.getElementById('groupName')).value;
-    if (name === '') {
+    if (name.trim() === '') {
       this.errorMessage = 'You must enter a name.';
       return null;
     }
@@ -159,13 +159,13 @@ export class GroupEditorComponent implements OnInit {
     // Description
     let description = (<HTMLTextAreaElement>document.getElementById('groupDescription')).value;
     if (description !== this.group$.description) {
-      group['description'] = description;
+      group['description'] = description.trim();
     }
 
     // Image url
     let imageUrl = (<HTMLInputElement>document.getElementById('groupImageUrl')).value;
     if (imageUrl !== this.group$.imageUrl) {
-      group['imageUrl'] = imageUrl;
+      group['imageUrl'] = imageUrl.trim();
     }
 
 

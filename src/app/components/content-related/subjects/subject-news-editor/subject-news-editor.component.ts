@@ -127,7 +127,7 @@ export class SubjectNewsEditorComponent implements OnInit {
     let post = {};
     // Title
     let title = (<HTMLInputElement>document.getElementById('postTitle')).value;
-    if (title == '') {
+    if (title.trim() == '') {
       this.errorMessage = 'You must enter a title.';
       return null;
     }

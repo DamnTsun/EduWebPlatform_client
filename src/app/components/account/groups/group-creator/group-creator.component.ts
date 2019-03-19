@@ -125,7 +125,7 @@ export class GroupCreatorComponent implements OnInit {
       imageUrlInput.value == null) {
       return null;
     }
-    group.imageUrl = imageUrlInput.value;
+    group.imageUrl = imageUrlInput.value.trim();
 
 
     return group;
