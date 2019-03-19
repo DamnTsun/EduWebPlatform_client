@@ -15,9 +15,9 @@
         <p>{{ user$.displayname }}</p>
         <div class="form-group">
           <input class="form-control form-control-lg nameInput" id="displayNameInput" type="text" placeholder="Enter new DisplayName"
-            value="{{ user$.displayname }}">
+            maxlength="30" value="{{ user$.displayname }}">
           <small class="form-text text-muted">
-            Note: Your DisplayName can be seen by admins and any user you send a message to.
+            Note: Your DisplayName can be seen by other users on the users list.
           </small>
         </div>
         <button class="btn btn-primary page-button" (click)="updateName()">Change DisplayName</button>

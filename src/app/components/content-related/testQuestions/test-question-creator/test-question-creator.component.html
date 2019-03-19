@@ -29,12 +29,12 @@
       <div class="form-group">
         <label for="name">Question Text</label>
         <input name="name" class="form-control form-control-lg" id="questionText" type="text" placeholder="Enter Question Text"
-          maxlength="50">
+          maxlength="255">
         <small class="form-text text-muted">
           Question Text Must Not:
           <ul>
             <li>Be blank.</li>
-            <li>Contain more than 50 characters.</li>
+            <li>Contain more than 255 characters.</li>
             <ul>
               <li>Current question text length: {{ questionValue.length }}</li>
             </ul>
@@ -46,12 +46,12 @@
       <div class="form-group">
         <label for="answer">Question Answer</label>
         <input name="answer" class="form-control form-control-lg" id="questionAnswer" type="text" placeholder="Enter Question Answer"
-          maxlength="50">
+          maxlength="255">
         <small class="form-text text-muted">
           Question Answer Must Not:
           <ul>
             <li>Be blank.</li>
-            <li>Contain more than 50 characters.</li>
+            <li>Contain more than 255 characters.</li>
             <ul>
               <li>Current answer length: {{ answerValue.length }}</li>
             </ul>

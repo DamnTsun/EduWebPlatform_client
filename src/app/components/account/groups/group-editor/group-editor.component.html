@@ -23,12 +23,12 @@
       <div class="form-group">
         <label for="name">Group Name</label>
         <input name="name" class="form-control form-control-lg" id="groupName" type="text"
-          placeholder="Enter Group Name" maxlength="50">
+          placeholder="Enter Group Name" maxlength="100">
         <small class="form-text text-muted">
           Group Name Must Not:
           <ul>
             <li>Be blank.</li>
-            <li>Contain more than 50 characters.</li>
+            <li>Contain more than 100 characters.</li>
             <ul>
               <li>Current name length: {{ nameValue.length }}</li>
             </ul>
@@ -40,13 +40,13 @@
       <div class="form-group">
         <label for="description">Group Description (Optional)</label>
         <textarea name="description" class="form-control" id="groupDescription"
-          placeholder="Enter Group Desciption (Optional)" rows="10" maxlength="1024"></textarea>
+          placeholder="Enter Group Desciption (Optional)" rows="10" maxlength="4096"></textarea>
         <small class="form-text text-muted">
           Description may be styled using Markdown.
           <div>
             Group Description Must Not:
             <ul>
-              <li>Contain more than 1024 characters.</li>
+              <li>Contain more than 4096 characters.</li>
               <ul>
                 <li>Current description length: {{ descriptionValue.length }}</li>
               </ul>

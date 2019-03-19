@@ -168,6 +168,7 @@ export class SubjectEditorComponent implements OnInit {
     switch (err.status) {
       case 400:     // Something wrong with request.
         this.errorMessage = err.error.message;
+        this.submitted = false;
         break;
       case 401:     // User not admin.
         this.router.navigate([ environment.routes.subjectSelect ]);

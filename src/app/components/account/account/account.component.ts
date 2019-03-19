@@ -63,13 +63,13 @@ export class AccountComponent implements OnInit {
     let name = <HTMLInputElement>document.getElementById('displayNameInput');
     if (name == null) { return; }
     // Validate.
-    if (name.value.trim().length < 1 || name.value.trim().length > 50) {
-      this.errorMessage = 'Name is not valid. Name must be between 1 and 50 characters long.';
+    if (name.value.trim().length < 1 || name.value.trim().length > 30) {
+      this.errorMessage = 'DisplayName is not valid. DisplayName must be between 1 and 30 characters long.';
       return;
     }
     // Check not same as original.
     if (name.value.trim() == this.user$.displayname) {
-      this.errorMessage = 'Name not updated. Name is the same as current name.';
+      this.errorMessage = 'DisplayName not updated. Entered name is the same as your current name.';
       return;
     }
 
