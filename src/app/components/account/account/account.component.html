@@ -5,6 +5,10 @@
     {{ errorMessage }}
   </div>
 
+  <!-- Loading icon (while loading) -->
+  <app-loader *ngIf="this.user$ === null"></app-loader>
+
+  <!-- User dashboard (once loaded) -->
   <div class="card" *ngIf="this.user$ !== null" style="text-align: center;">
     <h2 class="card-header">Account Dashboard:</h2>
     <div class="card-body">
