@@ -77,10 +77,10 @@ export class TestQuestionEditorComponent implements OnInit {
 
     // Watch values for question / answer / imageUrl.
     document.getElementById('questionText').addEventListener('input', (e) => {
-      this.questionValue = (<HTMLInputElement>e.target).value;
+      this.questionValue = (<HTMLInputElement>e.target).value.trim();
     });
     document.getElementById('questionAnswer').addEventListener('input', (e) => {
-      this.answerValue = (<HTMLInputElement>e.target).value;
+      this.answerValue = (<HTMLInputElement>e.target).value.trim();
     });
     document.getElementById('questionImageUrl').addEventListener('input', (e) => {
       this.imageUrlValue = (<HTMLInputElement>e.target).value;
