@@ -63,7 +63,12 @@ export class SubjectNewsEditorComponent implements OnInit {
 
 
     // Watch updates to inputs.
-
+    document.getElementById('postTitle').addEventListener('input', (e) => {
+      this.titleValue = (<HTMLInputElement>e.target).value.trim();
+    });
+    document.getElementById('postBody').addEventListener('input', (e) => {
+      this.bodyValue = (<HTMLTextAreaElement>e.target).value.trim();
+    });
   }
 
 
