@@ -32,3 +32,8 @@
 .card {
     margin-bottom: 1em;
 }
+
+
+.error-input-feedback {
+    color: red;
+}

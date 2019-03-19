@@ -1,5 +1,14 @@
 <div class="container page-content">
 
+
+  <!-- Breadcrumb navigation -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="groupid !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getGroupListRoute() }}">Groups</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getGroupHomeRoute(groupid) }}">{{ groupid }}</a>
+    <span class="breadcrumb-item active" aria-current="page">Chat</span>
+  </nav>
+
+
   <button class="btn btn-success back-button" routerLink="../">
     <i class="material-icons button-icon">arrow_back</i>
     Back to Group Home
@@ -12,13 +21,12 @@
   <h2>Group Chat:</h2>
 
   <!-- Send message input -->
-  <div class="form-text text-muted">Messages must be between 1 and 1024 characters long.</div>
+  <div class="form-text text-muted">Messages must be between 1 and 1024 characters long and cannot be blank.</div>
   <div class="input-group mb-3">
     <input type="text" id="messageInput" class="form-control" placeholder="Type Message..." aria-label="Message Input"
       maxlength="1024">
     <div class="input-group-append">
-      <button id="messageSubmit" class="btn btn-outline-secondary" type="button" disabled="true"
-        (click)="sendMessage()">Send</button>
+      <button id="messageSubmit" class="btn btn-outline-secondary" type="button" disabled="true" (click)="sendMessage()">Send</button>
     </div>
   </div>
 
@@ -49,7 +57,7 @@
         <!-- If message sent by another user. -->
         <ng-template #otherUserTemplate>
           <div class="message-other-user-displayname" *ngIf="shouldShowNameOnMessage(i)">
-            <div>{{ message.sender_displayname }} (#{{ message.sender_id }})</div>
+            <div>{{ message.sender_displayname }} (#{{ message.sender_id }}) <span class="badge badge-success" *ngIf="message.sender_isAdmin">Admin</span></div>
             <div>{{ message.date }}</div>
           </div>
           <div class="message message-other-user">
@@ -69,6 +77,5 @@
   </div>
 
   <!-- Infinite scroll div. -->
-  <div id="infiniteScrollDiv" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000"
-    (scrolled)="onScroll()"></div>
+  <div id="infiniteScrollDiv" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
 </div>

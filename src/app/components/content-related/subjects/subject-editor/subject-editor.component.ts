@@ -132,7 +132,7 @@ export class SubjectEditorComponent implements OnInit {
     let subject = {};
     // Name
     let name = (<HTMLInputElement>document.getElementById('subjectName')).value;
-    if (name == '') {
+    if (name.trim() == '') {
       this.errorMessage = 'You must enter a name.';
       return null;
     }
@@ -168,6 +168,7 @@ export class SubjectEditorComponent implements OnInit {
     switch (err.status) {
       case 400:     // Something wrong with request.
         this.errorMessage = err.error.message;
+        this.submitted = false;
         break;
       case 401:     // User not admin.
         this.router.navigate([ environment.routes.subjectSelect ]);

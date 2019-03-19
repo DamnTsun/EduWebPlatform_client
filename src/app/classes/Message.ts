@@ -4,4 +4,5 @@ export class Message {
     public date: string;
     public sender_id: number;
     public sender_displayname: string;
+    public sender_isAdmin: boolean;
 }

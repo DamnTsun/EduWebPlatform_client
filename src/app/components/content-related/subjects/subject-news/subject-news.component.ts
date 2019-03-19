@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Post } from 'src/app/classes/Posts';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { SignInService } from 'src/app/services/sign-in.service';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-subject-news',
@@ -30,6 +31,7 @@ export class SubjectNewsComponent implements OnInit {
     private subjectService: SubjectsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
+    public navService: NavigationServiceService
   ) { }
 
 

@@ -28,6 +28,7 @@ export class SubjectHomeComponent implements OnInit {
   // Number of news posts to get.
   public newsCount: number = 3;
   public news$: Post[] = [];
+  public noNewsPosts: boolean = false;
   public newsLoadingError: boolean = false;
 
   // Variables for handling subject admin display.
@@ -60,6 +61,8 @@ export class SubjectHomeComponent implements OnInit {
     this.signIn.userInternalRecord().subscribe((user: User[]) => {
       if (user !== null) {
         this.currentUser = user[0];
+
+        this.loadInitialSubjectAdmins();
       }
     }, (err) => {
       console.error('SubjectHome user signed in Error:', err);
@@ -78,13 +81,14 @@ export class SubjectHomeComponent implements OnInit {
     // Get newCount number of news posts to display.
     this.subjectService.getPosts(this.subjectid, this.newsCount, 0).subscribe((posts: Post[]) => {
       this.news$ = posts;
+      if (posts.length === 0) { this.noNewsPosts = true; }
     }, (err) => {
       this.newsLoadingError = true;
       console.error('SubjectHome get recent news Error:', err);
     });
+  }
 
-
-    // Get initial subject admins to show.
+  private loadInitialSubjectAdmins() {
     if (this.currentUser !== null) {
       // If user is admin, get whether the are a subject admin for this subject.
       if (this.currentUser.admin) {
@@ -118,7 +122,7 @@ export class SubjectHomeComponent implements OnInit {
     this.subjectService.getSubjectAdmins(this.subjectid, this.subjectAdminCount, this.subjectAdminOffset)
       .subscribe((subjectAdmins: SubjectAdmin[]) => {
         // Check how many subject admin records fetched.
-        if (subjectAdmins.length > 0) { 
+        if (subjectAdmins.length > 0) {
           this.subjectAdmins$ = this.subjectAdmins$.concat(subjectAdmins);
           this.subjectAdminOffset += subjectAdmins.length;
           // If less records fetched than asked for, must be end of content.

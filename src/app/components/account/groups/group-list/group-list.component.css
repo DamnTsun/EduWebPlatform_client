@@ -24,3 +24,12 @@
     max-height: 100%;
     max-width: 100%;
 }
+
+.view-all-groups-button {
+    width: 20em;
+    max-width: 100%;
+}
+
+.view-all-groups-button-container {
+    margin-bottom: 1em;
+}

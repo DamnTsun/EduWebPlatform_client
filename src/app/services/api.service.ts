@@ -24,7 +24,9 @@ export class ApiService {
 
 
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
 
 

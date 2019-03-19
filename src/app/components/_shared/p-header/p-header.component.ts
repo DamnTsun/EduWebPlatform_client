@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Subject } from '../../../classes/Subject';
 import { environment } from '../../../../environments/environment';
-import { AuthService, SocialUser } from 'angularx-social-login';
+import { SocialUser } from 'angularx-social-login';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 
@@ -71,4 +71,12 @@ export class PHeaderComponent implements OnInit {
   }
 
 
+
+  /**
+   * Gets site name from environment variable.
+   * Used by HTML since it cannot access environment variable.
+   */
+  public getSiteName(): string {
+    return environment.siteName;
+  }
 }

@@ -2,7 +2,7 @@ div.dashboard-section {
     margin-bottom: 2em;
 }
 
-button.btn {
+button.page-button {
     width: 20em;
     max-width: 100%;
 }
@@ -18,4 +18,8 @@ div.signOutButtonContainer {
 
 input.nameInput {
     text-align: center;
+}
+
+div.delete-message {
+    color: red;
 }

@@ -38,7 +38,7 @@
       <!-- Navbar if on subject select / account area, etc -->
       <ng-template #elseTemplate>
         <a class="navbar-brand" routerLink="/">
-          Edu Web Platform
+          {{ getSiteName() }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
           area-expanded="false" aria-label="Toggle Navigation">

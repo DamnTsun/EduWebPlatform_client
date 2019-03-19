@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Message } from 'src/app/classes/Message';
 import { UtilService } from 'src/app/services/util.service';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-chat',
@@ -32,6 +33,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private route: ActivatedRoute,
     private router: Router,
+    public navService: NavigationServiceService,
     private util: UtilService
   ) { }
 
@@ -64,7 +66,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     // Add event listener for message input.
     document.getElementById('messageInput').addEventListener('input', (e) => {
       let input = (<HTMLInputElement>e.target);
-      let len = input.value.length;
+      let len = input.value.trim().length;
       if (len < 1) {
         (<HTMLButtonElement>document.getElementById('messageSubmit')).disabled = true;
         return;
@@ -159,11 +161,14 @@ export class ChatComponent implements OnInit, OnDestroy {
    */
   public sendMessage() {
     let input = <HTMLInputElement>document.getElementById('messageInput');
-    let msg = input.value;
+    let msg = input.value.trim();
     // Ensure valid.
     if (msg == null || msg.length < 1 || msg.length > 1024) {
+      this.errorMessage = 'Message must be between 1 and 1024 characters long and cannot be blank.';
       return;
     }
+    // Clear error message if input is now valid.
+    this.errorMessage = null;
 
     // Send the message.
     this.messageService.sendMessage(this.otherUserId, msg).subscribe((res) => {

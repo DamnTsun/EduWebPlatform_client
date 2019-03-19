@@ -64,13 +64,13 @@ export class GroupEditorComponent implements OnInit {
     // Watch values of inputs.
     // Watch form values for preview.
     document.getElementById('groupName').addEventListener('input', (e) => {
-      this.nameValue = (<HTMLInputElement>e.target).value;
+      this.nameValue = (<HTMLInputElement>e.target).value.trim();
     });
     document.getElementById('groupDescription').addEventListener('input', (e) => {
-      this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
+      this.descriptionValue = (<HTMLTextAreaElement>e.target).value.trim();
     });
     document.getElementById('groupImageUrl').addEventListener('input', (e) => {
-      this.imageUrlValue = (<HTMLInputElement>e.target).value.trim();
+      this.imageUrlValue = (<HTMLInputElement>e.target).value;
       // Check if current value is valid.
       if (this.imageUrlValue !== '') {
         let img = new Image();
@@ -146,7 +146,7 @@ export class GroupEditorComponent implements OnInit {
     let group = {};
     // Name
     let name = (<HTMLInputElement>document.getElementById('groupName')).value;
-    if (name === '') {
+    if (name.trim() === '') {
       this.errorMessage = 'You must enter a name.';
       return null;
     }
@@ -159,13 +159,13 @@ export class GroupEditorComponent implements OnInit {
     // Description
     let description = (<HTMLTextAreaElement>document.getElementById('groupDescription')).value;
     if (description !== this.group$.description) {
-      group['description'] = description;
+      group['description'] = description.trim();
     }
 
     // Image url
     let imageUrl = (<HTMLInputElement>document.getElementById('groupImageUrl')).value;
     if (imageUrl !== this.group$.imageUrl) {
-      group['imageUrl'] = imageUrl;
+      group['imageUrl'] = imageUrl.trim();
     }
 
 

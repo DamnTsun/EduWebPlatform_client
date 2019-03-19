@@ -46,13 +46,13 @@ export class GroupCreatorComponent implements OnInit {
 
     // Watch form values for preview.
     document.getElementById('groupName').addEventListener('input', (e) => {
-      this.nameValue = (<HTMLInputElement>e.target).value;
+      this.nameValue = (<HTMLInputElement>e.target).value.trim();
     });
     document.getElementById('groupDescription').addEventListener('input', (e) => {
-      this.descriptionValue = (<HTMLTextAreaElement>e.target).value;
+      this.descriptionValue = (<HTMLTextAreaElement>e.target).value.trim();
     });
     document.getElementById('groupImageUrl').addEventListener('input', (e) => {
-      this.imageUrlValue = (<HTMLInputElement>e.target).value.trim();
+      this.imageUrlValue = (<HTMLInputElement>e.target).value;
       // Check if current value is valid.
       if (this.imageUrlValue !== '') {
         let img = new Image();
@@ -125,7 +125,7 @@ export class GroupCreatorComponent implements OnInit {
       imageUrlInput.value == null) {
       return null;
     }
-    group.imageUrl = imageUrlInput.value;
+    group.imageUrl = imageUrlInput.value.trim();
 
 
     return group;

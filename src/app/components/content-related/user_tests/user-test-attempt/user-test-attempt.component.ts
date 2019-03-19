@@ -129,9 +129,17 @@ export class UserTestAttemptComponent implements OnInit {
     let name = <HTMLInputElement>document.getElementById('ut_name');
     if (name == null) { return null; }
     if (name.value == null) { return null; }
-    user_test.title = name.value;
-    // If name is '', replace with current time.
-    user_test.title = this.utilService.getIsoTimeFormatted(new Date(new Date().getTime()));
+    user_test.title = name.value.trim();
+    // Check title is not longer than 30 chars.
+    if (user_test.title.length > 30) {
+      this.errorMessage = 'Title cannot be longer than 30 characters.';
+      return null;
+    }
+    // If title is empty, set it to current time.
+    if (user_test.title.length === 0) {
+      user_test.title = this.utilService.getIsoTimeFormatted(new Date(new Date().getTime()));
+    }
+
 
     // Get testid as number.
     let testidNumber = Number(this.testid);
@@ -143,6 +151,10 @@ export class UserTestAttemptComponent implements OnInit {
       // Get the input field for question. Check value given.
       let input = <HTMLInputElement>document.getElementById(`question${tq.id}`);
       if (input.value == null) { return null; }
+      if (input.value.trim().length > 255) {
+        this.errorMessage = 'Question answers cannot be longer than 255 characters.';
+        return null;
+      }
       // Add the id and user answer.
       user_test.questions.push({
         id: tq.id,

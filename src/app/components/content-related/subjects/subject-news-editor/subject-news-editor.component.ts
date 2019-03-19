@@ -63,7 +63,12 @@ export class SubjectNewsEditorComponent implements OnInit {
 
 
     // Watch updates to inputs.
-
+    document.getElementById('postTitle').addEventListener('input', (e) => {
+      this.titleValue = (<HTMLInputElement>e.target).value.trim();
+    });
+    document.getElementById('postBody').addEventListener('input', (e) => {
+      this.bodyValue = (<HTMLTextAreaElement>e.target).value.trim();
+    });
   }
 
 
@@ -127,7 +132,7 @@ export class SubjectNewsEditorComponent implements OnInit {
     let post = {};
     // Title
     let title = (<HTMLInputElement>document.getElementById('postTitle')).value;
-    if (title == '') {
+    if (title.trim() == '') {
       this.errorMessage = 'You must enter a title.';
       return null;
     }
@@ -142,7 +147,6 @@ export class SubjectNewsEditorComponent implements OnInit {
     if (body !== this.post$.body) {
       post['body'] = body;
     }
-
 
     return post;
   }

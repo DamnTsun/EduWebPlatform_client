@@ -18,7 +18,32 @@
 
 
   <!-- Title -->
-  <h2>Previous Test Results:</h2>
+  <h2>Previous Test Results ({{ getTimespanForTitle() }}):</h2>
+
+  <h5>Line Chart of Previous Results</h5>
+  <div>
+    <div>Each point corresponds to a user test that you have completed.</div>
+    <div>- The y-position of the point indicates what percentage of questions you answered correctly.</div>
+    <div>* Chart is automatically updated as more resulted are loaded. (via scrolling down)</div>
+    <div class="chart-mobile-warning">
+      You appear to be using a small screen, such as a mobile device.
+      It is strongly recommended that you view the chart in landscape,
+      as it may display incorrectly otherwise.
+    </div>
+  </div>
+
+  <!-- Line chart for results. -->
+  <div>
+    <canvas baseChart
+                    [data]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    [colors]="lineChartColors"
+                    [legend]="false"
+                    [chartType]="lineChartType"></canvas>
+    </div>
+
+  <h5>Table of Previous Results:</h5>
 </section>
 
 <section class="container container-no-margin page-content">
@@ -46,7 +71,8 @@
           <td>{{ result.score }} / {{ result.questionCount }} ({{ getScorePercentage(result) }}#)</td>
           <!-- Options cell -->
           <td class="table-options-cell">
-            <button class="btn btn-outline-primary table-cell-button" routerLink="{{ result.id }}">
+            <button class="btn btn-outline-primary table-cell-button"
+              [routerLink]="[navService.getUserTestDetailsRoute(subjectid, topicid, testid, result.id), getTimespanParamForNavigation()]">
               View
             </button>
             <button class="btn btn-outline-danger table-cell-button" data-toggle="modal" data-target="#deleteModal"

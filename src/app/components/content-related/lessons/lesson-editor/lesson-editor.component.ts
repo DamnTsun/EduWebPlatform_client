@@ -154,7 +154,7 @@ export class LessonEditorComponent implements OnInit {
 
     // Body
     if (this.bodyValue == null ||
-        this.bodyValue == '') {
+      this.bodyValue == '') {
       this.errorMessage = 'You must enter a body.';
       return null;
     }
@@ -186,7 +186,7 @@ export class LessonEditorComponent implements OnInit {
     route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid);
     route = route.replace(`:${environment.routeParams.topicid}`, this.topicid);
     route = route.replace(`:${environment.routeParams.lessonid}`, res[0].id);
-    this.router.navigate([ route ]);
+    this.router.navigate([route]);
   }
 
   private handleFailure = (err) => {
@@ -219,7 +219,18 @@ export class LessonEditorComponent implements OnInit {
     route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid);
     route = route.replace(`:${environment.routeParams.topicid}`, this.topicid);
     route = route.replace(`:${environment.routeParams.lessonid}`, this.lessonid.toString());
-    this.router.navigate([ route ]);
+    this.router.navigate([route]);
   }
 
+
+
+
+  // HTML methods
+  /**
+   * Gets length of name input.
+   */
+  public getNameLength(): number {
+    if (this.nameValue === null) { return 0; }
+    return this.nameValue.length;
+  }
 }

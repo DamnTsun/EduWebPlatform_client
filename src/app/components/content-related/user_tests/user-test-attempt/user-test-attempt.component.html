@@ -25,7 +25,7 @@
       <div class="card-body">
         <!-- Input for user to set user_test name -->
         <input type="text" class="form-control" id="ut_name" placeholder="Custom Name for User Test..." name="ut_name_input"
-          maxlength="50">
+          maxlength="30">
         <small class="form-text text-muted">
           <div>Users test may optionally be given a custom name.</div>
           <div>If no name is given, the current time will be used instead.</div>
@@ -57,7 +57,7 @@
         <!-- Footer (answer input) -->
         <div class="card-footer">
           <input class="form-control" id="question{{tq.id}}" type="text" placeholder="Your Answer..." name="questionInput{{ tq.id }}"
-            maxlength="50">
+            maxlength="255">
         </div>
       </div>
     </div>

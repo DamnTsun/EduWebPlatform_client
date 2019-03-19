@@ -9,7 +9,8 @@
     <a class="breadcrumb-item" routerLink="{{ navService.getTestListRoute(subjectid, topicid) }}">Tests</a>
     <a class="breadcrumb-item" routerLink="{{ navService.getTestHomeRoute(subjectid, topicid, testid) }}">{{ testid }}</a>
     <a class="breadcrumb-item" routerLink="{{ navService.getTestQuestionListRoute(subjectid, topicid, testid) }}">Questions</a>
-    <a class="breadcrumb-item" routerLink="{{ navService.getTestQuestionHomeRoute(subjectid, topicid, testid, question$.id) }}">{{ question$.id }}</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getTestQuestionHomeRoute(subjectid, topicid, testid, question$.id) }}">{{
+      question$.id }}</a>
     <span class="breadcrumb-item active" aria-current="page">Edit</span>
   </nav>
 
@@ -30,12 +31,12 @@
       <div class="form-group">
         <label for="name">Question Text</label>
         <input name="name" class="form-control form-control-lg" id="questionText" type="text" placeholder="Enter Question Text"
-          maxlength="50">
+          maxlength="255">
         <small class="form-text text-muted">
           Question Text Must Not:
           <ul>
             <li>Be blank.</li>
-            <li>Contain more than 50 characters.</li>
+            <li>Contain more than 255 characters.</li>
             <ul>
               <li>Current question text length: {{ questionValue.length }}</li>
             </ul>
@@ -47,12 +48,12 @@
       <div class="form-group">
         <label for="answer">Question Answer</label>
         <input name="answer" class="form-control form-control-lg" id="questionAnswer" type="text" placeholder="Enter Question Answer"
-          maxlength="50">
+          maxlength="255">
         <small class="form-text text-muted">
           Question Answer Must Not:
           <ul>
             <li>Be blank.</li>
-            <li>Contain more than 50 characters.</li>
+            <li>Contain more than 255 characters.</li>
             <ul>
               <li>Current answer length: {{ answerValue.length }}</li>
             </ul>
@@ -74,13 +75,17 @@
             </ul>
           </ul>
         </small>
+        <small class="error-input-feedback" *ngIf="!imageUrlValid">
+          Invalid image URL. Please correct or clear it.
+        </small>
       </div>
 
     </div>
 
     <div class="card-footer">
       <div class="submit-button-container">
-        <button class="btn btn-primary submit-button" (click)="editTestQuestion()" *ngIf="!this.submitted">Submit</button>
+        <button class="btn btn-primary submit-button" [disabled]="questionValue.length === 0 || answerValue.length === 0 || !imageUrlValid"
+          (click)="editTestQuestion()" *ngIf="!this.submitted">Submit</button>
       </div>
     </div>
   </div>

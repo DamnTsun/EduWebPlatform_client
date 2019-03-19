@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UtilService } from 'src/app/services/util.service';
 import { environment } from 'src/environments/environment';
 import { MessageService } from 'src/app/services/user/message.service';
+import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 @Component({
   selector: 'app-group-chat',
@@ -37,6 +38,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private route: ActivatedRoute,
     private router: Router,
+    public navService: NavigationServiceService,
     private util: UtilService
   ) { }
 
@@ -69,7 +71,7 @@ export class GroupChatComponent implements OnInit, OnDestroy {
     // Add event listener for message input.
     document.getElementById('messageInput').addEventListener('input', (e) => {
       let input = (<HTMLInputElement>e.target);
-      let len = input.value.length;
+      let len = input.value.trim().length;
       if (len < 1) {
         (<HTMLButtonElement>document.getElementById('messageSubmit')).disabled = true;
         return;
@@ -165,11 +167,14 @@ export class GroupChatComponent implements OnInit, OnDestroy {
    */
   public sendMessage() {
     let input = <HTMLInputElement>document.getElementById('messageInput');
-    let msg = input.value;
+    let msg = input.value.trim();
     // Ensure valid.
     if (msg == null || msg.length < 1 || msg.length > 1024) {
+      this.errorMessage = 'Message must be between 1 and 1024 characters long and cannot be blank.';
       return;
     }
+    // Clear error message if input now valid.
+    this.errorMessage = null;
 
     // Send the message.
     this.messageService.sendGroupMessage(this.groupid, msg).subscribe((res) => {

@@ -60,15 +60,12 @@ export class LessonCreatorComponent implements OnInit {
     // Watch input values.
     document.getElementById('lessonName').addEventListener('input', (e) => {
       this.nameValue = (<HTMLInputElement>e.target).value.trim();
-      console.log(this.nameValue);
     });
     document.getElementById('lessonBody').addEventListener('input', (e) => {
       this.bodyValue = (<HTMLInputElement>e.target).value.trim();
-      console.log(this.bodyValue);
     });
     document.getElementById('lessonHidden').addEventListener('input', (e) => {
       this.hiddenValue = (<HTMLInputElement>e.target).checked;
-      console.log(this.hiddenValue);
     });
   }
 
@@ -177,5 +174,16 @@ export class LessonCreatorComponent implements OnInit {
     route = route.replace(`:${environment.routeParams.subjectid}`, this.subjectid);
     route = route.replace(`:${environment.routeParams.topicid}`, this.topicid);
     this.router.navigate([ route ]);
+  }
+
+
+
+  // HTML methods
+  /**
+   * Gets length of name input.
+   */
+  public getNameLength(): number {
+    if (this.nameValue === null) { return 0; }
+    return this.nameValue.length;
   }
 }

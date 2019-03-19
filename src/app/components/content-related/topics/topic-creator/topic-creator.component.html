@@ -23,13 +23,13 @@
       <div class="form-group">
         <label for="name">Topic Name</label>
         <input name="name" class="form-control form-control-lg" id="topicName" type="text" placeholder="Enter Topic Name"
-          maxlength="50">
+          maxlength="100">
         <small class="form-text text-muted">
           Topic Name Must Not:
           <ul>
             <li>Be blank.</li>
             <li>Be the same as an existing topics name, in this subject.</li>
-            <li>Contain more than 50 characters.</li>
+            <li>Contain more than 100 characters.</li>
             <ul>
               <li>Current name length: {{ nameValue.length }}</li>
             </ul>
@@ -41,11 +41,11 @@
       <div class="form-group">
         <label for="description">Topic Description (Optional)</label>
         <textarea name="description" class="form-control" id="topicDescription" placeholder="Enter Topic Desciption (Optional)"
-          rows="10" maxlength="1024"></textarea>
+          rows="10" maxlength="4096"></textarea>
         <small class="form-text text-muted">
           Topic Description Must Not:
           <ul>
-            <li>Contain more than 1024 characters.</li>
+            <li>Contain more than 4096 characters.</li>
             <ul>
               <li>Current description length: {{ descriptionValue.length }}</li>
             </ul>

@@ -34,6 +34,9 @@ export class GroupHomeComponent implements OnInit {
   private groupNonMembers_offset = 0;
   public groupNonMembers_endOfContent: boolean = false;
 
+  // Whether user is a member of the group. (if admin)
+  public isGroupMember = true;
+
 
 
 
@@ -66,6 +69,15 @@ export class GroupHomeComponent implements OnInit {
     // Check user admin status.
     this.signIn.userIsAdmin().subscribe((isAdmin) => {
       this.isAdmin = isAdmin;
+      // If admin, check whether user is in group.
+      // (admin can view groups without being members.)
+      if (this.isAdmin) {
+        this.groupService.getWhetherCurrentUserInGroup(this.groupid).subscribe((res: { isMember }) => {
+          this.isGroupMember = res.isMember;
+        }, (err) => {
+          console.error('Group home get user in group status Error:', err);
+        });
+      }
     }, (err) => {
       console.error('Group home admin Error:', err);
     });
@@ -244,6 +256,14 @@ export class GroupHomeComponent implements OnInit {
 
 
 
+  public joinGroup(): void {
+    this.groupService.addMemberToGroup(this.group$.id, this.userid).subscribe((res) => {
+      // Success, update isGroupMember variable.
+      this.isGroupMember = !this.isGroupMember;
+    }, (err) => {
+      console.error('Group home add self as member Error:', err);
+    });
+  }
 
   /**
    * Removes the current user from the group, then redirects them to the group list.
