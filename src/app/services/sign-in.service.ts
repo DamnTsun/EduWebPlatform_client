@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
-import { AuthObject } from '../classes/AuthObject';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -20,6 +19,12 @@ export class SignInService {
   // Store user admin status.
   private userIsAdminRecord: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public userIsAdmin(): Observable<boolean> { return this.userIsAdminRecord.asObservable(); }
+
+  // Handle for reauthorization timeout. (Where user reauthorizes before old auth token expires)
+  // Allows timeout to be cancelled if user signs out.
+  private reauthorizationTimeoutHandle = null;
+  // How many seconds before auth token expiry that re-authorization should be attempted.
+  private readonly REAUTH_BUFFER_TIME: number = 30;
 
 
 
@@ -91,9 +96,19 @@ export class SignInService {
       this.api.setAuthObject(res);                      // Set auth object to enable API requests that need idToken header.
       this.userIsAdminRecord.next(res.isAdmin);         // Set user admin status for components to use.
       this.getUserInfo();                               // Get and store the users internal user record data, such as their displayname.
+
+      // Setup timeout to attempt to reauthorize with API when token has nearly expired.
+      // Get time between now and token expiry.
+      let delta = (res.expiresAt - Math.floor(new Date().getTime() / 1000));
+      // Rerun this method after delta - buffer time has elapsed.
+      this.reauthorizationTimeoutHandle = setTimeout(() => {
+        this.authorizeWithAPIGoogle(); // Rerun this method.
+      },
+        (delta - this.REAUTH_BUFFER_TIME) * 1000 // Time in ms.
+      );
     },
-    // On failure.
-    this.handleAuthFailure
+      // On failure.
+      this.handleAuthFailure
     )
   }
   /**
@@ -106,11 +121,32 @@ export class SignInService {
       this.api.setAuthObject(res);                      // Set auth object to enable API requests that need idToken header.
       this.userIsAdminRecord.next(res.isAdmin);         // Set user admin status for components to use.
       this.getUserInfo();                               // Get and store the users internal user record data, such as their displayname.
+
+      // Setup timeout to attempt to reauthorize with API when token has nearly expired.
+      // Get time between now and token expiry.
+      let delta = (res.expiresAt - Math.floor(new Date().getTime() / 1000));
+      // Rerun this method after delta - buffer time has elapsed.
+      this.reauthorizationTimeoutHandle = setTimeout(() => {
+        this.authorizeWithAPIFacebook(); // Rerun this method.
+      },
+        (delta - this.REAUTH_BUFFER_TIME) * 1000 // Time in ms.
+      );
     },
-    // On failure.
-    this.handleAuthFailure
+      // On failure.
+      this.handleAuthFailure
     );
   }
+
+
+
+  /**
+   * Clears reauthorizationTimeoutHandle so that reauthorization timeout never occurs.
+   */
+  private clearReauthorizationTimeout(): void {
+    clearTimeout(this.reauthorizationTimeoutHandle);
+    this.reauthorizationTimeoutHandle = null;
+  }
+
 
 
   /**
@@ -151,6 +187,7 @@ export class SignInService {
    */
   public signOut(): void {
     this.auth.signOut();
+    this.clearReauthorizationTimeout();
     this.clearAuthorization();
   }
 
