@@ -71,3 +71,9 @@ section.page-sub-content {
 .create-button-container {
     margin: 0.5em 0.5em;
 }
+
+.card-table-container {
+    border-color: black;
+    max-width: 100%;
+    overflow-x: auto;
+}

@@ -21,10 +21,6 @@
 
 
 
-.card-table-container {
-    border-color: black;
-}
-
 
 .table {
     margin-bottom: 0px; /* Remove margin-bottom. */
@@ -70,4 +66,10 @@
     text-align: center;
     margin-top: 2em;
     margin-bottom: 2em;
+}
+
+.card-table-container {
+    border-color: black;
+    max-width: 100%;
+    overflow-x: auto;
 }
