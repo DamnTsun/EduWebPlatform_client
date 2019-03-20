@@ -41,14 +41,14 @@
       <!-- Body -->
       <div class="form-group">
         <label for="body">Lesson Body</label>
-        <textarea name="body" class="form-control" id="lessonBody" placeholder="Enter Lesson Body" rows="20" maxlength="65535"></textarea>
+        <textarea name="body" class="form-control" id="lessonBody" placeholder="Enter Lesson Body" rows="20" maxlength="16384"></textarea>
         <small class="form-text text-muted">
           Body can be styled using Markdown.
           <div>
             Lesson Body Must Not:
             <ul>
               <li>Be blank.</li>
-              <li>Contain more than 65,535 characters.</li>
+              <li>Contain more than 16,384 characters.</li>
               <ul>
                 <li>Current body length: {{ bodyValue.length }}</li>
               </ul>

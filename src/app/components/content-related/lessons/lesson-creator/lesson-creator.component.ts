@@ -116,8 +116,8 @@ export class LessonCreatorComponent implements OnInit {
       this.errorMessage = 'You must enter a body.';
       return null;
     }
-    if (this.bodyValue.length > 65535) {
-      this.errorMessage = 'Encoded body cannot contain more than 65,535 characters.';
+    if (this.bodyValue.length > 16384) {
+      this.errorMessage = 'Encoded body cannot contain more than 16,384 characters.';
       return null;
     }
     lesson.body = this.bodyValue;
