@@ -1,27 +1,45 @@
-# WebPlatform
+# EduWebPlatform_client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.1.
+This is the client / frontend for the educational web platform.
 
-## Development server
+*This README expects you to have already read through and set up the API / backend. Please do so before continuing if you have not yet done this.*
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Prerequisites
 
-## Code scaffolding
+In order to run the solution, you will need the following:
+* A modern web browser, such as Google Chrome or Mozilla Firefox.
+* Node.js and npm installed on your machine.
+* The 'Client ID' and 'App ID' keys generated using your Google and Facebook accounts. These keys **must** correspond to the 'Client Secret' / 'App Secret' keys used on the API.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Setting up the System
 
-## Build
+To setup the system, do the following:
+1. Open ```src/environments/environment.prod.ts``` and ```src/environments/environment.ts```.
+2. For both, change the ```environment.apiUrl``` attribute to the URL that the API is hosted at, such as ```https://api.domain.com/```.
+3. Open ```src/app/app.module.ts```.
+4. Find the config object, this will contain two objects, one for sign in with Google functionality, and one for sign in with Facebook functionality.
+```TypeScript
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider('{{google_client_id}}', googleLoginOptions)
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('{{facebook_client_id}}')
+  }
+]);
+```
+5. Update the values of ```{{google_client_id}}``` and ```{{facebook_app_id}}``` with your Google client ID / Facebook app ID.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+# Building the System
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To build the system, do the following:
+1. Open the Node.js commandprompt.
+2. Navigate to where you have downloaded the system.
+3. Enter ```npm install``` to install dependencies.
+4. Enter ```ng serve``` to run the system on a localhost server.
+5. Open your web browser and go to ```http://localhost:4200```. This should show the system. From here you can check that the system is acting as expected.
+6. When you wish to deploy the system, enter ```ng build --prod```. This will build the system into production mode.
+7. Navigate into the folder named ```dist```. This is where Angular outputs the built system.
+8. Simply copy the files inside the ```dist``` folder to where ever you want to host the system.
