@@ -112,12 +112,6 @@ button.delete-dropdown-option {
 
 
 
-
-/* Loading icon for before ajax requests complete */
-
-
-
-
 /* Bootstrap overrides */
 .card {
   border-color: blue;         /* Give colored outline. */
@@ -125,4 +119,33 @@ button.delete-dropdown-option {
 
 .container-no-margin {
   padding: 0px;
+}
+
+
+
+/* Animation related */
+/* Fade in animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Make all cards fade in over 0.5s on load */
+.card {
+  animation: 0.5s ease-out 0s 1 fadeIn;
+}
+
+/* Make dropdown menus fade in over 0.2s */
+div.dropdown-menu {
+  animation: 0.1s ease-out 0s 1 fadeIn;
+}
+
+/* Make table rows fade in over 0.5s */
+tr.content-row {
+  animation: 0.5s ease-out 0s 1 fadeIn;
 }

@@ -101,7 +101,7 @@
 
           <tbody>
             <!-- 1 row per user -->
-            <tr scope="row" *ngFor="let user of groupMembers$; let i = index">
+            <tr class="content-row" scope="row" *ngFor="let user of groupMembers$; let i = index">
               <td>{{ user.id }}</td>
               <td>{{ user.displayname }}</td>
               <!-- Cell with options-->
@@ -145,7 +145,7 @@
 
           <tbody>
             <!-- 1 row per user -->
-            <tr scope="row" *ngFor="let user of groupNonMembers$; let i = index">
+            <tr class="content-row" scope="row" *ngFor="let user of groupNonMembers$; let i = index">
               <td>{{ user.id }}</td>
               <td>{{ user.displayname }}</td>
               <!-- Cell with options-->

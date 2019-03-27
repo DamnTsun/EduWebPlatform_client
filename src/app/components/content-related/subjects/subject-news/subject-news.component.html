@@ -1,13 +1,13 @@
 <section class="container page-content">
 
-  <div class="news-post-container">
+  <!-- breadcrumb nav -->
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null">
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
+    <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
+    <span class="breadcrumb-item active" aria-current="page">News</span>
+  </nav>
 
-    <!-- breadcrumb nav -->
-    <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="subjectid !== null">
-      <a class="breadcrumb-item" routerLink="{{ navService.getSubjectListRoute() }}">Subjects</a>
-      <a class="breadcrumb-item" routerLink="{{ navService.getSubjectHomeRoute(subjectid) }}">{{ subjectid }}</a>
-      <span class="breadcrumb-item active" aria-current="page">News</span>
-    </nav>
+  <div class="news-post-container">
 
     <!-- Create button -->
     <div class="create-button-container" *ngIf="isAdmin">

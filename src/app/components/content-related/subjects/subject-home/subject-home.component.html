@@ -115,7 +115,7 @@
         <!-- 1 row per subject admin -->
         <ng-container *ngFor="let sa of subjectAdmins$; let i = index">
           <!-- Do not add row if subject admin is current user. -->
-          <tr scope="row" *ngIf="sa.id !== currentUser.id">
+          <tr class="content-row" scope="row" *ngIf="sa.id !== currentUser.id">
             <td>{{ sa.id }}</td>
             <td>{{ sa.displayname }}</td>
             <td>

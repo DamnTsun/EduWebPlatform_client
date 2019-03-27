@@ -65,7 +65,7 @@
       <!-- Regular rows. -->
       <tbody>
         <!-- 1 row per result -->
-        <tr scope="row" *ngFor="let result of userTestResults$; let i = index">
+        <tr class="content-row" scope="row" *ngFor="let result of userTestResults$; let i = index">
           <td>{{ result.title }}</td>
           <td>{{ result.date }}</td>
           <td>{{ result.score }} / {{ result.questionCount }} ({{ getScorePercentage(result) }}#)</td>

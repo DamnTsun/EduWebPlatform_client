@@ -70,7 +70,7 @@
         <!-- 1 row per question. -->
         <ng-container *ngFor="let q of utestQuestions; let i = index">
           <!-- If correct -->
-          <tr scope="row" class="table-success" *ngIf="q.userAnswer === q.correctAnswer">
+          <tr class="content-row" scope="row" class="table-success" *ngIf="q.userAnswer === q.correctAnswer">
             <td>{{ i + 1 }}</td>
             <td>{{ q.question }}</td>
             <td>{{ q.correctAnswer }}</td>
