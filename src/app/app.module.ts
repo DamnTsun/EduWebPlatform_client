@@ -1,7 +1,7 @@
 // Base modules / Environment variables.
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 // HTTP module.
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -93,6 +93,19 @@ export function provideConfig() {
 
 
 
+// Options for Markdown.
+const markdownOptions: MarkedOptions = {
+  gfm: true,                  // GitHub style rendering - Required for some features, such as tables.
+  tables: true,               // Allows tables to be rendered.
+  breaks: false,              // Disables linebreaks. (Prevents spammy empty line troll content)
+  pedantic: false,            // Do not follow original Markdown spec 100%. (It has some bugs)
+  sanitize: true,             // Sanitize resulting HTML. (Is disabled by default, for some crazy reason...)
+  smartLists: true,           // Override original spec list behavior.
+  smartypants: true           // Uses smarter typography for things like quotes.
+}
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -138,10 +151,18 @@ export function provideConfig() {
     BrowserModule,
     HttpModule,
     HttpClientModule,
+    // Import RouterModules with the app's routes.
+    // Use hash routing mode. (Not having it sometimes causes issues. Adds '/#' before route.)
     RouterModule.forRoot(appRoutes, { useHash: true }),
     SocialLoginModule,
     InfiniteScrollModule,
-    MarkdownModule.forRoot(),
+    // Import MarkdownModule with options listed.
+    MarkdownModule.forRoot({
+      markedOptions: {
+        provide: MarkedOptions,
+        useValue: markdownOptions
+      }
+    }),
     ChartsModule
   ],
   providers: [
