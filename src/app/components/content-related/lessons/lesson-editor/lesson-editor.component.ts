@@ -36,6 +36,27 @@ export class LessonEditorComponent implements OnInit {
   public bodyValue: string = '';
   public hiddenValue: boolean = false;
 
+  // Toolbar options for editor.
+  public quillModules = {
+    toolbar: {
+      container: [
+        ['bold', 'italic', 'underline', 'strike'],          // Toggle buttons for bold, italic, underline, strikethough.
+        ['blockquote', 'code-block'],                       // Toggle buttons for blockquote and code.
+
+        [{ 'header': 1 }, { 'header': 2 }],                 // Buttons for heading 1 / 2.
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],       // Buttons for ordered and bullet lists.
+        [{ 'script': 'sub' }, { 'script': 'super' }],        // Toggle buttons for sub and super script.
+        [{ 'direction': 'rtl' }],                           // Toggle button for change text direction.
+
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],          // Setting headers.
+
+        [{ 'color': [] }, { 'background': [] }],            // Set color of text / background.
+        [{ 'font': [] }],                                   // Set font.
+        [{ 'align': [] }]                                   // Set text alignment.
+      ]
+    }
+  }
+
 
 
 

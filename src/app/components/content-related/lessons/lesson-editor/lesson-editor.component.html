@@ -43,9 +43,11 @@
       <!-- Body -->
       <div class="form-group">
         <label for="body">Lesson Body</label>
-        <quill-editor #bodyEditor [style]="{ height: '50em' }" [maxLength]="16384"></quill-editor>
+        <quill-editor #bodyEditor [style]="{ height: '50em' }" [maxLength]="16384" [modules]="quillModules"></quill-editor>
         <small class="form-text text-muted">
-          Body can be styled using Markdown.
+          <div>To add an image, please copy and paste it into the editor. Images must be hosted on a 3rd party site,
+            such as Imgur.</div>
+          <div>Note: Indentation of text and/or lists is not supported.</div>
           <div>
             Lesson Body Must Not:
             <ul>
@@ -80,7 +82,7 @@
   </div>
 
 
-  
+
   <!-- Preview -->
   <h2>Preview:</h2>
   <div class="card">
