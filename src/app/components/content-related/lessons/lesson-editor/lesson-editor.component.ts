@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import * as QuillNamespace from 'quill';
+let Quill: any = QuillNamespace;
+
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Lesson } from 'src/app/classes/Lesson';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { LessonsService } from 'src/app/services/contentServices/lessons.service';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 import { UtilService } from 'src/app/services/util.service';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-lesson-editor',
@@ -24,6 +27,9 @@ export class LessonEditorComponent implements OnInit {
 
   public submitted: boolean = false;           // Whether page has been submitted.
   public errorMessage: string = null;          // Error message if something goes wrong.
+
+
+  @ViewChild('bodyEditor') bodyEditor: QuillEditorComponent;
 
   // Current values of inputs.
   public nameValue: string = '';
@@ -76,12 +82,21 @@ export class LessonEditorComponent implements OnInit {
     document.getElementById('lessonName').addEventListener('input', (e) => {
       this.nameValue = (<HTMLInputElement>e.target).value.trim();
     });
-    document.getElementById('lessonBody').addEventListener('input', (e) => {
-      this.bodyValue = (<HTMLTextAreaElement>e.target).value.trim();
-    });
     document.getElementById('lessonHidden').addEventListener('input', (e) => {
       this.hiddenValue = (<HTMLInputElement>e.target).checked;
     });
+    this.bodyEditor.onContentChanged.subscribe((e) => {
+      this.bodyValue = e.html;
+      if (this.bodyValue === null) { this.bodyValue = ''; }
+    });
+
+    // Set up quill to use styles instead of classes.
+    Quill.register(Quill.import('attributors/style/align'), true);
+    Quill.register(Quill.import('attributors/style/background'), true);
+    Quill.register(Quill.import('attributors/style/color'), true);
+    Quill.register(Quill.import('attributors/style/direction'), true);
+    Quill.register(Quill.import('attributors/style/font'), true);
+    Quill.register(Quill.import('attributors/style/size'), true);
   }
 
 
@@ -97,9 +112,7 @@ export class LessonEditorComponent implements OnInit {
     this.nameValue = lesson.name;
 
     // Body
-    let body = (<HTMLTextAreaElement>document.getElementById('lessonBody'));
-    if (body !== null) { body.value = lesson.body; }
-    this.bodyValue = lesson.body;
+    this.bodyEditor.writeValue(lesson.body);
 
     // Hidden
     let hidden = (<HTMLInputElement>document.getElementById('lessonHidden'));

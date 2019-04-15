@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Lesson } from 'src/app/classes/Lesson';
 import { environment } from 'src/environments/environment';
@@ -7,6 +7,7 @@ import { LessonsService } from 'src/app/services/contentServices/lessons.service
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { UtilService } from 'src/app/services/util.service';
+import { QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-lesson-home',
@@ -21,6 +22,8 @@ export class LessonHomeComponent implements OnInit {
 
   public lesson$: Lesson = null;
   public loadingError: boolean = false;
+
+
 
 
 

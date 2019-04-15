@@ -43,7 +43,7 @@
       <!-- Body -->
       <div class="form-group">
         <label for="body">Lesson Body</label>
-        <textarea name="body" class="form-control" id="lessonBody" placeholder="Enter Lesson Body" rows="20" maxlength="16384"></textarea>
+        <quill-editor #bodyEditor [style]="{ height: '50em' }" [maxLength]="16384"></quill-editor>
         <small class="form-text text-muted">
           Body can be styled using Markdown.
           <div>

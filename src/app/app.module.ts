@@ -1,7 +1,9 @@
 // Base modules / Environment variables.
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MarkdownModule, MarkedOptions, MarkedRenderer, MarkdownService } from 'ngx-markdown';
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { QuillModule } from 'ngx-quill';
+
 // HTTP module.
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -163,7 +165,8 @@ const markdownOptions: MarkedOptions = {
         useValue: markdownOptions
       }
     }),
-    ChartsModule
+    ChartsModule,
+    QuillModule
   ],
   providers: [
     {
