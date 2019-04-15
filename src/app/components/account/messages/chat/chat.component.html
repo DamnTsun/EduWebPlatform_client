@@ -2,7 +2,7 @@
 
 
   <!-- Breadcrumb navigation -->
-  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="groupid !== null">
+  <nav class="breadcrumb alert alert-secondary" aria-label="breadcrumb" *ngIf="otherUserId !== null">
     <a class="breadcrumb-item" routerLink="{{ navService.getUserListRoute() }}">Users</a>
     <span class="breadcrumb-item active" aria-current="page">{{ otherUserId }}</span>
     <span class="breadcrumb-item active" aria-current="page">Chat</span>

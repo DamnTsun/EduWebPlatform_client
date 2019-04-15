@@ -5,6 +5,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-test-editor',
@@ -37,7 +38,8 @@ export class TestEditorComponent implements OnInit {
     private signIn: SignInService,
     private route: ActivatedRoute,
     private router: Router,
-    public navService: NavigationServiceService
+    public navService: NavigationServiceService,
+    public util: UtilService
   ) { }
 
   ngOnInit() {

@@ -8,6 +8,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 
 import { UserTestListComponent } from 'src/app/components/content-related/user_tests/user-test-list/user-test-list.component';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-test-home',
@@ -31,7 +32,8 @@ export class TestHomeComponent implements OnInit {
     private subjectService: SubjectsService,
     private testService: TestsService,
     private signIn: SignInService,
-    public navService: NavigationServiceService
+    public navService: NavigationServiceService,
+    public util: UtilService
   ) { }
 
   ngOnInit() {

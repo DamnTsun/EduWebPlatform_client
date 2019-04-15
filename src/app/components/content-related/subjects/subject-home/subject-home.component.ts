@@ -9,6 +9,7 @@ import { Post } from 'src/app/classes/Posts';
 import { SubjectAdmin } from 'src/app/classes/SubjectAdmin';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { User } from 'src/app/classes/User';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-subject-home',
@@ -47,7 +48,8 @@ export class SubjectHomeComponent implements OnInit {
     private router: Router,
     private subjectService: SubjectsService,
     private signIn: SignInService,
-    public navService: NavigationServiceService
+    public navService: NavigationServiceService,
+    public util: UtilService
   ) { }
 
 

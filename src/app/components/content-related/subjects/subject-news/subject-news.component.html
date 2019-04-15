@@ -28,7 +28,7 @@
 
       <div class="card-body">
         <h5 class="card-title">{{ post.title }}</h5>
-        <div markdown class="card-text">{{ post.body }}</div>
+        <div markdown class="card-text">{{ util.sanitizeMarkdown(post.body) }}</div>
       </div>
 
 

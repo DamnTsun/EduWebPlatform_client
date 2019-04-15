@@ -5,6 +5,7 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 import { GroupService } from 'src/app/services/group/group.service';
 import { environment } from 'src/environments/environment';
 import { Group } from 'src/app/classes/Group';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-group-list',
@@ -39,7 +40,8 @@ export class GroupListComponent implements OnInit {
     private signIn: SignInService,                  // For getting user signed in / admin status.
     private groupService: GroupService,             // For interacting with groups on api.
     private router: Router,                         // For redirecting user if necessary.
-    public navService: NavigationServiceService    // Helps getting routes for redirects.
+    public navService: NavigationServiceService,    // Helps getting routes for redirects.
+    public util: UtilService
   ) { }
 
   ngOnInit() {

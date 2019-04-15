@@ -72,7 +72,7 @@
   <div class="card">
     <div class="card-body">
       <h2>{{ titleValue }}</h2>
-      <markdown [data]="bodyValue" ngPreserveWhitespace></markdown>
+      <markdown [data]="util.sanitizeMarkdown(bodyValue)" ngPreserveWhitespace></markdown>
     </div>
   </div>
 

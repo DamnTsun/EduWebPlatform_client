@@ -15,7 +15,7 @@
       <!-- Body (details) -->
       <div class="card-body">
         <h2>{{ subject$.name }}</h2>
-        <markdown ngPreserveWhitespaces [data]="subject$.description"></markdown>
+        <markdown ngPreserveWhitespaces [data]="util.sanitizeMarkdown(subject$.description)"></markdown>
       </div>
 
 

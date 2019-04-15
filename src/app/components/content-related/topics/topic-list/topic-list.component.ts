@@ -6,6 +6,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { TopicsService } from 'src/app/services/contentServices/topics.service';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-topic-list',
@@ -32,7 +33,8 @@ export class TopicListComponent implements OnInit {
     private subjectService: SubjectsService,
     private topicService: TopicsService,
     private signIn: SignInService,
-    public navService: NavigationServiceService
+    public navService: NavigationServiceService,
+    public util: UtilService
   ) { }
 
   ngOnInit() {

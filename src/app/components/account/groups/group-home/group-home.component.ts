@@ -6,6 +6,7 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 import { environment } from 'src/environments/environment';
 import { Group } from 'src/app/classes/Group';
 import { User } from 'src/app/classes/User';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-group-home',
@@ -45,7 +46,8 @@ export class GroupHomeComponent implements OnInit {
     private groupService: GroupService,             // For interacting with groups on api.
     private route: ActivatedRoute,                  // For getting route params.
     private router: Router,                         // For redirecting user if necessary.
-    private navService: NavigationServiceService    // For getting routes for redirects.
+    private navService: NavigationServiceService,   // For getting routes for redirects.
+    public util: UtilService
   ) { }
 
   ngOnInit() {

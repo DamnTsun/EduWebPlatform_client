@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'src/app/classes/Subject';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-subject-list',
@@ -25,7 +26,8 @@ export class SubjectListComponent implements OnInit {
 
   constructor(
     private subjectService: SubjectsService,
-    private signIn: SignInService
+    private signIn: SignInService,
+    public util: UtilService
   ) { }
 
 

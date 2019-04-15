@@ -82,7 +82,7 @@
   <div class="card">
     <div class="card-body">
       <h2>{{ nameValue }}</h2>
-      <markdown [data]="descriptionValue" ngPreserveWhitespaces></markdown>
+      <markdown [data]="util.sanitizeMarkdown(descriptionValue)" ngPreserveWhitespaces></markdown>
     </div>
 
     <!-- Hidden / auto-hidden badge -->

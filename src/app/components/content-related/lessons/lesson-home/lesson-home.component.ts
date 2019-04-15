@@ -6,6 +6,7 @@ import { SubjectsService } from 'src/app/services/contentServices/subjects.servi
 import { LessonsService } from 'src/app/services/contentServices/lessons.service';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 import { SignInService } from 'src/app/services/sign-in.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-lesson-home',
@@ -29,7 +30,8 @@ export class LessonHomeComponent implements OnInit {
     private signIn: SignInService,
     private subjectService: SubjectsService,
     private lessonService: LessonsService,
-    private navService: NavigationServiceService
+    private navService: NavigationServiceService,
+    public util: UtilService
   ) { }
 
   ngOnInit() {

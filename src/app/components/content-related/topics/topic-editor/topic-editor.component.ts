@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Topic } from 'src/app/classes/Topic';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-topic-editor',
@@ -34,7 +35,8 @@ export class TopicEditorComponent implements OnInit {
     private signIn: SignInService,
     private route: ActivatedRoute,
     private router: Router,
-    public navService: NavigationServiceService
+    public navService: NavigationServiceService,
+    public util: UtilService
   ) { }
 
   ngOnInit() {

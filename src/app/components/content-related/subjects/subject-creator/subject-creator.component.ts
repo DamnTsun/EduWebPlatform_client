@@ -4,6 +4,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-subject-creator',
@@ -28,7 +29,8 @@ export class SubjectCreatorComponent implements OnInit {
     private subjectService: SubjectsService,
     private signIn: SignInService,
     private router: Router,
-    public navService: NavigationServiceService
+    public navService: NavigationServiceService,
+    public util: UtilService
   ) { }
 
   ngOnInit() {

@@ -4,6 +4,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { Router } from '@angular/router';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 import { environment } from 'src/environments/environment';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-group-creator',
@@ -29,7 +30,8 @@ export class GroupCreatorComponent implements OnInit {
     private groupService: GroupService,
     private signIn: SignInService,
     private router: Router,
-    public navService: NavigationServiceService
+    public navService: NavigationServiceService,
+    public util: UtilService
   ) { }
 
   ngOnInit() {

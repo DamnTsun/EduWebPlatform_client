@@ -26,7 +26,7 @@
     <div class="card page-body">
       <div class="card-body">
         <h2>{{ test$.name }}</h2>
-        <div markdown ngPreserveWhitespaces class="test-description">{{ test$.description }}</div>
+        <div markdown ngPreserveWhitespaces class="test-description">{{ util.sanitizeMarkdown(test$.description) }}</div>
       </div>
 
 

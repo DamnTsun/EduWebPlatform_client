@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-lesson-editor',
@@ -39,8 +40,8 @@ export class LessonEditorComponent implements OnInit {
     private signIn: SignInService,
     private route: ActivatedRoute,
     private router: Router,
-    private sanitizer: DomSanitizer,
-    public navService: NavigationServiceService
+    public navService: NavigationServiceService,
+    public util: UtilService
   ) { }
 
   ngOnInit() {

@@ -24,7 +24,7 @@
     <!-- Body (name, full description) -->
     <div class="card-body">
       <h2 class="card-title">{{ group$.name }}</h2>
-      <div style="min-height: 5.8em" markdown>{{ group$.description }}</div>
+      <div style="min-height: 5.8em" markdown>{{ util.sanitizeMarkdown(group$.description) }}</div>
     </div>
 
     <!-- Footer (edit, leave group) -->

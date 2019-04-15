@@ -5,6 +5,7 @@ import { Post } from 'src/app/classes/Posts';
 import { SubjectsService } from 'src/app/services/contentServices/subjects.service';
 import { SignInService } from 'src/app/services/sign-in.service';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-subject-news',
@@ -14,7 +15,7 @@ import { NavigationServiceService } from 'src/app/services/navigation-service.se
 export class SubjectNewsComponent implements OnInit {
 
   // Subject being viewed and whether user is admin.
-  private subjectid = null;
+  public subjectid = null;
   public isAdmin: boolean = false;
 
   // Vars for handling posts, such as the currently stored posts, number to get / skip for api, whether end of posts reached.
@@ -31,7 +32,8 @@ export class SubjectNewsComponent implements OnInit {
     private subjectService: SubjectsService,
     private signIn: SignInService,
     private route: ActivatedRoute,
-    public navService: NavigationServiceService
+    public navService: NavigationServiceService,
+    public util: UtilService
   ) { }
 
 

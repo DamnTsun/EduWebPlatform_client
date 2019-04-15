@@ -10,6 +10,7 @@ import { TopicsService } from 'src/app/services/contentServices/topics.service';
 import { LessonsService } from 'src/app/services/contentServices/lessons.service';
 import { TestsService } from 'src/app/services/contentServices/tests.service';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-topic-home',
@@ -35,7 +36,8 @@ export class TopicHomeComponent implements OnInit {
     private subjectService: SubjectsService,
     private topicService: TopicsService,
     private signIn: SignInService,
-    private navService: NavigationServiceService
+    private navService: NavigationServiceService,
+    public util: UtilService
   ) { }
 
 

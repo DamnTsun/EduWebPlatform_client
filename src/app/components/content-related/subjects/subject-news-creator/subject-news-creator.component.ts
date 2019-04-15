@@ -4,6 +4,7 @@ import { SignInService } from 'src/app/services/sign-in.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 import { environment } from 'src/environments/environment';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-subject-news-creator',
@@ -29,7 +30,8 @@ export class SubjectNewsCreatorComponent implements OnInit {
     private signIn: SignInService,                  // For checking user is an admin.
     private route: ActivatedRoute,                  // For getting route params.
     private router: Router,                         // For redirecting user if necessary.
-    public navService: NavigationServiceService    // For getting routes, such as for breadcrumb navigation.
+    public navService: NavigationServiceService,    // For getting routes, such as for breadcrumb navigation.
+    public util: UtilService
   ) { }
 
   ngOnInit() {
