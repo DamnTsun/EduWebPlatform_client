@@ -68,7 +68,7 @@
         <tr class="content-row" scope="row" *ngFor="let result of userTestResults$; let i = index">
           <td>{{ result.title }}</td>
           <td>{{ result.date }}</td>
-          <td>{{ result.score }} / {{ result.questionCount }} ({{ getScorePercentage(result) }}#)</td>
+          <td>{{ result.score }} / {{ result.questionCount }} ({{ getScorePercentage(result) }}%)</td>
           <!-- Options cell -->
           <td class="table-options-cell">
             <button class="btn btn-outline-primary table-cell-button"
