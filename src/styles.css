@@ -17,6 +17,15 @@ body {
     margin-bottom: 1em;
 }
 
+/* Styling for codeblocks in lesson bodys.
+   The quill editor only exports these with classes, not style attributes.
+ */
+div.lesson-body pre.ql-syntax {
+  background-color: #23241f;
+  color: #f8f8f2;
+  border-radius: 0.25em;
+  padding: 5px 10px;
+}
 
 
 

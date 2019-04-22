@@ -36,7 +36,7 @@ export class LessonCreatorComponent implements OnInit {
     toolbar: {
       container: [
         ['bold', 'italic', 'underline', 'strike'],          // Toggle buttons for bold, italic, underline, strikethough.
-        ['blockquote', 'code-block'],                       // Toggle buttons for blockquote and code.
+        ['code-block'],                                     // Toggle buttons for and code.
 
         [{ 'header': 1 }, { 'header': 2 }],                 // Buttons for heading 1 / 2.
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],       // Buttons for ordered and bullet lists.

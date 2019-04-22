@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { NavigationServiceService } from 'src/app/services/navigation-service.service';
 import { UtilService } from 'src/app/services/util.service';
 import { QuillEditorComponent } from 'ngx-quill';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lesson-editor',
@@ -41,11 +42,11 @@ export class LessonEditorComponent implements OnInit {
     toolbar: {
       container: [
         ['bold', 'italic', 'underline', 'strike'],          // Toggle buttons for bold, italic, underline, strikethough.
-        ['blockquote', 'code-block'],                       // Toggle buttons for blockquote and code.
+        ['code-block'],                                     // Toggle buttons for and code.
 
         [{ 'header': 1 }, { 'header': 2 }],                 // Buttons for heading 1 / 2.
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],       // Buttons for ordered and bullet lists.
-        [{ 'script': 'sub' }, { 'script': 'super' }],        // Toggle buttons for sub and super script.
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],      // Buttons for ordered and bullet lists.
+        [{ 'script': 'sub' }, { 'script': 'super' }],       // Toggle buttons for sub and super script.
         [{ 'direction': 'rtl' }],                           // Toggle button for change text direction.
 
         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],          // Setting headers.
@@ -268,4 +269,5 @@ export class LessonEditorComponent implements OnInit {
     if (this.nameValue === null) { return 0; }
     return this.nameValue.length;
   }
+
 }

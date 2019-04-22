@@ -4,6 +4,7 @@ declare var DOMPurify: any;
 
 import { Injectable } from '@angular/core';
 import { MarkdownService } from 'ngx-markdown';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ import { MarkdownService } from 'ngx-markdown';
 export class UtilService {
 
   constructor(
-    private mdService: MarkdownService
+    private mdService: MarkdownService,
+    private angularSanitizer: DomSanitizer
   ) { }
 
   /**
@@ -37,7 +39,13 @@ export class UtilService {
   }
 
 
-
+  /**
+   * Sanitizes HTML.
+   * @param html HTML to be sanitized.
+   */
+  public sanitizeHTML(html: string): SafeHtml {
+    return this.angularSanitizer.bypassSecurityTrustHtml(DOMPurify.sanitize(html));
+  }
   /**
    * Converts incoming markdown into HTML, then sanitizes it.
    * @param markdown - Markdown to be sanitized.
