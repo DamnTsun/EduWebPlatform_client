@@ -157,7 +157,9 @@ export class GroupHomeComponent implements OnInit {
         this.groupNonMembers_offset++;
       }
       // If id of removed user is lower than id of last user in non members list.
-      else if (this.groupNonMembers$[this.groupNonMembers$.length - 1].id > this.groupMembers$[index].id) {
+      //  OR if at end of non-members list. (Won't be able to get the remove user from API).
+      else if (this.groupNonMembers$[this.groupNonMembers$.length - 1].id > this.groupMembers$[index].id
+                || this.groupNonMembers_endOfContent) {
         // Add to end of list. Then sort by id.
         this.groupNonMembers$.push(this.groupMembers$[index]);
         this.groupNonMembers$.sort((a, b) => { return a.id - b.id; });
@@ -239,7 +241,8 @@ export class GroupHomeComponent implements OnInit {
         this.groupMembers_offset++;
       }
       // If id of added user is lower than id of last user in current members list.
-      else if (this.groupMembers$[this.groupMembers$.length - 1].id  > this.groupNonMembers$[index].id) {
+      else if (this.groupMembers$[this.groupMembers$.length - 1].id  > this.groupNonMembers$[index].id
+                || this.groupMembers_endOfContent) {
         // Add to end of list. Then sort by id.
         this.groupMembers$.push(this.groupNonMembers$[index]);
         this.groupMembers$.sort((a, b) => { return a.id - b.id; });
