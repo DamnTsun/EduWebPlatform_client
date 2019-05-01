@@ -37,8 +37,7 @@ export class LessonsService {
    */
   public getLesson(subjectid, topicid, lessonid): Observable<Lesson[]> {
     return this.api.get(environment.apiUrl +
-      `subjects/${subjectid}/topics/${topicid}
-        /lessons/${lessonid}`
+      `subjects/${subjectid}/topics/${topicid}/lessons/${lessonid}`
     ) as Observable<Lesson[]>;
   }
 
