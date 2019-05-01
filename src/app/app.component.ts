@@ -3,6 +3,9 @@ import { Router, NavigationEnd } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { SubjectsService } from './services/contentServices/subjects.service';
 
+declare var $: any;
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -27,5 +30,13 @@ export class AppComponent {
         }
       }
     });
+
+    // jQuery for handling modals closing when back button used.
+    $(document).ready(function() {
+      // When browser back button pressed, close any open modals.
+      $(window).on('popstate', function() {
+        $('.modal').modal('hide');
+      });
+    })
   }
 }
